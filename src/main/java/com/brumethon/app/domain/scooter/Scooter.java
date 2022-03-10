@@ -6,7 +6,9 @@ import com.brumethon.kernel.Entity;
 
 import java.time.LocalDate;
 
-public class Scooter extends Entity<String> {
+public class Scooter extends Entity<Long> {
+
+    private final String serialNumber;
 
     private final ScooterModel model;
 
@@ -14,15 +16,16 @@ public class Scooter extends Entity<String> {
 
     private final LocalDate purchaseDate;
 
-    public Scooter(String serialId, ScooterModel model, User owner, LocalDate purchaseDate) {
-        super(serialId);
+    public Scooter(Long id, String serialNumber, ScooterModel model, User owner, LocalDate purchaseDate) {
+        super(id);
+        this.serialNumber = serialNumber;
         this.model = model;
         this.owner = owner;
         this.purchaseDate = purchaseDate;
     }
 
-    public String getSerialID(){
-        return id;
+    public String getSerialNumber(){
+        return serialNumber;
     }
 
     public ScooterModel getModel() {

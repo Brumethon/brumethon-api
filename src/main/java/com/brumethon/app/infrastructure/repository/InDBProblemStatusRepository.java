@@ -4,17 +4,24 @@ import com.brumethon.app.domain.problemestatus.ProblemStatus;
 import com.brumethon.app.domain.problemestatus.ProblemStatusRepository;
 import com.brumethon.app.infrastructure.database.problemstatus.ProblemStatusDB;
 import com.brumethon.app.infrastructure.database.problemstatus.ProblemStatusDBRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class InDBProblemStatusRepository implements ProblemStatusRepository {
 
     private final ProblemStatusDBRepository dbRepository;
 
     public InDBProblemStatusRepository(ProblemStatusDBRepository dbRepository) {
         this.dbRepository = dbRepository;
+    }
+
+    public ProblemStatus getByName(String name) {
+        ProblemStatusDB problemStatusDB = this.dbRepository.getProblemStatusDBByName(name).orElseThrow();
+        return problemStatusDB.toProblemStatus();
     }
 
     @Override

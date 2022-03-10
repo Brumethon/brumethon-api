@@ -8,12 +8,12 @@ import java.util.Optional;
 
 public class InDBScooterModelRepository implements ScooterModelRepository {
     @Override
-    public Optional<ScooterModel> get(String key) {
+    public Optional<ScooterModel> get(Long key) {
         return Optional.empty();
     }
 
     @Override
-    public String add(ScooterModel value) {
+    public Long add(ScooterModel value) {
         return null;
     }
 
@@ -23,7 +23,7 @@ public class InDBScooterModelRepository implements ScooterModelRepository {
     }
 
     @Override
-    public boolean remove(String value) {
+    public boolean remove(Long value) {
         return false;
     }
 

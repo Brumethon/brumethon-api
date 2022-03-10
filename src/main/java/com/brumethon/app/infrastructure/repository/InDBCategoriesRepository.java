@@ -8,12 +8,12 @@ import java.util.Optional;
 
 public class InDBCategoriesRepository implements CategoriesRepository {
     @Override
-    public Optional<Categories> get(String key) {
+    public Optional<Categories> get(Long key) {
         return Optional.empty();
     }
 
     @Override
-    public String add(Categories value) {
+    public Long add(Categories value) {
         return null;
     }
 
@@ -23,7 +23,7 @@ public class InDBCategoriesRepository implements CategoriesRepository {
     }
 
     @Override
-    public boolean remove(String value) {
+    public boolean remove(Long value) {
         return false;
     }
 

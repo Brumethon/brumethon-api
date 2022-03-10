@@ -8,12 +8,12 @@ import java.util.Optional;
 
 public class InDBProblemStatusRepository implements ProblemStatusRepository {
     @Override
-    public Optional<ProblemStatus> get(String key) {
+    public Optional<ProblemStatus> get(Long key) {
         return Optional.empty();
     }
 
     @Override
-    public String add(ProblemStatus value) {
+    public Long add(ProblemStatus value) {
         return null;
     }
 
@@ -23,7 +23,7 @@ public class InDBProblemStatusRepository implements ProblemStatusRepository {
     }
 
     @Override
-    public boolean remove(String value) {
+    public boolean remove(Long value) {
         return false;
     }
 

@@ -16,12 +16,12 @@ public class InDBRoleRepository implements RoleRepository {
     }
 
     @Override
-    public Optional<Role> get(String key) {
+    public Optional<Role> get(Long key) {
         return Optional.empty();
     }
 
     @Override
-    public String add(Role value) {
+    public Long add(Role value) {
         return null;
     }
 
@@ -31,7 +31,7 @@ public class InDBRoleRepository implements RoleRepository {
     }
 
     @Override
-    public boolean remove(String value) {
+    public boolean remove(Long value) {
         return false;
     }
 

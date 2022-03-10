@@ -1,11 +1,11 @@
 package com.brumethon.app.infrastructure.database.user;
 
 import com.brumethon.app.infrastructure.database.address.Address;
-import com.brumethon.app.infrastructure.database.scooter.Scooter;
+import com.brumethon.app.infrastructure.database.role.Role;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -19,6 +19,8 @@ public class User {
     private LocalDate registerDate;
     @OneToOne(fetch = FetchType.LAZY)
     private Address address;
+    @ManyToMany
+    private Set<Role> role;
 
     protected User() {
     }

@@ -4,11 +4,13 @@ import com.brumethon.app.domain.role.Role;
 import com.brumethon.app.domain.role.RoleRepository;
 import com.brumethon.app.infrastructure.database.role.RoleDB;
 import com.brumethon.app.infrastructure.database.role.RoleDBRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class InDBRoleRepository implements RoleRepository {
 
     private final RoleDBRepository dbRepository;

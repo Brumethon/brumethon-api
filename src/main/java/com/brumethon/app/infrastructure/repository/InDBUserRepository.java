@@ -59,6 +59,7 @@ public class InDBUserRepository implements Repository<User, Long> {
                 userDB.getFirstName(),
                 userDB.getLastName(),
                 userDB.getPassword(),
+                userDB.getPhoneNumber(),
                 new Address(
                         userDB.getAddressDB().getId(),
                         userDB.getAddressDB().getCity(),

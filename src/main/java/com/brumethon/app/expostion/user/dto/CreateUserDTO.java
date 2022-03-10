@@ -13,6 +13,8 @@ public class CreateUserDTO {
     public String firstname;
     @NotBlank
     public String password;
+    @NotBlank
+    public String phoneNumber;
     @NotNull
     public CreateAddressDTO address;
 }

@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
@@ -47,7 +48,8 @@ public class UserController {
                     userDTO.email = user.getEmailAddress().toString();
                     userDTO.firstname = user.getFirstName();
                     userDTO.lastname = user.getLastName();
-                });
+                    return userDTO;
+                }).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/users/{email}")

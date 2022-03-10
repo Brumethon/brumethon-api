@@ -3,6 +3,7 @@ package com.brumethon.app.infrastructure.database.user;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.role.RoleDB;
+import com.brumethon.kernel.email.EmailAddress;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -47,6 +48,17 @@ public class UserDB {
                 user.getPhoneNumber(),
                 LocalDate.now(),
                 AddressDB.of(user.getAddress()));
+    }
+
+    public User toUser() {
+        return new User(
+                this.getId(),
+                new EmailAddress(this.getMail()),
+                this.getFirstName(),
+                this.getLastName(),
+                this.getPassword(),
+                this.getPhoneNumber(),
+                this.getAddressDB().toAddress());
     }
 
     public Long getId() {

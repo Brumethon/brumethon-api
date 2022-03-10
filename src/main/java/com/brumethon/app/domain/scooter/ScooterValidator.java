@@ -2,14 +2,17 @@ package com.brumethon.app.domain.scooter;
 
 import com.brumethon.app.domain.scooter.exception.InvalidScooterException;
 import com.brumethon.app.domain.scootermodel.ScooterModelValidator;
+import com.brumethon.app.domain.user.UserValidator;
 import com.brumethon.kernel.Validator;
 
 public class ScooterValidator implements Validator<Scooter> {
 
     private final ScooterModelValidator scooterModelValidator;
+    private final UserValidator userValidator;
 
-    public ScooterValidator(ScooterModelValidator scooterModelValidator) {
+    public ScooterValidator(ScooterModelValidator scooterModelValidator, UserValidator userValidator) {
         this.scooterModelValidator = scooterModelValidator;
+        this.userValidator = userValidator;
     }
 
     @Override
@@ -29,8 +32,12 @@ public class ScooterValidator implements Validator<Scooter> {
         if(scooter.getModel() == null){
             throw new InvalidScooterException("scooter model can not be empty");
         }
-
         scooterModelValidator.validate(scooter.getModel());
+
+        if(scooter.getOwner() == null){
+            throw new InvalidScooterException("scooter owner can not be empty");
+        }
+        userValidator.validate(scooter.getOwner());
 
     }
 }

@@ -85,7 +85,16 @@ public class ProblemsDB {
     }
 
     public static ProblemsDB of(Problem problem) {
-        return null;
+        return new ProblemsDB(
+                problem.getDate(),
+                ScooterDB.of(problem.getScooter()),
+                CategoriesDB.of(problem.getCategories()),
+                ProblemStatusDB.of(problem.getStatus()),
+                problem.getName(),
+                problem.getDescription(),
+                UserDB.of(problem.getScooter().getOwner()),
+                problem.getCoordinate().getLatitude(),
+                problem.getCoordinate().getLongitude());
     }
 
     public Problem toProblem(){

@@ -2,18 +2,20 @@ package com.brumethon.app.infrastructure.repository;
 
 import com.brumethon.app.domain.problem.Problem;
 import com.brumethon.app.domain.problem.ProblemRepository;
-import com.brumethon.app.infrastructure.database.problems.ProblemDBRepository;
+import com.brumethon.app.infrastructure.database.problems.ProblemsDBRepository;
 import com.brumethon.app.infrastructure.database.problems.ProblemsDB;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class InDBProblemRepository implements ProblemRepository {
 
-    private final ProblemDBRepository dbRepository;
+    private final ProblemsDBRepository dbRepository;
 
-    public InDBProblemRepository(ProblemDBRepository dbRepository) {
+    public InDBProblemRepository(ProblemsDBRepository dbRepository) {
         this.dbRepository = dbRepository;
     }
 

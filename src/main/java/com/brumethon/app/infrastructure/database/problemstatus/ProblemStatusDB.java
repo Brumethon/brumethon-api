@@ -1,4 +1,4 @@
-package com.brumethon.app.infrastructure.database.problems;
+package com.brumethon.app.infrastructure.database.problemstatus;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -1,4 +1,4 @@
-package com.brumethon.app.infrastructure.database.problems;
+package com.brumethon.app.infrastructure.database.categories;
 
 import com.brumethon.app.infrastructure.database.user.UserDB;
 

@@ -2,8 +2,10 @@ package com.brumethon.app.infrastructure.repository;
 
 import com.brumethon.app.domain.role.Role;
 import com.brumethon.app.domain.role.RoleRepository;
+import com.brumethon.app.infrastructure.database.role.RoleDB;
 import com.brumethon.app.infrastructure.database.role.RoleDBRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,12 +19,21 @@ public class InDBRoleRepository implements RoleRepository {
 
     @Override
     public Optional<Role> get(Long key) {
-        return Optional.empty();
+
+        Optional<RoleDB> roleDB = dbRepository.findById(key);
+
+        if(roleDB.isEmpty()){
+            return Optional.empty();
+        }
+
+        return Optional.of( roleDB.get().toRole());
     }
 
     @Override
     public Long add(Role value) {
-        return null;
+        RoleDB roleDB = dbRepository.save(RoleDB.of(value));
+        value.setId(roleDB.getId());
+        return roleDB.getId();
     }
 
     @Override
@@ -37,7 +48,8 @@ public class InDBRoleRepository implements RoleRepository {
 
     @Override
     public List<Role> getAll() {
-
-        return null;
+        List<Role> list = new ArrayList<>();
+        dbRepository.findAll().forEach(roleDB -> list.add(roleDB.toRole()));
+        return list;
     }
 }

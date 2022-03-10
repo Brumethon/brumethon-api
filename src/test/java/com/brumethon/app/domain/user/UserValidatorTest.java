@@ -30,61 +30,61 @@ class UserValidatorTest {
 
     @Test
     void should_be_valid(){
-        User user = new User(1, defaultValidEmailAddress, defaultValidFirstName, defaultValidLastName, defaultValidPassword, defaultValidAddress);
+        User user = new User(1L, defaultValidEmailAddress, defaultValidFirstName, defaultValidLastName, defaultValidPassword, defaultValidAddress);
         Assertions.assertDoesNotThrow(() -> userValidator.validate(user));
     }
 
     @Test
     void should_not_be_valid_with_null_email_address(){
-        User user = new User(1, null, defaultValidFirstName, defaultValidLastName, defaultValidPassword, defaultValidAddress);
+        User user = new User(1L, null, defaultValidFirstName, defaultValidLastName, defaultValidPassword, defaultValidAddress);
         Assertions.assertThrows(InvalidUserException.class, () -> userValidator.validate(user));
     }
 
     @Test
     void should_not_be_valid_with_empty_email_address(){
-        User user = new User(1, new EmailAddress(""), defaultValidFirstName, defaultValidLastName, defaultValidPassword, defaultValidAddress);
+        User user = new User(1L, new EmailAddress(""), defaultValidFirstName, defaultValidLastName, defaultValidPassword, defaultValidAddress);
         Assertions.assertThrows(InvalidUserException.class, () -> userValidator.validate(user));
     }
 
     @Test
     void should_not_be_valid_with_null_first_name(){
-        User user = new User(1, defaultValidEmailAddress, null, defaultValidLastName, defaultValidPassword, defaultValidAddress);
+        User user = new User(1L, defaultValidEmailAddress, null, defaultValidLastName, defaultValidPassword, defaultValidAddress);
         Assertions.assertThrows(InvalidUserException.class, () -> userValidator.validate(user));
     }
 
     @Test
     void should_not_be_valid_with_empty_first_name(){
-        User user = new User(1, defaultValidEmailAddress, "", defaultValidLastName, defaultValidPassword, defaultValidAddress);
+        User user = new User(1L, defaultValidEmailAddress, "", defaultValidLastName, defaultValidPassword, defaultValidAddress);
         Assertions.assertThrows(InvalidUserException.class, () -> userValidator.validate(user));
     }
 
     @Test
     void should_not_be_valid_with_null_last_name(){
-        User user = new User(1, defaultValidEmailAddress, defaultValidFirstName, null, defaultValidPassword, defaultValidAddress);
+        User user = new User(1L, defaultValidEmailAddress, defaultValidFirstName, null, defaultValidPassword, defaultValidAddress);
         Assertions.assertThrows(InvalidUserException.class, () -> userValidator.validate(user));
     }
 
     @Test
     void should_not_be_valid_with_empty_last_name(){
-        User user = new User(1, defaultValidEmailAddress, defaultValidFirstName, "", defaultValidPassword, defaultValidAddress);
+        User user = new User(1L, defaultValidEmailAddress, defaultValidFirstName, "", defaultValidPassword, defaultValidAddress);
         Assertions.assertThrows(InvalidUserException.class, () -> userValidator.validate(user));
     }
 
     @Test
     void should_not_be_valid_with_null_password(){
-        User user = new User(1, defaultValidEmailAddress, defaultValidFirstName, defaultValidLastName, null, defaultValidAddress);
+        User user = new User(1L, defaultValidEmailAddress, defaultValidFirstName, defaultValidLastName, null, defaultValidAddress);
         Assertions.assertThrows(InvalidUserException.class, () -> userValidator.validate(user));
     }
 
     @Test
     void should_not_be_valid_with_empty_password(){
-        User user = new User(1, defaultValidEmailAddress, defaultValidFirstName, defaultValidLastName, "", defaultValidAddress);
+        User user = new User(1L, defaultValidEmailAddress, defaultValidFirstName, defaultValidLastName, "", defaultValidAddress);
         Assertions.assertThrows(InvalidUserException.class, () -> userValidator.validate(user));
     }
 
     @Test
     void should_not_be_valid_with_null_address(){
-        User user = new User(1, defaultValidEmailAddress, defaultValidFirstName, defaultValidLastName, defaultValidPassword, null);
+        User user = new User(1L, defaultValidEmailAddress, defaultValidFirstName, defaultValidLastName, defaultValidPassword, null);
         Assertions.assertThrows(InvalidUserException.class, () -> userValidator.validate(user));
     }
 

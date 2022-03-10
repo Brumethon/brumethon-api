@@ -14,13 +14,13 @@ import com.brumethon.kernel.email.SimpleEmailAddressValidator;
 
 import java.util.List;
 
-class UserServiceTest extends SimpleServiceTest<UserRepository, User, Integer> {
+class UserServiceTest extends SimpleServiceTest<UserRepository, User, Long> {
 
     static Address defaultValidAddress = new Address(1L, "", "", "", "", "", 0.0, 0.0);
 
     public UserServiceTest() {
-        super(new User(1, new EmailAddress("test@test.com"), "bob", "bob", "p", defaultValidAddress),
-                new User(2, new EmailAddress("test@test.com"), "bob", "bob", "p", defaultValidAddress));
+        super(new User(1L, new EmailAddress("test@test.com"), "bob", "bob", "p", defaultValidAddress),
+                new User(2L, new EmailAddress("test@test.com"), "bob", "bob", "p", defaultValidAddress));
     }
 
     @Override
@@ -39,12 +39,12 @@ class UserServiceTest extends SimpleServiceTest<UserRepository, User, Integer> {
     }
 
     @Override
-    protected SimpleService<UserRepository, User, Integer> getNewService() {
+    protected SimpleService<UserRepository, User, Long> getNewService() {
         return new UserService(getNewRepository(), (UserValidator) getNewValidator());
     }
 
     @Override
-    protected SimpleService<UserRepository, User, Integer> getNewService(UserRepository repo, Validator<User> validator) {
+    protected SimpleService<UserRepository, User, Long> getNewService(UserRepository repo, Validator<User> validator) {
         return new UserService(repo, (UserValidator) validator);
     }
 }

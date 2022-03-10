@@ -19,8 +19,8 @@ class UserServiceTest extends SimpleServiceTest<UserRepository, User, Long> {
     static Address defaultValidAddress = new Address(1L, "", "", "", "", "", 0.0, 0.0);
 
     public UserServiceTest() {
-        super(new User(1L, new EmailAddress("test@test.com"), "bob", "bob", "p", defaultValidAddress),
-                new User(2L, new EmailAddress("test@test.com"), "bob", "bob", "p", defaultValidAddress));
+        super(new User(1L, new EmailAddress("test@test.com"), "bob", "bob", "p", "0601020304", defaultValidAddress),
+                new User(2L, new EmailAddress("test@test.com"), "bob", "bob", "p", "0601020304", defaultValidAddress));
     }
 
     @Override

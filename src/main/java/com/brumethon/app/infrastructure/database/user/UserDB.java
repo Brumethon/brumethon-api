@@ -18,6 +18,7 @@ public class UserDB {
     private String password;
     private String firstName;
     private String lastName;
+    private String phoneNumber;
     private LocalDate registerDate;
     @OneToOne(fetch = FetchType.LAZY)
     private AddressDB addressDB;
@@ -27,11 +28,12 @@ public class UserDB {
     protected UserDB() {
     }
 
-    protected UserDB(String mail, String password, String firstName, String lastName, LocalDate registerDate, AddressDB addressDB) {
+    protected UserDB(String mail, String password, String firstName, String lastName, String phoneNumber, LocalDate registerDate, AddressDB addressDB) {
         this.mail = mail;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
         this.registerDate = registerDate;
         this.addressDB = addressDB;
     }
@@ -42,6 +44,7 @@ public class UserDB {
                 user.getPassword(),
                 user.getFirstName(),
                 user.getLastName(),
+                user.getPhoneNumber(),
                 LocalDate.now(),
                 AddressDB.of(user.getAddress()));
     }
@@ -64,6 +67,10 @@ public class UserDB {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public LocalDate getRegisterDate() {

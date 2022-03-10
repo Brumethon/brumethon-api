@@ -3,10 +3,10 @@ package com.brumethon.app.infrastructure.repository;
 import com.brumethon.app.domain.address.Address;
 import com.brumethon.app.domain.address.AddressRepository;
 import com.brumethon.app.domain.user.User;
+import com.brumethon.app.domain.user.UserRepository;
 import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.app.infrastructure.database.user.UserDBRepository;
-import com.brumethon.kernel.Repository;
 import com.brumethon.kernel.email.EmailAddress;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Repository
-public class InDBUserRepository implements Repository<User, Long> {
+public class InDBUserRepository implements UserRepository {
 
     private final UserDBRepository dbRepository;
 
@@ -59,6 +59,7 @@ public class InDBUserRepository implements Repository<User, Long> {
                 userDB.getFirstName(),
                 userDB.getLastName(),
                 userDB.getPassword(),
+                userDB.getPhoneNumber(),
                 new Address(
                         userDB.getAddressDB().getId(),
                         userDB.getAddressDB().getCity(),

@@ -73,6 +73,7 @@ public class UserController {
                 createUserDTO.firstname,
                 createUserDTO.lastname,
                 createUserDTO.password,
+                createUserDTO.phoneNumber,
                 new Address(
                         -1L,
                         createUserDTO.address.city,

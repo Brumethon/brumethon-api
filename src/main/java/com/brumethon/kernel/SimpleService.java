@@ -1,12 +1,10 @@
 package com.brumethon.kernel;
 
-
-
 import com.brumethon.kernel.exception.SimpleServiceException;
 
 import java.util.List;
 
-public abstract class SimpleService<K, V extends Entity<K>, R extends Repository<K, V>> {
+public abstract class SimpleService<R extends Repository<V, K> , V extends Entity<K>, K > {
 
     protected final R repository;
     protected final Validator<V> validator;

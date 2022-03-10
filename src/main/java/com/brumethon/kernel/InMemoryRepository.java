@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class InMemoryRepository<K, V extends Entity<K>> implements Repository<K, V>{
+public abstract class InMemoryRepository<V extends Entity<K>, K> implements Repository<V, K>{
 
     private List<V> list;
 
-    protected InMemoryRepository(List<V> list) {
+    public InMemoryRepository(List<V> list) {
         this.list = list;
     }
 
-    protected InMemoryRepository() {
+    public InMemoryRepository() {
         this.list = new ArrayList<>();
     }
 

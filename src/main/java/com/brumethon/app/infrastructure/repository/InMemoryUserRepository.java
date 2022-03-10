@@ -6,7 +6,7 @@ import com.brumethon.kernel.InMemoryRepository;
 
 import java.util.List;
 
-public class InMemoryUserRepository extends InMemoryRepository<User, Integer> implements UserRepository {
+public class InMemoryUserRepository extends InMemoryRepository<User, Long> implements UserRepository {
 
     public InMemoryUserRepository(List<User> values) {
         super(values);

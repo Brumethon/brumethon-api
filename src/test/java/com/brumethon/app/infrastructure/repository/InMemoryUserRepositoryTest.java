@@ -9,23 +9,23 @@ import com.brumethon.kernel.email.EmailAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-class InMemoryUserRepositoryTest extends InMemoryRepositoryTest<User, Integer> {
+class InMemoryUserRepositoryTest extends InMemoryRepositoryTest<User, Long> {
 
 
     static Address defaultValidAddress = new Address(1L, "", "", "", "", "", 0.0, 0.0);
 
     public InMemoryUserRepositoryTest() {
-        super( new User(1, new EmailAddress("test@test.com"), "bob", "bob", "p", defaultValidAddress),
-                new User(2, new EmailAddress(""), "bob", "bob", "p", defaultValidAddress));
+        super( new User(1L, new EmailAddress("test@test.com"), "bob", "bob", "p", defaultValidAddress),
+                new User(2L, new EmailAddress(""), "bob", "bob", "p", defaultValidAddress));
     }
 
     @Override
-    protected Repository<User, Integer> getNewRepository(List<User> values) {
+    protected Repository<User, Long> getNewRepository(List<User> values) {
         return new InMemoryUserRepository(new ArrayList<>(values));
     }
 
     @Override
     protected User getUpdateValue1() {
-        return new User(1, new EmailAddress("test@test.com"), "bob2", "bob2", "p", defaultValidAddress);
+        return new User(1L, new EmailAddress("test@test.com"), "bob2", "bob2", "p", defaultValidAddress);
     }
 }

@@ -23,7 +23,7 @@ class ScooterValidatorTest {
     @BeforeAll
     static void beforeAll(){
         scooterValidator = new ScooterValidator(new ScooterModelValidator(), new UserValidator(new AddressValidator(), new SimpleEmailAddressValidator()));
-        defaultValidUser = new User(1, new EmailAddress("test@test.com"), "bob", "bob", "p",
+        defaultValidUser = new User(1L, new EmailAddress("test@test.com"), "bob", "bob", "p",
                                     new Address(1L, "", "", "", "", "", 0.0, 0.0));
     }
 

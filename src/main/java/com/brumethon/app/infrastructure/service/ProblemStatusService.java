@@ -4,6 +4,7 @@ import com.brumethon.app.domain.problemestatus.ProblemStatus;
 import com.brumethon.app.domain.problemestatus.ProblemStatusRepository;
 import com.brumethon.kernel.SimpleService;
 import com.brumethon.kernel.Validator;
+import org.springframework.stereotype.Service;
 
 public class ProblemStatusService extends SimpleService<ProblemStatusRepository, ProblemStatus, Long> {
     public ProblemStatusService(ProblemStatusRepository repository, Validator<ProblemStatus> validator) {

@@ -6,6 +6,7 @@ import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.address.AddressDBRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,11 +35,14 @@ public class InDBAddressRepository implements AddressRepository {
 
     @Override
     public boolean remove(Long value) {
-        return false;
+        dbRepository.deleteById(value);
+        return dbRepository.existsById(value);
     }
 
     @Override
     public List<Address> getAll() {
-        return null;
+        List<Address> addresses = new ArrayList<>();
+        dbRepository.findAll().forEach(addressDB -> addresses.add(addressDB.toAddress()));
+        return addresses;
     }
 }

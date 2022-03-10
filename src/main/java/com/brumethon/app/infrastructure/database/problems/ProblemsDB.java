@@ -1,7 +1,7 @@
 package com.brumethon.app.infrastructure.database.problems;
 
-import com.brumethon.app.infrastructure.database.referent.ReferentDB;
 import com.brumethon.app.infrastructure.database.scooter.ScooterDB;
+import com.brumethon.app.infrastructure.database.user.UserDB;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,21 +22,21 @@ public class ProblemsDB {
     private String name;
     private String description;
     @OneToOne(fetch = FetchType.LAZY)
-    private ReferentDB referentDB;
+    private UserDB referentUser;
     private Double latitude;
     private Double longitude;
 
     public ProblemsDB() {
     }
 
-    public ProblemsDB(LocalDate date, ScooterDB scooterDB, CategoriesDB categoriesDB, ProblemStatusDB status, String name, String description, ReferentDB referentDB, Double latitude, Double longitude) {
+    public ProblemsDB(LocalDate date, ScooterDB scooterDB, CategoriesDB categoriesDB, ProblemStatusDB status, String name, String description, UserDB referentUser, Double latitude, Double longitude) {
         this.date = date;
         this.scooterDB = scooterDB;
         this.categoriesDB = categoriesDB;
         this.status = status;
         this.name = name;
         this.description = description;
-        this.referentDB = referentDB;
+        this.referentUser = referentUser;
         this.latitude = latitude;
         this.longitude = longitude;
     }

@@ -1,5 +1,7 @@
 package com.brumethon.app.infrastructure.database.scooter;
 
+import com.brumethon.app.infrastructure.database.user.User;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -11,6 +13,8 @@ public class Scooter {
     private LocalDate dateOfPurchase;
     @OneToOne
     private Model model;
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
 
     public Scooter() {
     }

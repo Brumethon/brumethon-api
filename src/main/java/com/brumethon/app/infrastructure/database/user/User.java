@@ -19,19 +19,16 @@ public class User {
     private LocalDate registerDate;
     @OneToOne(fetch = FetchType.LAZY)
     private Address address;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Scooter> scooters;
 
     protected User() {
     }
 
-    protected User(String mail, String password, String firstName, String lastName, LocalDate registerDate, Address address, List<Scooter> scooters) {
+    protected User(String mail, String password, String firstName, String lastName, LocalDate registerDate, Address address) {
         this.mail = mail;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.registerDate = registerDate;
         this.address = address;
-        this.scooters = scooters;
     }
 }

@@ -1,0 +1,43 @@
+package com.brumethon.app.domain.scooter;
+
+import com.brumethon.app.domain.scooter.exception.InvalidScooterException;
+import com.brumethon.app.domain.scootermodel.ScooterModelValidator;
+import com.brumethon.app.domain.user.UserValidator;
+import com.brumethon.kernel.Validator;
+
+public class ScooterValidator implements Validator<Scooter> {
+
+    private final ScooterModelValidator scooterModelValidator;
+    private final UserValidator userValidator;
+
+    public ScooterValidator(ScooterModelValidator scooterModelValidator, UserValidator userValidator) {
+        this.scooterModelValidator = scooterModelValidator;
+        this.userValidator = userValidator;
+    }
+
+    @Override
+    public void validate(Scooter scooter) {
+        if(scooter == null) {
+            throw new IllegalArgumentException("User to validate is null");
+        }
+
+        if(scooter.getSerialID() == null || scooter.getSerialID().isEmpty()){
+            throw new InvalidScooterException("scooter serial ID can not be empty");
+        }
+
+        if( scooter.getPurchaseDate() == null){
+            throw new InvalidScooterException("scooter purchase date can not be empty");
+        }
+
+        if(scooter.getModel() == null){
+            throw new InvalidScooterException("scooter model can not be empty");
+        }
+        scooterModelValidator.validate(scooter.getModel());
+
+        if(scooter.getOwner() == null){
+            throw new InvalidScooterException("scooter owner can not be empty");
+        }
+        userValidator.validate(scooter.getOwner());
+
+    }
+}

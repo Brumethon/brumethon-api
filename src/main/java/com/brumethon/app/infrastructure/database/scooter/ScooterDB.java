@@ -1,5 +1,6 @@
 package com.brumethon.app.infrastructure.database.scooter;
 
+import com.brumethon.app.infrastructure.database.scootermodel.ScooterModelDB;
 import com.brumethon.app.infrastructure.database.user.UserDB;
 
 import javax.persistence.*;
@@ -13,15 +14,15 @@ public class ScooterDB {
     private Long id;
     private LocalDate dateOfPurchase;
     @OneToOne
-    private ModelDB modelDB;
+    private ScooterModelDB scooterModelDB;
     @OneToOne(fetch = FetchType.LAZY)
     private UserDB userDB;
 
     public ScooterDB() {
     }
 
-    public ScooterDB(LocalDate dateOfPurchase, ModelDB modelDB) {
+    public ScooterDB(LocalDate dateOfPurchase, ScooterModelDB scooterModelDB) {
         this.dateOfPurchase = dateOfPurchase;
-        this.modelDB = modelDB;
+        this.scooterModelDB = scooterModelDB;
     }
 }

@@ -1,5 +1,7 @@
 package com.brumethon.app.infrastructure.database.problems;
 
+import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
+import com.brumethon.app.infrastructure.database.problemstatus.ProblemStatusDB;
 import com.brumethon.app.infrastructure.database.scooter.ScooterDB;
 import com.brumethon.app.infrastructure.database.user.UserDB;
 

@@ -1,6 +1,6 @@
 package com.brumethon.app.domain.role;
 
-import com.brumethon.app.domain.referent.exception.InvalidReferentException;
+import com.brumethon.app.domain.role.exception.InvalidRoleException;
 import com.brumethon.kernel.Validator;
 
 public class RoleValidator implements Validator<Role> {
@@ -11,7 +11,7 @@ public class RoleValidator implements Validator<Role> {
         }
 
         if( role.getName() == null || role.getName().isEmpty()){
-            throw new InvalidReferentException("Role name can not be empty");
+            throw new InvalidRoleException("Role name can not be empty");
         }
     }
 }

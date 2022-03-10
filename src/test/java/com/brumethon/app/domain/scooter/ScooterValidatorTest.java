@@ -29,19 +29,19 @@ class ScooterValidatorTest {
 
     @Test
     void should_be_valid(){
-        Scooter scooter = new Scooter("s", new ScooterModel("model1"), defaultValidUser, LocalDate.now());
+        Scooter scooter = new Scooter("s", new ScooterModel(1L,"model1"), defaultValidUser, LocalDate.now());
         Assertions.assertDoesNotThrow(() -> scooterValidator.validate(scooter));
     }
 
     @Test
     void should_not_be_valid_with_null_serialID(){
-        Scooter scooter = new Scooter(null, new ScooterModel("model1"), defaultValidUser, LocalDate.now());
+        Scooter scooter = new Scooter(null, new ScooterModel(1L,"model1"), defaultValidUser, LocalDate.now());
         Assertions.assertThrows(InvalidScooterException.class, () -> scooterValidator.validate(scooter));
     }
 
     @Test
     void should_not_be_valid_with_empty_serialID(){
-        Scooter scooter = new Scooter("", new ScooterModel("model1"), defaultValidUser, LocalDate.now());
+        Scooter scooter = new Scooter("", new ScooterModel(1L,"model1"), defaultValidUser, LocalDate.now());
         Assertions.assertThrows(InvalidScooterException.class, () -> scooterValidator.validate(scooter));
     }
 
@@ -53,13 +53,13 @@ class ScooterValidatorTest {
 
     @Test
     void should_not_be_valid_with_null_purchase_date(){
-        Scooter scooter = new Scooter("s", new ScooterModel("model1"), defaultValidUser, null);
+        Scooter scooter = new Scooter("s", new ScooterModel(1L,"model1"), defaultValidUser, null);
         Assertions.assertThrows(InvalidScooterException.class, () -> scooterValidator.validate(scooter));
     }
 
     @Test
     void should_not_be_valid_with_null_owner(){
-        Scooter scooter = new Scooter("s", new ScooterModel("model1"), null, null);
+        Scooter scooter = new Scooter("s", new ScooterModel(1L,"model1"), null, null);
         Assertions.assertThrows(InvalidScooterException.class, () -> scooterValidator.validate(scooter));
     }
 

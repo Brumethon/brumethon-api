@@ -4,7 +4,6 @@ import com.brumethon.app.domain.address.Address;
 import com.brumethon.app.domain.address.AddressRepository;
 import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.address.AddressDBRepository;
-import com.brumethon.kernel.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

@@ -13,9 +13,9 @@ import java.util.Optional;
 @Repository
 public class InDBProblemRepository implements ProblemRepository {
 
-    private final ProblemsDBRepository dbRepository;
+    private final ProblemDBRepository dbRepository;
 
-    public InDBProblemRepository(ProblemsDBRepository dbRepository) {
+    public InDBProblemRepository(ProblemDBRepository dbRepository) {
         this.dbRepository = dbRepository;
     }
 

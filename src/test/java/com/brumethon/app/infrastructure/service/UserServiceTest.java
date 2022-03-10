@@ -1,11 +1,11 @@
 package com.brumethon.app.infrastructure.service;
 
+import com.brumethon.app.domain.address.Address;
+import com.brumethon.app.domain.address.AddressValidator;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.domain.user.UserRepository;
 import com.brumethon.app.domain.user.UserValidator;
 import com.brumethon.app.infrastructure.repository.InMemoryUserRepository;
-import com.brumethon.app.infrastructure.service.exception.UserAlreadyExistException;
-import com.brumethon.app.infrastructure.service.exception.UserNotFoundException;
 import com.brumethon.kernel.SimpleService;
 import com.brumethon.kernel.SimpleServiceTest;
 import com.brumethon.kernel.Validator;
@@ -16,16 +16,16 @@ import java.util.List;
 
 class UserServiceTest extends SimpleServiceTest<UserRepository, User, Integer> {
 
+    static Address defaultValidAddress = new Address(1L, "", "", "", "", "", 0.0, 0.0);
+
     public UserServiceTest() {
-        super(new User(1, new EmailAddress("test@test.com"), "bob", "bob", "p"),
-                new User(2, new EmailAddress(""), "bob", "bob", "p"),
-                UserNotFoundException.class,
-                UserAlreadyExistException.class);
+        super(new User(1, new EmailAddress("test@test.com"), "bob", "bob", "p", defaultValidAddress),
+                new User(2, new EmailAddress("test@test.com"), "bob", "bob", "p", defaultValidAddress));
     }
 
     @Override
     protected Validator<User> getNewValidator() {
-        return new UserValidator(new SimpleEmailAddressValidator());
+        return new UserValidator(new AddressValidator(), new SimpleEmailAddressValidator());
     }
 
     @Override

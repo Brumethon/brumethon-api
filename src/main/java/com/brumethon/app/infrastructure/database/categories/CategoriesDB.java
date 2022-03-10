@@ -18,4 +18,8 @@ public class CategoriesDB {
 
     public CategoriesDB() {
     }
+
+    public String getName() {
+        return name;
+    }
 }

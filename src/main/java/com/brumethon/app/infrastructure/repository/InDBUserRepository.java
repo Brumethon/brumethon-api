@@ -8,12 +8,13 @@ import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.app.infrastructure.database.user.UserDBRepository;
 import com.brumethon.kernel.email.EmailAddress;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@org.springframework.stereotype.Repository
+@Repository
 public class InDBUserRepository implements UserRepository {
 
     private final UserDBRepository dbRepository;

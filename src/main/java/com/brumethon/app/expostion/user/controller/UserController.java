@@ -42,13 +42,12 @@ public class UserController {
     @GetMapping(value = "/users")
     public List<UserDTO> getUsers() {
         return inDBUserRepository.getAll().stream()
-                .map(user -> {
-                    return new UserDTO(
+                .map(user -> new UserDTO(
                         user.getEmailAddress().toString(),
                         user.getLastName(),
                         user.getFirstName(),
-                        user.getAddress().toString());
-                }).collect(Collectors.toList());
+                        user.getAddress().toString()))
+                .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/users/{email}")

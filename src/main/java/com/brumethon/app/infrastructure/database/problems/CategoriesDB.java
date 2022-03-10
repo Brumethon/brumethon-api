@@ -8,7 +8,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
-@Table(schema = "categories")
+@Table(name = "categories")
 @Entity
 public class CategoriesDB {
     @Id

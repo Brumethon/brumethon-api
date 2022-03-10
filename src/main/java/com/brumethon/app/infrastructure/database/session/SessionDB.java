@@ -5,7 +5,7 @@ import com.brumethon.app.infrastructure.database.user.UserDB;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Table(schema = "session")
+@Table(name = "session")
 @Entity
 public class SessionDB {
     @Id

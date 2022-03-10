@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
-@Table(schema = "referent_request")
+@Table(name = "referent_request")
 @Entity
 public class ReferentRequestDB {
     @Id

@@ -1,5 +1,6 @@
 package com.brumethon.app.infrastructure.database.user;
 
+import com.brumethon.app.domain.user.User;
 import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.role.RoleDB;
 
@@ -7,7 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
 
-@Table(schema = "user")
+@Table(name = "user")
 @Entity
 public class UserDB {
     @Id
@@ -18,7 +19,7 @@ public class UserDB {
     private String firstName;
     private String lastName;
     private LocalDate registerDate;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private AddressDB addressDB;
     @ManyToMany
     private Set<RoleDB> roleDB;
@@ -33,5 +34,47 @@ public class UserDB {
         this.lastName = lastName;
         this.registerDate = registerDate;
         this.addressDB = addressDB;
+    }
+
+    public static UserDB of(User user) {
+        return new UserDB(
+                user.getEmailAddress().toString(),
+                user.getPassword(),
+                user.getFirstName(),
+                user.getLastName(),
+                LocalDate.now(),
+                AddressDB.of(user.getAddress()));
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public LocalDate getRegisterDate() {
+        return registerDate;
+    }
+
+    public AddressDB getAddressDB() {
+        return addressDB;
+    }
+
+    public Set<RoleDB> getRoleDB() {
+        return roleDB;
     }
 }

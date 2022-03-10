@@ -8,7 +8,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
-@Table(schema = "role")
+@Table(name = "role")
 @Entity
 public class RoleDB {
     @Id

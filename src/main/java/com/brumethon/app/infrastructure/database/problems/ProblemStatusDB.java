@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(schema = "problem_status")
+@Table(name = "problem_status")
 @Entity
 public class ProblemStatusDB {
     @Id

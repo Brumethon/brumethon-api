@@ -6,12 +6,14 @@ import com.byteowls.jopencage.model.JOpenCageLatLng;
 import com.byteowls.jopencage.model.JOpenCageResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+@Disabled
 public class GeocodingTest {
 
     private Properties appProps;

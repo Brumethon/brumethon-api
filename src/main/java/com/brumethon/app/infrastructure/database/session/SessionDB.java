@@ -1,25 +1,25 @@
 package com.brumethon.app.infrastructure.database.session;
 
-import com.brumethon.app.infrastructure.database.user.User;
+import com.brumethon.app.infrastructure.database.user.UserDB;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Table(schema = "session")
 @Entity
-public class Session {
+public class SessionDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tokenId;
     @OneToOne(fetch = FetchType.LAZY)
-    private User user;
+    private UserDB userDB;
     private LocalDate expirationDate;
 
-    protected Session() {
+    protected SessionDB() {
     }
 
-    protected Session(User user, LocalDate expirationDate) {
-        this.user = user;
+    protected SessionDB(UserDB userDB, LocalDate expirationDate) {
+        this.userDB = userDB;
         this.expirationDate = expirationDate;
     }
 }

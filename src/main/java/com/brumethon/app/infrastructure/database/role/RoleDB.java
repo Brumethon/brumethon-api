@@ -1,6 +1,6 @@
 package com.brumethon.app.infrastructure.database.role;
 
-import com.brumethon.app.infrastructure.database.user.User;
+import com.brumethon.app.infrastructure.database.user.UserDB;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,10 +10,10 @@ import java.util.Set;
 
 @Table(schema = "role")
 @Entity
-public class Role {
+public class RoleDB {
     @Id
     private String name;
 
     @ManyToMany
-    private Set<User> user;
+    private Set<UserDB> userDB;
 }

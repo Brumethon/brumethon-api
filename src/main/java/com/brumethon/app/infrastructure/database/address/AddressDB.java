@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Table(schema = "address")
 @Entity
-public class Address {
+public class AddressDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,10 +16,10 @@ public class Address {
     private Double latitude;
     private Double longitude;
 
-    protected Address() {
+    protected AddressDB() {
     }
 
-    protected Address(String city, String street, String number, String country, String postalCode, Double latitude, Double longitude) {
+    protected AddressDB(String city, String street, String number, String country, String postalCode, Double latitude, Double longitude) {
         this.city = city;
         this.street = street;
         this.number = number;

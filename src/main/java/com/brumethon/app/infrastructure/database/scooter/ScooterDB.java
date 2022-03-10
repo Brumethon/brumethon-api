@@ -1,27 +1,27 @@
 package com.brumethon.app.infrastructure.database.scooter;
 
-import com.brumethon.app.infrastructure.database.user.User;
+import com.brumethon.app.infrastructure.database.user.UserDB;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Table(schema = "scooter")
 @Entity
-public class Scooter {
+public class ScooterDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate dateOfPurchase;
     @OneToOne
-    private Model model;
+    private ModelDB modelDB;
     @OneToOne(fetch = FetchType.LAZY)
-    private User user;
+    private UserDB userDB;
 
-    public Scooter() {
+    public ScooterDB() {
     }
 
-    public Scooter(LocalDate dateOfPurchase, Model model) {
+    public ScooterDB(LocalDate dateOfPurchase, ModelDB modelDB) {
         this.dateOfPurchase = dateOfPurchase;
-        this.model = model;
+        this.modelDB = modelDB;
     }
 }

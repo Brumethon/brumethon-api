@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Table(schema = "request_status")
 @Entity
-public class RequestStatus {
+public class RequestStatusDB {
     @Id
     private String name;
 }

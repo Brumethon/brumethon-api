@@ -1,6 +1,6 @@
 package com.brumethon.app.infrastructure.database.request;
 
-import com.brumethon.app.infrastructure.database.user.User;
+import com.brumethon.app.infrastructure.database.user.UserDB;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,12 +10,12 @@ import java.time.LocalDate;
 
 @Table(schema = "referent_request")
 @Entity
-public class ReferentRequest {
+public class ReferentRequestDB {
     @Id
     private long id;
     @OneToOne
-    private User user;
+    private UserDB userDB;
     @OneToOne
-    private ReferentRequest status;
+    private ReferentRequestDB status;
     private LocalDate date;
 }

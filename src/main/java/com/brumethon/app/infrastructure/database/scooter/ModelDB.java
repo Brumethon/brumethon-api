@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Table(schema = "model")
 @Entity
-public class Model {
+public class ModelDB {
     @Id
     private String name;
 }

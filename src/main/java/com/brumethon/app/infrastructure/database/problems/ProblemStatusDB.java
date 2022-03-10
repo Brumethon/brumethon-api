@@ -6,10 +6,10 @@ import javax.persistence.Table;
 
 @Table(schema = "problem_status")
 @Entity
-public class ProblemStatus {
+public class ProblemStatusDB {
     @Id
     private String name;
 
-    public ProblemStatus() {
+    public ProblemStatusDB() {
     }
 }

@@ -2,19 +2,37 @@ package com.brumethon.app.infrastructure.repository;
 
 import com.brumethon.app.domain.scootermodel.ScooterModel;
 import com.brumethon.app.domain.scootermodel.ScooterModelRepository;
+import com.brumethon.app.infrastructure.database.scootermodel.ScooterModelDB;
+import com.brumethon.app.infrastructure.database.scootermodel.ScooterModelDBRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class InDBScooterModelRepository implements ScooterModelRepository {
+
+    private final ScooterModelDBRepository dbRepository;
+
+    public InDBScooterModelRepository(ScooterModelDBRepository dbRepository) {
+        this.dbRepository = dbRepository;
+    }
+
     @Override
     public Optional<ScooterModel> get(Long key) {
-        return Optional.empty();
+        Optional<ScooterModelDB> scooterModelDB = dbRepository.findById(key);
+
+        if (scooterModelDB.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(scooterModelDB.get().toScooterModel());
     }
 
     @Override
     public Long add(ScooterModel value) {
-        return null;
+        ScooterModelDB scooterModelDB = dbRepository.save(ScooterModelDB.of(value));
+        value.setId(scooterModelDB.getId());
+        return scooterModelDB.getId();
     }
 
     @Override
@@ -24,11 +42,14 @@ public class InDBScooterModelRepository implements ScooterModelRepository {
 
     @Override
     public boolean remove(Long value) {
-        return false;
+        dbRepository.deleteById(value);
+        return dbRepository.existsById(value);
     }
 
     @Override
     public List<ScooterModel> getAll() {
-        return null;
+        List<ScooterModel> list = new ArrayList<>();
+        dbRepository.findAll().forEach(scooterModelDB -> list.add(scooterModelDB.toScooterModel()));
+        return list;
     }
 }

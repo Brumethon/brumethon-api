@@ -46,13 +46,14 @@ public class UserController {
 
     @GetMapping(value = "/users")
     public List<UserDTO> getUsers() {
-        System.out.println(inDBUserRepository.getAll());
-        return List.of();
+        List<UserDTO> userDTOList = inDBUserRepository.getAll().stream().map(user -> new UserDTO(user.getEmailAddress().toString(), user.getLastName(), user.getFirstName(), user.getAddress().toString())).toList();
+        return userDTOList;
     }
 
     @GetMapping(value = "/users/{email}")
     public UserDTO getUser(@PathVariable @Valid String email) {
-        return new UserDTO();
+        User user = inDBUserRepository.getByEmail(email);
+        return new UserDTO(user.getEmailAddress().toString(), user.getLastName(), user.getFirstName(), user.getAddress().toString());
     }
 
     @PostMapping(value = "/users")

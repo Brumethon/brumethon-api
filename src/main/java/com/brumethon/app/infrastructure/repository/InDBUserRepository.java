@@ -25,6 +25,11 @@ public class InDBUserRepository implements UserRepository {
         this.addressRepository = addressRepository;
     }
 
+    public User getByEmail(String email) {
+        UserDB userDB = this.dbRepository.getUserDBByMail(email).orElseThrow();
+        return userDB.toUser();
+    }
+
     @Override
     public Optional<User> get(Long key) {
         return Optional.empty();

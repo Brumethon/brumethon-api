@@ -1,9 +1,11 @@
 package com.brumethon.app.infrastructure.database.user;
 
 import com.brumethon.app.infrastructure.database.address.Address;
+import com.brumethon.app.infrastructure.database.scooter.Scooter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class User {
@@ -17,15 +19,19 @@ public class User {
     private LocalDate registerDate;
     @OneToOne(fetch = FetchType.LAZY)
     private Address address;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Scooter> scooters;
 
     protected User() {
     }
 
-    protected User(String mail, String password, String firstName, String lastName, LocalDate registerDate) {
+    protected User(String mail, String password, String firstName, String lastName, LocalDate registerDate, Address address, List<Scooter> scooters) {
         this.mail = mail;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.registerDate = registerDate;
+        this.address = address;
+        this.scooters = scooters;
     }
 }

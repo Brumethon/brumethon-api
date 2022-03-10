@@ -4,6 +4,7 @@ import com.brumethon.app.domain.user.User;
 import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.role.RoleDB;
 import com.brumethon.kernel.email.EmailAddress;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -39,8 +40,20 @@ public class UserDB {
         this.addressDB = addressDB;
     }
 
+    protected UserDB(Long id, String mail, String password, String firstName, String lastName, String phoneNumber, LocalDate registerDate, AddressDB addressDB) {
+        this.id = id;
+        this.mail = mail;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.registerDate = registerDate;
+        this.addressDB = addressDB;
+    }
+
     public static UserDB of(User user) {
         return new UserDB(
+                user.getID(),
                 user.getEmailAddress().toString(),
                 user.getPassword(),
                 user.getFirstName(),

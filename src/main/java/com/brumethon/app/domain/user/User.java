@@ -1,5 +1,6 @@
 package com.brumethon.app.domain.user;
 
+import com.brumethon.app.domain.address.Address;
 import com.brumethon.kernel.Entity;
 import com.brumethon.kernel.email.EmailAddress;
 
@@ -13,12 +14,15 @@ public class User extends Entity<Integer> {
 
     private final EmailAddress emailAddress;
 
-    public User(Integer id, EmailAddress emailAddress, String firstName, String lastName, String password) {
+    private final Address address;
+
+    public User(Integer id, EmailAddress emailAddress, String firstName, String lastName, String password, Address address) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.emailAddress = emailAddress;
+        this.address = address;
     }
 
     public EmailAddress getEmailAddress() {
@@ -35,5 +39,9 @@ public class User extends Entity<Integer> {
 
     public String getPassword() {
         return password;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 }

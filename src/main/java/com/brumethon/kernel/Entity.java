@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public abstract class Entity <T>{
 
-    protected final T id;
+    protected T id;
 
     public Entity(T id) {
         this.id = id;
@@ -12,6 +12,10 @@ public abstract class Entity <T>{
 
     public T getID() {
         return id;
+    }
+
+    public void setId(T id) {
+        this.id = id;
     }
 
     @Override

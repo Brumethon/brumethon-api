@@ -4,7 +4,7 @@ import javax.validation.constraints.NotBlank;
 
 public class UserConnectionDTO {
     @NotBlank
-    private String email;
+    public String email;
     @NotBlank
-    private String password;
+    public String password;
 }

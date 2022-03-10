@@ -3,6 +3,7 @@ package com.brumethon.app.infrastructure.repository;
 import com.brumethon.app.domain.session.Session;
 import com.brumethon.app.infrastructure.database.session.SessionDB;
 import com.brumethon.app.infrastructure.database.session.SessionDBRepository;
+import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.kernel.Repository;
 
 import java.util.ArrayList;
@@ -54,5 +55,9 @@ public class InDBSessionRepository implements Repository<Session, String> {
         dbRepository.findAll().forEach(sessionDB -> list.add( sessionDB.toSession()));
 
         return list;
+    }
+
+    public void removeAllForUserID(UserDB id) {
+        dbRepository.deleteAllByUserID(id);
     }
 }

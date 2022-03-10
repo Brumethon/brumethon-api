@@ -13,10 +13,7 @@ import com.byteowls.jopencage.model.JOpenCageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -25,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
@@ -71,7 +68,7 @@ public class UserController {
         JOpenCageLatLng firstResultLatLng = response.getFirstPosition();
 
         this.inDBUserRepository.add(new User(
-                -1,
+                -1L,
                 new EmailAddress(createUserDTO.email),
                 createUserDTO.firstname,
                 createUserDTO.lastname,

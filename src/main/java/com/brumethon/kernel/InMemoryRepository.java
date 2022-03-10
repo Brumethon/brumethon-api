@@ -25,8 +25,9 @@ public abstract class InMemoryRepository<V extends Entity<K>, K> implements Repo
     }
 
     @Override
-    public void add(V value) {
+    public K add(V value) {
         list.add(value);
+        return value.id;
     }
 
     @Override

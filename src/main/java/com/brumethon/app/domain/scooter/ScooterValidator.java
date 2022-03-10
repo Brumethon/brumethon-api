@@ -21,7 +21,7 @@ public class ScooterValidator implements Validator<Scooter> {
             throw new IllegalArgumentException("User to validate is null");
         }
 
-        if(scooter.getSerialID() == null || scooter.getSerialID().isEmpty()){
+        if(scooter.getSerialNumber() == null || scooter.getSerialNumber().isEmpty()){
             throw new InvalidScooterException("scooter serial ID can not be empty");
         }
 

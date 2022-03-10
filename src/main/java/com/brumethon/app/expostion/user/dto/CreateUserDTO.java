@@ -1,8 +1,9 @@
 package com.brumethon.app.expostion.user.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-public class UserDTO {
+public class CreateUserDTO {
 
     @NotBlank
     public String email;
@@ -11,5 +12,7 @@ public class UserDTO {
     @NotBlank
     public String firstname;
     @NotBlank
-    public String Address;
+    public String password;
+    @NotNull
+    public CreateAddressDTO address;
 }

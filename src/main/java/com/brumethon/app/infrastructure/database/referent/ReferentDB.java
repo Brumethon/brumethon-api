@@ -1,27 +1,28 @@
 package com.brumethon.app.infrastructure.database.referent;
 
-import com.brumethon.app.infrastructure.database.problems.Categories;
-import com.brumethon.app.infrastructure.database.user.User;
+import com.brumethon.app.infrastructure.database.problems.CategoriesDB;
+import com.brumethon.app.infrastructure.database.user.UserDB;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@Table(name = "referent")
 @Entity
-public class Referent {
+public class ReferentDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(fetch = FetchType.LAZY)
-    private User user;
+    private UserDB userDB;
     private boolean isOffline;
     @ManyToMany(fetch = FetchType.LAZY)
-    Set<Categories> categories;
+    Set<CategoriesDB> categories;
 
-    public Referent() {
+    public ReferentDB() {
     }
 
-    public Referent(User user, boolean isOffline) {
-        this.user = user;
+    public ReferentDB(UserDB userDB, boolean isOffline) {
+        this.userDB = userDB;
         this.isOffline = isOffline;
     }
 }

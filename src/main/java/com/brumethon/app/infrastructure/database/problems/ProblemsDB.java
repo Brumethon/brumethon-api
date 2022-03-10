@@ -1,41 +1,42 @@
 package com.brumethon.app.infrastructure.database.problems;
 
-import com.brumethon.app.infrastructure.database.referent.Referent;
-import com.brumethon.app.infrastructure.database.scooter.Scooter;
+import com.brumethon.app.infrastructure.database.referent.ReferentDB;
+import com.brumethon.app.infrastructure.database.scooter.ScooterDB;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Table(name = "problems")
 @Entity
-public class Problems {
+public class ProblemsDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate date;
     @OneToOne(fetch = FetchType.LAZY)
-    private Scooter scooter;
+    private ScooterDB scooterDB;
     @OneToOne(fetch = FetchType.LAZY)
-    private Categories categories;
+    private CategoriesDB categoriesDB;
     @OneToOne(fetch = FetchType.LAZY)
-    private ProblemStatus status;
+    private ProblemStatusDB status;
     private String name;
     private String description;
     @OneToOne(fetch = FetchType.LAZY)
-    private Referent referent;
+    private ReferentDB referentDB;
     private Double latitude;
     private Double longitude;
 
-    public Problems() {
+    public ProblemsDB() {
     }
 
-    public Problems(LocalDate date, Scooter scooter, Categories categories, ProblemStatus status, String name, String description, Referent referent, Double latitude, Double longitude) {
+    public ProblemsDB(LocalDate date, ScooterDB scooterDB, CategoriesDB categoriesDB, ProblemStatusDB status, String name, String description, ReferentDB referentDB, Double latitude, Double longitude) {
         this.date = date;
-        this.scooter = scooter;
-        this.categories = categories;
+        this.scooterDB = scooterDB;
+        this.categoriesDB = categoriesDB;
         this.status = status;
         this.name = name;
         this.description = description;
-        this.referent = referent;
+        this.referentDB = referentDB;
         this.latitude = latitude;
         this.longitude = longitude;
     }

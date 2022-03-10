@@ -4,7 +4,9 @@ import com.brumethon.app.domain.scootermodel.ScooterModel;
 import com.brumethon.app.domain.scootermodel.ScooterModelRepository;
 import com.brumethon.kernel.SimpleService;
 import com.brumethon.kernel.Validator;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ScooterModelService extends SimpleService<ScooterModelRepository, ScooterModel, Long> {
 
     public ScooterModelService(ScooterModelRepository repository, Validator<ScooterModel> validator) {

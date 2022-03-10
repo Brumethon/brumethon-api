@@ -43,12 +43,11 @@ public class UserController {
     public List<UserDTO> getUsers() {
         return inDBUserRepository.getAll().stream()
                 .map(user -> {
-                    UserDTO userDTO = new UserDTO();
-                    userDTO.Address = user.getAddress().toString();
-                    userDTO.email = user.getEmailAddress().toString();
-                    userDTO.firstname = user.getFirstName();
-                    userDTO.lastname = user.getLastName();
-                    return userDTO;
+                    return new UserDTO(
+                        user.getEmailAddress().toString(),
+                        user.getLastName(),
+                        user.getFirstName(),
+                        user.getAddress().toString());
                 }).collect(Collectors.toList());
     }
 

@@ -11,6 +11,8 @@ import com.byteowls.jopencage.model.JOpenCageForwardRequest;
 import com.byteowls.jopencage.model.JOpenCageLatLng;
 import com.byteowls.jopencage.model.JOpenCageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,20 +30,12 @@ public class UserController {
     @Autowired
     private final InDBUserRepository inDBUserRepository;
 
-    private Properties appProps;
+    @Value("${open_cages.token}")
+    private String token;
+
 
     public UserController(InDBUserRepository inDBUserRepository) {
         this.inDBUserRepository = inDBUserRepository;
-
-        String rootPath = getClass().getClassLoader().getResource("").getPath();
-        String appConfigPath = rootPath + "application.properties";
-
-        appProps = new Properties();
-        try {
-            appProps.load(new FileInputStream(appConfigPath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @GetMapping(value = "/users")
@@ -57,7 +51,7 @@ public class UserController {
 
     @PostMapping(value = "/users")
     public void addUser(@RequestBody @Valid CreateUserDTO createUserDTO) {
-        JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder(appProps.getProperty("open_cages.token"));
+        JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder(token);
         JOpenCageForwardRequest request = new JOpenCageForwardRequest(
                 createUserDTO.address.number + " " +
                         createUserDTO.address.street + ", " +

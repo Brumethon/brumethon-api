@@ -13,5 +13,4 @@ public class UserDTO {
     @NotBlank
     private String Address;
 
-
 }

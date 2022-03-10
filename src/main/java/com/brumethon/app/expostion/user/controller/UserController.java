@@ -71,7 +71,7 @@ public class UserController {
         JOpenCageLatLng firstResultLatLng = response.getFirstPosition();
 
         this.inDBUserRepository.add(new User(
-                -1,
+                -1L,
                 new EmailAddress(createUserDTO.email),
                 createUserDTO.firstname,
                 createUserDTO.lastname,

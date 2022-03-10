@@ -9,12 +9,12 @@ import com.brumethon.kernel.email.EmailAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-class InMemoryUserRepositoryTest extends InMemoryRepositoryTest<User, Long> {
+class InMemoryUserDBRepositoryTest extends InMemoryRepositoryTest<User, Long> {
 
 
     static Address defaultValidAddress = new Address(1L, "", "", "", "", "", 0.0, 0.0);
 
-    public InMemoryUserRepositoryTest() {
+    public InMemoryUserDBRepositoryTest() {
         super( new User(1L, new EmailAddress("test@test.com"), "bob", "bob", "p", defaultValidAddress),
                 new User(2L, new EmailAddress(""), "bob", "bob", "p", defaultValidAddress));
     }

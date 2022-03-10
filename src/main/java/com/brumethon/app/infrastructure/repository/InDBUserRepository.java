@@ -3,6 +3,7 @@ package com.brumethon.app.infrastructure.repository;
 import com.brumethon.app.domain.address.Address;
 import com.brumethon.app.domain.address.AddressRepository;
 import com.brumethon.app.domain.user.User;
+import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.app.infrastructure.database.user.UserDBRepository;
 import com.brumethon.kernel.Repository;
@@ -30,9 +31,13 @@ public class InDBUserRepository implements Repository<User, Long> {
     }
 
     @Override
-    public void add(User value) {
-        addressRepository.add(value.getAddress());
-        dbRepository.save(UserDB.of(value));
+    public Long add(User value) {
+        Long addressId = addressRepository.add(value.getAddress());
+        Address address = addressRepository.get(addressId).orElseThrow();
+        UserDB userDB = UserDB.of(value);
+        userDB.setAddressDB(AddressDB.of(address));
+        userDB = dbRepository.save(userDB);
+        return userDB.getId();
     }
 
     @Override

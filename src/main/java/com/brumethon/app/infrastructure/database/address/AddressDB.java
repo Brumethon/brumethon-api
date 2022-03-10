@@ -3,6 +3,7 @@ package com.brumethon.app.infrastructure.database.address;
 import com.brumethon.app.domain.address.Address;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Table(name = "address")
 @Entity
@@ -31,8 +32,20 @@ public class AddressDB {
         this.longitude = longitude;
     }
 
+    protected AddressDB(Long id, String city, String street, String number, String country, String postalCode, Double latitude, Double longitude) {
+        this.id = id;
+        this.city = city;
+        this.street = street;
+        this.number = number;
+        this.country = country;
+        this.postalCode = postalCode;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public static AddressDB of(Address address) {
         return new AddressDB(
+                address.getID(),
                 address.getCity(),
                 address.getStreet(),
                 address.getNumber(),
@@ -72,5 +85,17 @@ public class AddressDB {
 
     public Double getLongitude() {
         return longitude;
+    }
+
+    public Address toAddress() {
+        return new Address(
+                this.id,
+                this.city,
+                this.street,
+                this.number,
+                this.country,
+                this.postalCode,
+                this.latitude,
+                this.longitude);
     }
 }

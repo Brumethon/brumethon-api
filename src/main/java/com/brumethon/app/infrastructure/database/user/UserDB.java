@@ -19,7 +19,7 @@ public class UserDB {
     private String firstName;
     private String lastName;
     private LocalDate registerDate;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @OneToOne(fetch = FetchType.LAZY)
     private AddressDB addressDB;
     @ManyToMany
     private Set<RoleDB> roleDB;
@@ -76,5 +76,9 @@ public class UserDB {
 
     public Set<RoleDB> getRoleDB() {
         return roleDB;
+    }
+
+    public void setAddressDB(AddressDB addressDB) {
+        this.addressDB = addressDB;
     }
 }

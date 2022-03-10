@@ -18,13 +18,14 @@ public class InDBAddressRepository implements AddressRepository {
 
     @Override
     public Optional<Address> get(Long key) {
-        return Optional.empty();
+        return Optional.of(dbRepository.findById(key).orElseThrow().toAddress());
     }
 
     @Override
-    public void add(Address value) {
+    public Long add(Address value) {
         AddressDB addressDB = dbRepository.save(AddressDB.of(value));
         value.setId(addressDB.getId());
+        return addressDB.getId();
     }
 
     @Override

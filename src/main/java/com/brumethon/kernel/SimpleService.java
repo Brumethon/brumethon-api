@@ -1,17 +1,22 @@
 package com.brumethon.kernel;
 
 import com.brumethon.kernel.exception.SimpleServiceException;
+import com.brumethon.kernel.exception.SimpleServiceObjectAlreadyException;
+import com.brumethon.kernel.exception.SimpleServiceObjectNotFoundException;
 
 import java.util.List;
 
 public abstract class SimpleService<R extends Repository<V, K> , V extends Entity<K>, K > {
 
+
     protected final R repository;
     protected final Validator<V> validator;
+    protected final String serviceObjectName;
 
-    public SimpleService(R repository, Validator<V> validator) {
+    public SimpleService(R repository, Validator<V> validator, String serviceObjectName) {
         this.repository = repository;
         this.validator = validator;
+        this.serviceObjectName = serviceObjectName;
     }
 
     public V get(K key) {
@@ -44,7 +49,11 @@ public abstract class SimpleService<R extends Repository<V, K> , V extends Entit
         return repository.getAll();
     }
 
-    public abstract SimpleServiceException getExceptionWhenObjectNotFound(K key);
+    public SimpleServiceObjectNotFoundException getExceptionWhenObjectNotFound(K key){
+        return new SimpleServiceObjectNotFoundException(serviceObjectName, key.toString());
+    }
 
-    public abstract SimpleServiceException getExceptionWhenObjectAlreadyPresent(K key);
+    public SimpleServiceException getExceptionWhenObjectAlreadyPresent(K key){
+        return new SimpleServiceObjectAlreadyException(serviceObjectName, key.toString());
+    }
 }

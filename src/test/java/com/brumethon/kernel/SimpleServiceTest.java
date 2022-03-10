@@ -1,5 +1,7 @@
 package com.brumethon.kernel;
 
+import com.brumethon.kernel.exception.SimpleServiceObjectAlreadyException;
+import com.brumethon.kernel.exception.SimpleServiceObjectNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,11 +21,17 @@ public abstract class SimpleServiceTest<R extends Repository<V, K>, V extends En
     private final Class<? extends Throwable> exceptionClassWhenObjectNotFound;
     private final Class<? extends Throwable> exceptionClassWhenObjectAlreadyPresent;
 
-    public SimpleServiceTest(V value1, V value2, Class<? extends Throwable> exceptionClassWhenObjectNotFound, Class<? extends Throwable> exceptionClassWhenObjectAlreadyPresent) {
+    public SimpleServiceTest(V value1, V value2,
+                             Class<? extends Throwable> exceptionClassWhenObjectNotFound,
+                             Class<? extends Throwable> exceptionClassWhenObjectAlreadyPresent) {
         this.value1 = value1;
         this.value2 = value2;
         this.exceptionClassWhenObjectNotFound = exceptionClassWhenObjectNotFound;
         this.exceptionClassWhenObjectAlreadyPresent = exceptionClassWhenObjectAlreadyPresent;
+    }
+
+    public SimpleServiceTest(V value1, V value2) {
+        this(value1, value2, SimpleServiceObjectNotFoundException.class, SimpleServiceObjectAlreadyException.class);
     }
 
     @BeforeEach
@@ -45,7 +53,7 @@ public abstract class SimpleServiceTest<R extends Repository<V, K>, V extends En
 
 
     @Test
-    void should_add_new_skill_if_not_already_present() {
+    void should_add_new_object_if_not_already_present() {
         List<V> expected = List.of(value1);
 
         Assertions.assertDoesNotThrow(() -> service.add(value1));
@@ -53,7 +61,7 @@ public abstract class SimpleServiceTest<R extends Repository<V, K>, V extends En
     }
 
     @Test
-    void should_not_add_new_skill_if_already_present() {
+    void should_not_add_new_object_if_already_present() {
         List<V> expected = List.of(value1);
 
         Assertions.assertDoesNotThrow(() -> service.add(value1));
@@ -62,7 +70,7 @@ public abstract class SimpleServiceTest<R extends Repository<V, K>, V extends En
     }
 
     @Test
-    void should_remove_skill_if_present() {
+    void should_remove_object_if_present() {
         List<V> expected = List.of(value1);
 
         repository = getNewRepository(new ArrayList<>(List.of(value1, value2)));
@@ -73,7 +81,7 @@ public abstract class SimpleServiceTest<R extends Repository<V, K>, V extends En
     }
 
     @Test
-    void should_not_remove_skill_if_not_present() {
+    void should_not_remove_object_if_not_present() {
         List<V> expected = List.of(value1);
 
         repository = getNewRepository(new ArrayList<>(List.of(value1)));
@@ -84,7 +92,7 @@ public abstract class SimpleServiceTest<R extends Repository<V, K>, V extends En
     }
 
     @Test
-    void should_get_skill_if_present() {
+    void should_get_object_if_present() {
         repository = getNewRepository(new ArrayList<>(List.of(value1)));
         service = getNewService(repository, validator);
 
@@ -92,7 +100,7 @@ public abstract class SimpleServiceTest<R extends Repository<V, K>, V extends En
     }
 
     @Test
-    void should_not_get_skill_if_not_present() {
+    void should_not_get_object_if_not_present() {
         repository = getNewRepository(new ArrayList<>(List.of(value1)));
         service = getNewService(repository, validator);
 

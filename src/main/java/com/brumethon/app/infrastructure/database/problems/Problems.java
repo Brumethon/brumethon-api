@@ -6,6 +6,7 @@ import com.brumethon.app.infrastructure.database.scooter.Scooter;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Table(schema = "problems")
 @Entity
 public class Problems {
     @Id

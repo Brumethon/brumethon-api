@@ -5,8 +5,10 @@ import com.brumethon.app.infrastructure.database.user.User;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.Set;
 
+@Table(schema = "role")
 @Entity
 public class Role {
     @Id

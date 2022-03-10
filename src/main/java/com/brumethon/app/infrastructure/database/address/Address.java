@@ -1,10 +1,8 @@
 package com.brumethon.app.infrastructure.database.address;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Table(schema = "address")
 @Entity
 public class Address {
     @Id

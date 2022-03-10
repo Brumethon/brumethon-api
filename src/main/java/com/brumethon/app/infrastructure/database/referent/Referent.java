@@ -6,6 +6,7 @@ import com.brumethon.app.infrastructure.database.user.User;
 import javax.persistence.*;
 import java.util.Set;
 
+@Table(schema = "referent")
 @Entity
 public class Referent {
     @Id

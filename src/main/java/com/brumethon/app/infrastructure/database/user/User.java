@@ -5,8 +5,10 @@ import com.brumethon.app.infrastructure.database.role.Role;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
+@Table(schema = "user")
 @Entity
 public class User {
     @Id

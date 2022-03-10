@@ -2,19 +2,38 @@ package com.brumethon.app.infrastructure.repository;
 
 import com.brumethon.app.domain.problem.Problem;
 import com.brumethon.app.domain.problem.ProblemRepository;
+import com.brumethon.app.infrastructure.database.problems.ProblemDBRepository;
+import com.brumethon.app.infrastructure.database.problems.ProblemsDB;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class InDBProblemRepository implements ProblemRepository {
+
+    private final ProblemDBRepository dbRepository;
+
+    public InDBProblemRepository(ProblemDBRepository dbRepository) {
+        this.dbRepository = dbRepository;
+    }
+
     @Override
     public Optional<Problem> get(Long key) {
-        return Optional.empty();
+        Optional<ProblemsDB> problemsDB = dbRepository.findById(key);
+
+
+        if(problemsDB.isEmpty()){
+            return Optional.empty();
+        }
+
+        return Optional.of( problemsDB.get().toProblem());
     }
 
     @Override
     public Long add(Problem value) {
-        return null;
+        ProblemsDB problemsDB = dbRepository.save(ProblemsDB.of(value));
+        value.setId(problemsDB.getId());
+        return problemsDB.getId();
     }
 
     @Override
@@ -24,11 +43,14 @@ public class InDBProblemRepository implements ProblemRepository {
 
     @Override
     public boolean remove(Long value) {
-        return false;
+        dbRepository.deleteById(value);
+        return dbRepository.existsById(value);
     }
 
     @Override
     public List<Problem> getAll() {
-        return null;
+        List<Problem> problems = new ArrayList<>();
+        dbRepository.findAll().forEach(problemsDB -> problems.add(problemsDB.toProblem()));
+        return problems;
     }
 }

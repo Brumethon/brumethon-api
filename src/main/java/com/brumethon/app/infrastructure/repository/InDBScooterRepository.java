@@ -4,11 +4,13 @@ import com.brumethon.app.domain.scooter.Scooter;
 import com.brumethon.app.domain.scooter.ScooterRepository;
 import com.brumethon.app.infrastructure.database.scooter.ScooterDB;
 import com.brumethon.app.infrastructure.database.scooter.ScooterDBRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class InDBScooterRepository implements ScooterRepository {
 
     private final ScooterDBRepository dbRepository;

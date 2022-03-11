@@ -1,8 +1,11 @@
 package com.brumethon.app.expostion.user.dto;
 
 import com.brumethon.app.domain.user.User;
+import com.brumethon.app.expostion.role.dto.RoleDTO;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDTO {
 
@@ -17,13 +20,16 @@ public class UserDTO {
     @NotBlank
     public String phoneNumber;
 
+    public List<RoleDTO> roles;
 
-    public UserDTO(String email, String lastname, String firstname, String address, String phoneNumber) {
+
+    public UserDTO(String email, String lastname, String firstname, String address, String phoneNumber, List<RoleDTO> roles) {
         this.email = email;
         this.lastname = lastname;
         this.firstname = firstname;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.roles = roles;
     }
 
     public static UserDTO of(User user) {
@@ -32,6 +38,7 @@ public class UserDTO {
                 user.getLastName(),
                 user.getFirstName(),
                 user.getAddress().toString(),
-                user.getPhoneNumber());
+                user.getPhoneNumber(),
+                user.getAssignedRoles().stream().map(role -> new RoleDTO(role.getID(), role.getName())).collect(Collectors.toList()) );
     }
 }

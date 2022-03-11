@@ -8,8 +8,6 @@ import com.brumethon.kernel.exception.SimpleServiceObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class SessionService extends SimpleService<SessionRepository, Session, String> {

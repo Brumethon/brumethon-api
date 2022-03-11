@@ -2,8 +2,8 @@ package com.brumethon.app.infrastructure.repository;
 
 import com.brumethon.app.domain.problem.Problem;
 import com.brumethon.app.domain.problem.ProblemRepository;
-import com.brumethon.app.infrastructure.database.problems.ProblemsDBRepository;
 import com.brumethon.app.infrastructure.database.problems.ProblemsDB;
+import com.brumethon.app.infrastructure.database.problems.ProblemsDBRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

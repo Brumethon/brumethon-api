@@ -5,20 +5,18 @@ import com.brumethon.app.domain.problem.Problem;
 import com.brumethon.app.domain.problemestatus.ProblemStatus;
 import com.brumethon.app.domain.scooter.Scooter;
 import com.brumethon.app.domain.session.Session;
-import com.brumethon.app.expostion.category.dto.CategoryDTO;
 import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.problem.dto.CreateProblemDTO;
 import com.brumethon.app.expostion.problem.dto.ProblemDTO;
-import com.brumethon.app.expostion.scooter.dto.ScooterDTO;
-import com.brumethon.app.expostion.user.dto.UserDTO;
-import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.app.infrastructure.service.*;
 import com.brumethon.kernel.coordinate.Coordinate;
+import com.brumethon.kernel.exception.SimpleServiceException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -51,52 +49,14 @@ public class ProblemController extends ErrorHandler {
     @GetMapping(value = "/problems")
     public List<ProblemDTO> getAllProblems() {
         return problemService.getAll().stream()
-                .map(problem -> {
-                    UserDTO user = null;
-                    if (problem.getReferent() != null) {
-                        user = UserDTO.of(problem.getReferent());
-                    }
-                    return new ProblemDTO(
-                        problem.getID(),
-                        problem.getName(),
-                        problem.getDescription(),
-                        new ScooterDTO(
-                                problem.getScooter().getID(),
-                                problem.getScooter().getModel().getID(),
-                                problem.getScooter().getSerialNumber()),
-                        problem.getCoordinate().getLatitude(),
-                        problem.getCoordinate().getLongitude(),
-                        problem.getDate(),
-                        UserDTO.of(problem.getScooter().getOwner()),
-                        user,
-                        new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName()));
-                })
+                .map(ProblemDTO::of)
                 .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/problems/{id}")
     public ProblemDTO getProblem(@PathVariable @Valid Long id) {
         Problem problem = problemService.get(id);
-
-        UserDTO user = null;
-        if (problem.getReferent() != null) {
-            user = UserDTO.of(problem.getReferent());
-        }
-
-        return new ProblemDTO(
-                problem.getID(),
-                problem.getName(),
-                problem.getDescription(),
-                new ScooterDTO(
-                        problem.getScooter().getID(),
-                        problem.getScooter().getModel().getID(),
-                        problem.getScooter().getSerialNumber()),
-                problem.getCoordinate().getLatitude(),
-                problem.getCoordinate().getLongitude(),
-                problem.getDate(),
-                UserDTO.of(problem.getScooter().getOwner()),
-                user,
-                new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName()));
+        return ProblemDTO.of(problem);
     }
 
     @PostMapping(value = "/problems")
@@ -121,5 +81,19 @@ public class ProblemController extends ErrorHandler {
     public void putReferentOnProblem(@RequestHeader("uuid") UUID uuid, @PathVariable @Valid Long id) {
         Session userSession = sessionService.get(uuid.toString());
         problemService.putReferentOnProblem(userSession.getUser(),id);
+    }
+
+    @PutMapping(value = "/problems/{id}/status/{statusId}")
+    public void putStatusOnProblem(@RequestHeader("uuid") UUID uuid, @PathVariable @Valid Long id, @PathVariable @Valid Long statusId) {
+        Session userSession = sessionService.get(uuid.toString());
+        Problem problem = problemService.get(id);
+        if (problem.getReferent() == null && !Objects.equals(problem.getReferent().getID(), userSession.getUser().getID())) {
+            throw new SimpleServiceException("Only the referent on the problem can close it");
+        }
+        ProblemStatus problemStatus = problemStatusService.get(statusId);
+        if (problemStatus == null) {
+            throw new SimpleServiceException("Problem status does not exist");
+        }
+        problemService.putProblemStatusOnProblem(problemStatus, id);
     }
 }

@@ -18,7 +18,7 @@ public class Problem extends Entity<Long> {
     private final LocalDate date;
     private final Categories categories;
     private User referent;
-    private final ProblemStatus status;
+    private ProblemStatus status;
 
     public Problem(Long id, String name, String description, Scooter scooter, Coordinate coordinate, LocalDate date, Categories categories, ProblemStatus status) {
         super(id);
@@ -73,6 +73,10 @@ public class Problem extends Entity<Long> {
 
     public User getReferent() {
         return referent;
+    }
+
+    public void setStatus(ProblemStatus status) {
+        this.status = status;
     }
 
     public void setReferent(User referent) {

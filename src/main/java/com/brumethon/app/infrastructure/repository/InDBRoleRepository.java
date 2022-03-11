@@ -45,7 +45,8 @@ public class InDBRoleRepository implements RoleRepository {
 
     @Override
     public boolean remove(Long value) {
-        return false;
+        dbRepository.deleteById(value);
+        return !dbRepository.existsById(value);
     }
 
     @Override

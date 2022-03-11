@@ -23,7 +23,7 @@ public class CategoryController {
     @GetMapping(value = "/categories")
     public List<CategoryDTO> getCategory() {
         return categoriesService.getAll().stream()
-                .map(categories -> new CategoryDTO(categories.getName())).collect(Collectors.toList());
+                .map(categories -> new CategoryDTO(categories.getID(), categories.getName())).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/categories/{id}/users")

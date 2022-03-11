@@ -54,8 +54,8 @@ public class UserController {
 
     @GetMapping(value = "/users/{email}/categories")
     public List<CategoryDTO> getUserCategories(@PathVariable @Valid String email) {
-        User user = userService.getByEmail(new EmailAddress(email));
-        return user.getCategories().stream().map(categories -> new CategoryDTO(categories.getName())).collect(Collectors.toList());
+        User user = userService.getByEmail( new EmailAddress(email) );
+        return user.getCategories().stream().map(categories -> new CategoryDTO(categories.getID(), categories.getName())).collect(Collectors.toList());
     }
 
     @PostMapping(value = "/users/{email}/categories/{id}")

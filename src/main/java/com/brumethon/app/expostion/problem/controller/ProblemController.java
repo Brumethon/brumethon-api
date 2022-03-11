@@ -55,7 +55,7 @@ public class ProblemController {
                         problem.getCoordinate().getLatitude(),
                         problem.getCoordinate().getLongitude(),
                         problem.getDate(),
-                        new CategoryDTO(problem.getCategories().getName())))
+                        new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName())))
                 .collect(Collectors.toList());
     }
 
@@ -73,7 +73,7 @@ public class ProblemController {
                 problem.getCoordinate().getLatitude(),
                 problem.getCoordinate().getLongitude(),
                 problem.getDate(),
-                new CategoryDTO(problem.getCategories().getName()));
+                new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName()));
     }
 
     @PostMapping(value = "/problems")

@@ -4,6 +4,8 @@ import com.brumethon.app.domain.user.User;
 import com.brumethon.app.domain.user.UserRepository;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDBRepository;
+import com.brumethon.app.infrastructure.database.role.RoleDB;
+import com.brumethon.app.infrastructure.database.role.RoleDBRepository;
 import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.app.infrastructure.database.user.UserDBRepository;
 import com.brumethon.kernel.email.EmailAddress;
@@ -20,9 +22,12 @@ public class InDBUserRepository implements UserRepository {
 
     private final CategoriesDBRepository categoriesDBRepository;
 
-    public InDBUserRepository(UserDBRepository dbRepository, CategoriesDBRepository categoriesDBRepository) {
+    private final RoleDBRepository roleDBRepository;
+
+    public InDBUserRepository(UserDBRepository dbRepository, CategoriesDBRepository categoriesDBRepository, RoleDBRepository roleDBRepository) {
         this.dbRepository = dbRepository;
         this.categoriesDBRepository = categoriesDBRepository;
+        this.roleDBRepository = roleDBRepository;
     }
 
     public User getByEmail(String email) {
@@ -91,6 +96,21 @@ public class InDBUserRepository implements UserRepository {
 
     @Override
     public boolean addRoleToUser(EmailAddress emailAddress, Long roleID) {
-        return false;
+        Optional<UserDB> userDB = dbRepository.getUserDBByMail(emailAddress.toString());
+
+        if(userDB.isEmpty()){
+            return false;
+        }
+
+        Optional<RoleDB> roleDB =  roleDBRepository.findById(roleID);
+
+        if(roleDB.isEmpty()){
+            return false;
+        }
+
+        userDB.get().getRoleDB().add(roleDB.get());
+
+        UserDB userDB1 = dbRepository.save(userDB.get());
+        return true;
     }
 }

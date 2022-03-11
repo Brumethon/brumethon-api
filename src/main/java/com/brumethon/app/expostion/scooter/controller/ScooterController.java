@@ -42,9 +42,9 @@ public class ScooterController extends ErrorHandler {
                 .collect(Collectors.toList());
     }
 
-    @PutMapping(value = "/scooters")
+    @PostMapping(value = "/scooters")
     public void putScooters(@RequestHeader("uuid") UUID uuid, @RequestBody @Valid ScooterDTO scooterDTO) {
-        Session userSession = sessionService.getByUserID(uuid);
+        Session userSession = sessionService.get(uuid.toString());
         ScooterModel scooterModel = scooterModelService.get(scooterDTO.scooterModelID);
         scooterService.add(new Scooter(-1L, scooterDTO.serialNumber, scooterModel, userSession.getUser(), LocalDate.now()));
     }

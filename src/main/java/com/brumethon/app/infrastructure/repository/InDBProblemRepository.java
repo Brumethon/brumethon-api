@@ -40,7 +40,8 @@ public class InDBProblemRepository implements ProblemRepository {
 
     @Override
     public boolean update(Problem value) {
-        return false;
+        dbRepository.save(ProblemsDB.of(value));
+        return true;
     }
 
     @Override

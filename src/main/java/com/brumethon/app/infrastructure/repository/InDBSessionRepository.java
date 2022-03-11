@@ -61,25 +61,15 @@ public class InDBSessionRepository implements SessionRepository {
         return list;
     }
 
-    public void removeAllForUserID(UserDB id) {
-        dbRepository.deleteAllByUserID(id);
-    }
-
-    public Session getByUser(final UUID uuid) {
-        SessionDB sessionDB = dbRepository.findById(uuid.toString()).orElseThrow();
-        if (isExpired(sessionDB.getExpirationDate())) {
-            removeAllForUserID(sessionDB.getUser());
-            throw new RuntimeException();
-        }
-        return sessionDB.toSession();
-    }
-
-    private boolean isExpired(LocalDateTime dateTime) {
-        return LocalDateTime.now().isAfter(dateTime);
+    @Override
+    public void removeAllForUserID(Long userID) {
+        dbRepository.deleteAllByUserID(userID);
     }
 
     @Override
-    public Optional<Session> getByUserID(UUID id) {
-        return Optional.empty();
+    public Optional<Session> get(UUID id) {
+        SessionDB sessionDB = dbRepository.findById(id.toString()).orElseThrow();
+
+        return Optional.of(sessionDB.toSession());
     }
 }

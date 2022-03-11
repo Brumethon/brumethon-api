@@ -3,6 +3,7 @@ package com.brumethon.app.domain.problem;
 import com.brumethon.app.domain.categories.Categories;
 import com.brumethon.app.domain.problemestatus.ProblemStatus;
 import com.brumethon.app.domain.scooter.Scooter;
+import com.brumethon.app.domain.user.User;
 import com.brumethon.kernel.Entity;
 import com.brumethon.kernel.coordinate.Coordinate;
 
@@ -16,6 +17,7 @@ public class Problem extends Entity<Long> {
     private final Coordinate coordinate;
     private final LocalDate date;
     private final Categories categories;
+    private User referent;
     private final ProblemStatus status;
 
     public Problem(Long id, String name, String description, Scooter scooter, Coordinate coordinate, LocalDate date, Categories categories, ProblemStatus status) {
@@ -27,6 +29,18 @@ public class Problem extends Entity<Long> {
         this.date = date;
         this.categories = categories;
         this.status = status;
+    }
+
+    public Problem(User referent, Long id, String name, String description, Scooter scooter, Coordinate coordinate, LocalDate date, Categories categories, ProblemStatus status) {
+        super(id);
+        this.name = name;
+        this.description = description;
+        this.scooter = scooter;
+        this.coordinate = coordinate;
+        this.date = date;
+        this.categories = categories;
+        this.status = status;
+        this.referent = referent;
     }
 
     public String getName() {
@@ -55,5 +69,13 @@ public class Problem extends Entity<Long> {
 
     public Scooter getScooter() {
         return scooter;
+    }
+
+    public User getReferent() {
+        return referent;
+    }
+
+    public void setReferent(User referent) {
+        this.referent = referent;
     }
 }

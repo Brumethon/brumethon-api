@@ -7,7 +7,6 @@ import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
 import com.brumethon.app.infrastructure.database.role.RoleDB;
 import com.brumethon.kernel.email.EmailAddress;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,7 +21,7 @@ public class UserDB {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long user_id;
-
+    @Column(unique = true)
     private String mail;
     private String password;
     private String firstName;

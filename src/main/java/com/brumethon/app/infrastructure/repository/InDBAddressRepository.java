@@ -24,8 +24,8 @@ public class InDBAddressRepository implements AddressRepository {
     @Override
     public Long add(Address value) {
         AddressDB addressDB = dbRepository.save(AddressDB.of(value));
-        value.setId(addressDB.getId());
-        return addressDB.getId();
+        value.setId(addressDB.getAddressID());
+        return addressDB.getAddressID();
     }
 
     @Override

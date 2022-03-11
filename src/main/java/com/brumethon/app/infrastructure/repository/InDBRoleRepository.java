@@ -34,8 +34,8 @@ public class InDBRoleRepository implements RoleRepository {
     @Override
     public Long add(Role value) {
         RoleDB roleDB = dbRepository.save(RoleDB.of(value));
-        value.setId(roleDB.getRole_id());
-        return roleDB.getRole_id();
+        value.setId(roleDB.getRoleID());
+        return roleDB.getRoleID();
     }
 
     @Override

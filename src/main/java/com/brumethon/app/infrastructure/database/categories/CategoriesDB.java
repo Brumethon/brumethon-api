@@ -13,7 +13,7 @@ public class CategoriesDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categories_id")
-    private Long categories_id;
+    private Long categoriesID;
 
     private String name;
 
@@ -26,13 +26,13 @@ public class CategoriesDB {
     public CategoriesDB() {
     }
 
-    public CategoriesDB(Long categories_id, String name) {
-        this.categories_id = categories_id;
+    public CategoriesDB(Long categoriesID, String name) {
+        this.categoriesID = categoriesID;
         this.name = name;
     }
 
-    public Long getCategories_id() {
-        return categories_id;
+    public Long getCategoriesID() {
+        return categoriesID;
     }
 
     public String getName() {
@@ -44,7 +44,7 @@ public class CategoriesDB {
     }
 
     public Categories toCategories(){
-        return new Categories(categories_id, name);
+        return new Categories(categoriesID, name);
     }
 
     public List<UserDB> getAssignedUser() {

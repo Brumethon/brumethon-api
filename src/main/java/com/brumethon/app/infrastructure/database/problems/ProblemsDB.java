@@ -14,50 +14,60 @@ import java.time.LocalDate;
 public class ProblemsDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "problem_id")
+    private Long problemID;
+
     private LocalDate date;
+
     @OneToOne(fetch = FetchType.LAZY)
-    private ScooterDB scooterDB;
+    private ScooterDB scooter;
+
     @OneToOne(fetch = FetchType.LAZY)
-    private CategoriesDB categoriesDB;
+    private CategoriesDB categories;
+
     @OneToOne(fetch = FetchType.LAZY)
     private ProblemStatusDB status;
+
     private String name;
+
     private String description;
+
     @OneToOne(fetch = FetchType.LAZY)
-    private UserDB referentUser;
+    private UserDB referent;
+
     private Double latitude;
+
     private Double longitude;
 
     public ProblemsDB() {
     }
 
-    public ProblemsDB(LocalDate date, ScooterDB scooterDB, CategoriesDB categoriesDB, ProblemStatusDB status, String name, String description, UserDB referentUser, Double latitude, Double longitude) {
+    public ProblemsDB(LocalDate date, ScooterDB scooter, CategoriesDB categories, ProblemStatusDB status, String name, String description, UserDB referent, Double latitude, Double longitude) {
         this.date = date;
-        this.scooterDB = scooterDB;
-        this.categoriesDB = categoriesDB;
+        this.scooter = scooter;
+        this.categories = categories;
         this.status = status;
         this.name = name;
         this.description = description;
-        this.referentUser = referentUser;
+        this.referent = referent;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
     public Long getId() {
-        return id;
+        return problemID;
     }
 
     public LocalDate getDate() {
         return date;
     }
 
-    public ScooterDB getScooterDB() {
-        return scooterDB;
+    public ScooterDB getScooter() {
+        return scooter;
     }
 
-    public CategoriesDB getCategoriesDB() {
-        return categoriesDB;
+    public CategoriesDB getCategories() {
+        return categories;
     }
 
     public ProblemStatusDB getStatus() {
@@ -72,8 +82,8 @@ public class ProblemsDB {
         return description;
     }
 
-    public UserDB getReferentUser() {
-        return referentUser;
+    public UserDB getReferent() {
+        return referent;
     }
 
     public Double getLatitude() {
@@ -97,10 +107,9 @@ public class ProblemsDB {
                 problem.getCoordinate().getLongitude());
     }
 
-    public Problem toProblem(){
+    public Problem toProblem() {
         return null;
     }
-
 
 
 }

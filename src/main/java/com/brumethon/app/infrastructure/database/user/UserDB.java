@@ -7,7 +7,6 @@ import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
 import com.brumethon.app.infrastructure.database.role.RoleDB;
 import com.brumethon.kernel.email.EmailAddress;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -37,7 +36,7 @@ public class UserDB {
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private List<RoleDB> roleDB;
+    private List<RoleDB> roles;
 
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -55,7 +54,7 @@ public class UserDB {
                   String phoneNumber,
                   LocalDate registerDate,
                   AddressDB address,
-                  List<RoleDB> roleDB, List<CategoriesDB> categories) {
+                  List<RoleDB> roles, List<CategoriesDB> categories) {
         this.user_id = user_id;
         this.mail = mail;
         this.password = password;
@@ -64,7 +63,7 @@ public class UserDB {
         this.phoneNumber = phoneNumber;
         this.registerDate = registerDate;
         this.address = address;
-        this.roleDB = roleDB;
+        this.roles = roles;
         this.categories = categories;
     }
 
@@ -99,8 +98,8 @@ public class UserDB {
                 this.getPhoneNumber(),
                 new EmailAddress(this.getMail()),
                 this.getAddress().toAddress(),
-                categories.stream().map(categoriesDB -> new Categories(categoriesDB.getCategories_id(), categoriesDB.getName())).collect(Collectors.toList()),
-                roleDB.stream().map(roleDB -> new Role(roleDB.getRole_id(), roleDB.getName())).collect(Collectors.toList()));
+                categories.stream().map(categoriesDB -> new Categories(categoriesDB.getCategoriesID(), categoriesDB.getName())).collect(Collectors.toList()),
+                roles.stream().map(roleDB -> new Role(roleDB.getRoleID(), roleDB.getName())).collect(Collectors.toList()));
     }
 
     public Long getUser_id() {
@@ -135,8 +134,8 @@ public class UserDB {
         return address;
     }
 
-    public List<RoleDB> getRoleDB() {
-        return roleDB;
+    public List<RoleDB> getRoles() {
+        return roles;
     }
 
     public void setAddress(AddressDB addressDB) {

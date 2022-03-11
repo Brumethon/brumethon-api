@@ -108,7 +108,7 @@ public class InDBUserRepository implements UserRepository {
             return false;
         }
 
-        userDB.get().getRoleDB().add(roleDB.get());
+        userDB.get().getRoles().add(roleDB.get());
 
         UserDB userDB1 = dbRepository.save(userDB.get());
         return true;

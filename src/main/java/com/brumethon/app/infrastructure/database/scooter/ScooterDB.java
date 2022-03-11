@@ -12,46 +12,49 @@ import java.time.LocalDate;
 public class ScooterDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "scooter_id")
+    private Long scooterID;
 
     private String serialNumber;
 
     private LocalDate dateOfPurchase;
+
     @OneToOne
-    private ScooterModelDB scooterModelDB;
+    private ScooterModelDB scooterModel;
+
     @OneToOne(fetch = FetchType.LAZY)
-    private UserDB userDB;
+    private UserDB user;
 
     public ScooterDB() {
     }
 
-    public ScooterDB(Long id, String serialNumber, LocalDate dateOfPurchase, ScooterModelDB scooterModelDB, UserDB userDB) {
-        this.id = id;
+    public ScooterDB(Long scooterID, String serialNumber, LocalDate dateOfPurchase, ScooterModelDB scooterModel, UserDB user) {
+        this.scooterID = scooterID;
         this.serialNumber = serialNumber;
         this.dateOfPurchase = dateOfPurchase;
-        this.scooterModelDB = scooterModelDB;
-        this.userDB = userDB;
+        this.scooterModel = scooterModel;
+        this.user = user;
     }
 
-    public ScooterDB(LocalDate dateOfPurchase, ScooterModelDB scooterModelDB) {
+    public ScooterDB(LocalDate dateOfPurchase, ScooterModelDB scooterModel) {
         this.dateOfPurchase = dateOfPurchase;
-        this.scooterModelDB = scooterModelDB;
+        this.scooterModel = scooterModel;
     }
 
-    public Long getId() {
-        return id;
+    public Long getScooterID() {
+        return scooterID;
     }
 
     public LocalDate getDateOfPurchase() {
         return dateOfPurchase;
     }
 
-    public ScooterModelDB getScooterModelDB() {
-        return scooterModelDB;
+    public ScooterModelDB getScooterModel() {
+        return scooterModel;
     }
 
-    public UserDB getUserDB() {
-        return userDB;
+    public UserDB getUser() {
+        return user;
     }
 
     public static ScooterDB of(Scooter scooter) {
@@ -61,8 +64,8 @@ public class ScooterDB {
     }
 
     public Scooter toScooter() {
-        return new Scooter(id, serialNumber,
-                scooterModelDB.toScooterModel(), userDB.toUser(),
+        return new Scooter(scooterID, serialNumber,
+                scooterModel.toScooterModel(), user.toUser(),
                 dateOfPurchase);
     }
 

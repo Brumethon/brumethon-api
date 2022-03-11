@@ -27,7 +27,7 @@ public class ProblemStatusController {
     }
 
     @GetMapping(value = "problemstatus/{status}")
-    public ProblemStatusDTO getProblemStatusByStatus(@PathVariable @Valid String status) {
+    public ProblemStatusDTO getProblemStatusByName(@PathVariable @Valid String status) {
         ProblemStatus problemStatus = problemStatusService.getByName(status);
         return new ProblemStatusDTO(problemStatus.getID(), problemStatus.getName());
     }

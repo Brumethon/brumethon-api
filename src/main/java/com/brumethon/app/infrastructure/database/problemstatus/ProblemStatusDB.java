@@ -10,20 +10,21 @@ public class ProblemStatusDB {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "problem_status_id")
+    private Long problemStatusID;
 
     private String name;
 
     public ProblemStatusDB() {
     }
 
-    public ProblemStatusDB(Long id, String name) {
-        this.id = id;
+    public ProblemStatusDB(Long problemStatusID, String name) {
+        this.problemStatusID = problemStatusID;
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
+    public Long getProblemStatusID() {
+        return problemStatusID;
     }
 
     public String getName() {
@@ -35,6 +36,6 @@ public class ProblemStatusDB {
     }
 
     public ProblemStatus toProblemStatus(){
-        return new ProblemStatus(id, name);
+        return new ProblemStatus(problemStatusID, name);
     }
 }

@@ -5,7 +5,6 @@ import com.brumethon.app.domain.session.SessionRepository;
 import com.brumethon.app.infrastructure.database.session.SessionDB;
 import com.brumethon.app.infrastructure.database.session.SessionDBRepository;
 import com.brumethon.app.infrastructure.database.user.UserDB;
-import com.brumethon.kernel.Repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -69,7 +68,7 @@ public class InDBSessionRepository implements SessionRepository {
     public Session getByUser(final UUID uuid) {
         SessionDB sessionDB = dbRepository.findById(uuid.toString()).orElseThrow();
         if (isExpired(sessionDB.getExpirationDate())) {
-            removeAllForUserID(sessionDB.getUserDB());
+            removeAllForUserID(sessionDB.getUser());
             throw new RuntimeException();
         }
         return sessionDB.toSession();

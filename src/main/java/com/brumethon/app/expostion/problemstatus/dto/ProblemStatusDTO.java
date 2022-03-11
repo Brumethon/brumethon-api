@@ -11,6 +11,10 @@ public class ProblemStatusDTO {
     @NotBlank
     public String name;
 
+    public ProblemStatusDTO() {
+
+    }
+
     public ProblemStatusDTO(Long id, String name) {
         this.id = id;
         this.name = name;

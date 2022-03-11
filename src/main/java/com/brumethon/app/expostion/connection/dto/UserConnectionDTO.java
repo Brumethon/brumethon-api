@@ -7,4 +7,8 @@ public class UserConnectionDTO {
     public String email;
     @NotBlank
     public String password;
+
+    public UserConnectionDTO(){
+
+    }
 }

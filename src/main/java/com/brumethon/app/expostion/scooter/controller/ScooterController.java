@@ -4,9 +4,9 @@ import com.brumethon.app.domain.scooter.Scooter;
 import com.brumethon.app.domain.scootermodel.ScooterModel;
 import com.brumethon.app.domain.session.Session;
 import com.brumethon.app.expostion.scooter.dto.ScooterDTO;
-import com.brumethon.app.infrastructure.repository.InDBScooterModelRepository;
-import com.brumethon.app.infrastructure.repository.InDBScooterRepository;
-import com.brumethon.app.infrastructure.repository.InDBSessionRepository;
+import com.brumethon.app.infrastructure.service.ScooterModelService;
+import com.brumethon.app.infrastructure.service.ScooterService;
+import com.brumethon.app.infrastructure.service.SessionService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 @RestController
 public class ScooterController {
 
-    private final InDBScooterRepository scooterService;
-    private final InDBScooterModelRepository scooterModelService;
-    private final InDBSessionRepository sessionService;
+    private final ScooterService scooterService;
+    private final ScooterModelService scooterModelService;
+    private final SessionService sessionService;
 
-    public ScooterController(InDBScooterRepository scooterService, InDBScooterModelRepository scooterModelService, InDBSessionRepository sessionService) {
+    public ScooterController(ScooterService scooterService, ScooterModelService scooterModelService, SessionService sessionService) {
         this.scooterService = scooterService;
         this.scooterModelService = scooterModelService;
         this.sessionService = sessionService;
@@ -30,7 +30,7 @@ public class ScooterController {
 
     @GetMapping(value = "/scooters/{id}")
     public ScooterDTO getScooter(@PathVariable @Valid long id) {
-        Scooter scooter = scooterService.get(id).orElseThrow();
+        Scooter scooter = scooterService.get(id);
         return new ScooterDTO(scooter.getID(), scooter.getModel().getID(), scooter.getSerialNumber());
     }
 
@@ -43,8 +43,8 @@ public class ScooterController {
 
     @PutMapping(value = "/scooters")
     public void putScooters(@RequestHeader("uuid") UUID uuid, @RequestBody @Valid ScooterDTO scooterDTO) {
-        Session userSession = sessionService.getByUser(uuid);
-        ScooterModel scooterModel = scooterModelService.get(scooterDTO.scooterModelID).orElseThrow();
+        Session userSession = sessionService.getByUserID(uuid);
+        ScooterModel scooterModel = scooterModelService.get(scooterDTO.scooterModelID);
         scooterService.add(new Scooter(-1L, scooterDTO.serialNumber, scooterModel, userSession.getUser(), LocalDate.now()));
     }
 }

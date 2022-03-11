@@ -1,6 +1,7 @@
 package com.brumethon.app.infrastructure.repository;
 
 import com.brumethon.app.domain.session.Session;
+import com.brumethon.app.domain.session.SessionRepository;
 import com.brumethon.app.infrastructure.database.session.SessionDB;
 import com.brumethon.app.infrastructure.database.session.SessionDBRepository;
 import com.brumethon.app.infrastructure.database.user.UserDB;
@@ -13,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @org.springframework.stereotype.Repository
-public class InDBSessionRepository implements Repository<Session, String> {
+public class InDBSessionRepository implements SessionRepository {
 
     private final SessionDBRepository dbRepository;
     private final InDBUserRepository inDBUserRepository;
@@ -76,5 +77,10 @@ public class InDBSessionRepository implements Repository<Session, String> {
 
     private boolean isExpired(LocalDateTime dateTime) {
         return LocalDateTime.now().isAfter(dateTime);
+    }
+
+    @Override
+    public Optional<Session> getByUserID(UUID id) {
+        return Optional.empty();
     }
 }

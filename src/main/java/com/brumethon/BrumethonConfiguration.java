@@ -2,6 +2,8 @@ package com.brumethon;
 
 import com.brumethon.app.domain.address.Address;
 import com.brumethon.app.domain.address.AddressValidator;
+import com.brumethon.app.domain.categories.Categories;
+import com.brumethon.app.domain.categories.CategoriesValidator;
 import com.brumethon.app.domain.role.Role;
 import com.brumethon.app.domain.role.RoleValidator;
 import com.brumethon.app.domain.scooter.Scooter;
@@ -56,5 +58,10 @@ public class BrumethonConfiguration {
     @Bean
     public Validator<Session> getSessionValidator() {
         return new SessionValidator();
+    }
+
+    @Bean
+    public Validator<Categories> getCategoriesValidator() {
+        return new CategoriesValidator();
     }
 }

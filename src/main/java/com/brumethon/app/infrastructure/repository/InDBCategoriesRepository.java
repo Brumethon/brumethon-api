@@ -2,26 +2,29 @@ package com.brumethon.app.infrastructure.repository;
 
 import com.brumethon.app.domain.categories.Categories;
 import com.brumethon.app.domain.categories.CategoriesRepository;
+import com.brumethon.app.domain.user.User;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDBRepository;
+import com.brumethon.app.infrastructure.database.user.UserDB;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class InDBCategoriesRepository implements CategoriesRepository {
 
-    private final CategoriesDBRepository dbRepository;
+    private final CategoriesDBRepository categoriesDBRepository;
 
-    public InDBCategoriesRepository(CategoriesDBRepository dbRepository) {
-        this.dbRepository = dbRepository;
+    public InDBCategoriesRepository(CategoriesDBRepository categoriesDBRepository) {
+        this.categoriesDBRepository = categoriesDBRepository;
     }
 
     @Override
     public Optional<Categories> get(Long key) {
-        Optional<CategoriesDB> categoriesDB = dbRepository.findById(key);
+        Optional<CategoriesDB> categoriesDB = categoriesDBRepository.findById(key);
 
         if (categoriesDB.isEmpty()) {
             return Optional.empty();
@@ -32,7 +35,7 @@ public class InDBCategoriesRepository implements CategoriesRepository {
 
     @Override
     public Long add(Categories value) {
-        CategoriesDB categoriesDB = dbRepository.save(CategoriesDB.of(value));
+        CategoriesDB categoriesDB = categoriesDBRepository.save(CategoriesDB.of(value));
         value.setId(categoriesDB.getCategories_id());
         return categoriesDB.getCategories_id();
     }
@@ -44,14 +47,25 @@ public class InDBCategoriesRepository implements CategoriesRepository {
 
     @Override
     public boolean remove(Long value) {
-        dbRepository.deleteById(value);
-        return dbRepository.existsById(value);
+        categoriesDBRepository.deleteById(value);
+        return categoriesDBRepository.existsById(value);
     }
 
     @Override
     public List<Categories> getAll() {
         List<Categories> result = new ArrayList<>();
-        dbRepository.findAll().forEach(categoriesDB -> result.add(categoriesDB.toCategories()));
+        categoriesDBRepository.findAll().forEach(categoriesDB -> result.add(categoriesDB.toCategories()));
         return result;
+    }
+
+    @Override
+    public List<User> getAllCategoriesUsers(Long id) {
+        Optional<CategoriesDB> categoriesDB = categoriesDBRepository.findById(id);
+
+        if(categoriesDB.isEmpty()){
+            return List.of();
+        }
+
+        return categoriesDB.get().getAssignedUser().stream().map(UserDB::toUser).collect(Collectors.toList());
     }
 }

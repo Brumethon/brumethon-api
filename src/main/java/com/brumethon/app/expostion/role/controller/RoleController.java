@@ -5,6 +5,7 @@ import com.brumethon.app.domain.role.Role;
 import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.role.dto.RoleDTO;
 import com.brumethon.app.infrastructure.service.RoleService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class RoleController extends ErrorHandler {
 

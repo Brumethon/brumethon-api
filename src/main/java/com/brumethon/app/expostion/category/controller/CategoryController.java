@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Handler;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class CategoryController extends ErrorHandler {
 

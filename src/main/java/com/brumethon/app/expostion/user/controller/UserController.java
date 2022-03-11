@@ -4,10 +4,13 @@ import com.brumethon.app.domain.address.Address;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.expostion.category.dto.CategoryDTO;
 import com.brumethon.app.expostion.error.ErrorHandler;
+import com.brumethon.app.expostion.problem.dto.ProblemDTO;
 import com.brumethon.app.expostion.role.dto.RoleDTO;
+import com.brumethon.app.expostion.scooter.dto.ScooterDTO;
 import com.brumethon.app.expostion.user.dto.CreateUserDTO;
 import com.brumethon.app.expostion.user.dto.UserDTO;
 import com.brumethon.app.infrastructure.service.AddressService;
+import com.brumethon.app.infrastructure.service.ProblemService;
 import com.brumethon.app.infrastructure.service.UserService;
 import com.brumethon.kernel.email.EmailAddress;
 import com.byteowls.jopencage.JOpenCageGeocoder;
@@ -29,13 +32,16 @@ public class UserController extends ErrorHandler {
 
     private final AddressService addressService;
 
+    private final ProblemService problemService;
+
     @Value("${open_cages.token}")
     private String token;
 
 
-    public UserController(UserService userService, AddressService addressService) {
+    public UserController(UserService userService, AddressService addressService, ProblemService problemService) {
         this.userService = userService;
         this.addressService = addressService;
+        this.problemService = problemService;
     }
 
     @GetMapping(value = "/users")
@@ -58,14 +64,30 @@ public class UserController extends ErrorHandler {
 
     @GetMapping(value = "/users/{email}/categories")
     public List<CategoryDTO> getUserCategories(@PathVariable @Valid String email) {
-        User user = userService.getByEmail( new EmailAddress(email) );
+        User user = userService.getByEmail(new EmailAddress(email));
         return user.getAssignedCategories().stream().map(categories -> new CategoryDTO(categories.getID(), categories.getName())).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/users/{email}/roles")
     public List<RoleDTO> getUserRoles(@PathVariable @Valid String email) {
-        User user = userService.getByEmail( new EmailAddress(email) );
+        User user = userService.getByEmail(new EmailAddress(email));
         return user.getAssignedRoles().stream().map(role -> new RoleDTO(role.getID(), role.getName())).collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/users/{email}/availableproblems")
+    public List<ProblemDTO> getUserAvailableProblem(@PathVariable @Valid String email) {
+        User user = userService.getByEmail(new EmailAddress(email));
+        return problemService.getAllAvailable(user).stream()
+                .map(problem -> new ProblemDTO(problem.getID(),
+                        problem.getName(),
+                        problem.getDescription(),
+                        new ScooterDTO(problem.getScooter().getID(), problem.getScooter().getModel().getID(), problem.getScooter().getSerialNumber()),
+                        problem.getCoordinate().getLatitude(),
+                        problem.getCoordinate().getLongitude(),
+                        problem.getDate(),
+                        new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName())
+                ))
+                .collect(Collectors.toList());
     }
 
     @PostMapping(value = "/users/{email}/categories/{id}")

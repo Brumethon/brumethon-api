@@ -25,7 +25,6 @@ public class UserService extends SimpleService<UserRepository, User, Long> {
         }
     }
 
-
     public void addRoleToUser(EmailAddress userEmail, Long roleID){
         repository.addCategoryToUser(userEmail, roleID);
     }

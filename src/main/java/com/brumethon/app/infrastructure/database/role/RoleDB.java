@@ -12,23 +12,20 @@ public class RoleDB {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long role_id;
 
     private String name;
-
-    @ManyToMany
-    private Set<UserDB> userDB;
 
     public RoleDB() {
     }
 
-    public RoleDB(Long id, String name) {
-        this.id = id;
+    public RoleDB(Long role_id, String name) {
+        this.role_id = role_id;
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
+    public Long getRole_id() {
+        return role_id;
     }
 
     public String getName() {
@@ -40,6 +37,6 @@ public class RoleDB {
     }
 
     public Role toRole(){
-        return new Role(id, name);
+        return new Role(role_id, name);
     }
 }

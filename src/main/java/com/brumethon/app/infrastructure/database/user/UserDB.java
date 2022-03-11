@@ -1,31 +1,45 @@
 package com.brumethon.app.infrastructure.database.user;
 
+import com.brumethon.app.domain.categories.Categories;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.infrastructure.database.address.AddressDB;
+import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
 import com.brumethon.app.infrastructure.database.role.RoleDB;
 import com.brumethon.kernel.email.EmailAddress;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Table(name = "user")
 @Entity
 public class UserDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
+
     private String mail;
     private String password;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private LocalDate registerDate;
-    @OneToOne(fetch = FetchType.LAZY)
+
+    @OneToOne
     private AddressDB addressDB;
+
     @ManyToMany
     private Set<RoleDB> roleDB;
+
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_categories",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "categories_id") })
+    private List<CategoriesDB> categories;
 
     protected UserDB() {
     }
@@ -66,12 +80,13 @@ public class UserDB {
     public User toUser() {
         return new User(
                 this.getId(),
-                new EmailAddress(this.getMail()),
                 this.getFirstName(),
                 this.getLastName(),
                 this.getPassword(),
                 this.getPhoneNumber(),
-                this.getAddressDB().toAddress());
+                new EmailAddress(this.getMail()),
+                this.getAddressDB().toAddress(),
+                categories.stream().map(categoriesDB -> new Categories(categoriesDB.getCategories_id(), categoriesDB.getName())).collect(Collectors.toList()) );
     }
 
     public Long getId() {
@@ -112,5 +127,9 @@ public class UserDB {
 
     public void setAddressDB(AddressDB addressDB) {
         this.addressDB = addressDB;
+    }
+
+    public List<CategoriesDB> getCategories() {
+        return categories;
     }
 }

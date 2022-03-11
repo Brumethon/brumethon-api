@@ -1,10 +1,8 @@
 package com.brumethon.app.infrastructure.database.categories;
 
 import com.brumethon.app.domain.categories.Categories;
-import com.brumethon.app.infrastructure.database.user.UserDB;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Table(name = "categories")
 @Entity
@@ -12,26 +10,21 @@ public class CategoriesDB {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "categories_id")
+    private Long categories_id;
 
     private String name;
-    @ManyToMany
-    private Set<UserDB> userDBS;
 
     public CategoriesDB() {
     }
 
-    public CategoriesDB(Long id, String name) {
-        this.id = id;
+    public CategoriesDB(Long categories_id, String name) {
+        this.categories_id = categories_id;
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Set<UserDB> getUserDBS() {
-        return userDBS;
+    public Long getCategories_id() {
+        return categories_id;
     }
 
     public String getName() {
@@ -43,6 +36,6 @@ public class CategoriesDB {
     }
 
     public Categories toCategories(){
-        return new Categories(id, name);
+        return new Categories(categories_id, name);
     }
 }

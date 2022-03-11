@@ -4,10 +4,12 @@ import javax.validation.constraints.NotBlank;
 
 public class RoleDTO {
 
+    public long id;
     @NotBlank
     public String name;
 
-    public RoleDTO(String name) {
+    public RoleDTO(long id,String name) {
+        this.id = id;
         this.name = name;
     }
 }

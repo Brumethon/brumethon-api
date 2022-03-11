@@ -1,5 +1,6 @@
 package com.brumethon.app.infrastructure.service;
 
+import com.brumethon.app.domain.categories.Categories;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.domain.user.UserRepository;
 import com.brumethon.kernel.SimpleService;

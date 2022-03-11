@@ -50,4 +50,9 @@ public class Address extends Entity<Long> {
     public Double getLongitude() {
         return longitude;
     }
+
+    @Override
+    public String toString() {
+        return this.number + " " + this.street + ", " + this.postalCode + " " + this.country;
+    }
 }

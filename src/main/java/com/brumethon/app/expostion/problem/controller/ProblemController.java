@@ -10,6 +10,8 @@ import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.problem.dto.CreateProblemDTO;
 import com.brumethon.app.expostion.problem.dto.ProblemDTO;
 import com.brumethon.app.expostion.scooter.dto.ScooterDTO;
+import com.brumethon.app.expostion.user.dto.UserDTO;
+import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.app.infrastructure.service.*;
 import com.brumethon.kernel.coordinate.Coordinate;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +51,12 @@ public class ProblemController extends ErrorHandler {
     @GetMapping(value = "/problems")
     public List<ProblemDTO> getAllProblems() {
         return problemService.getAll().stream()
-                .map(problem -> new ProblemDTO(
+                .map(problem -> {
+                    UserDTO user = null;
+                    if (problem.getReferent() != null) {
+                        user = UserDTO.of(problem.getReferent());
+                    }
+                    return new ProblemDTO(
                         problem.getID(),
                         problem.getName(),
                         problem.getDescription(),
@@ -60,13 +67,22 @@ public class ProblemController extends ErrorHandler {
                         problem.getCoordinate().getLatitude(),
                         problem.getCoordinate().getLongitude(),
                         problem.getDate(),
-                        new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName())))
+                        UserDTO.of(problem.getScooter().getOwner()),
+                        user,
+                        new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName()));
+                })
                 .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/problems/{id}")
     public ProblemDTO getProblem(@PathVariable @Valid Long id) {
         Problem problem = problemService.get(id);
+
+        UserDTO user = null;
+        if (problem.getReferent() != null) {
+            user = UserDTO.of(problem.getReferent());
+        }
+
         return new ProblemDTO(
                 problem.getID(),
                 problem.getName(),
@@ -78,6 +94,8 @@ public class ProblemController extends ErrorHandler {
                 problem.getCoordinate().getLatitude(),
                 problem.getCoordinate().getLongitude(),
                 problem.getDate(),
+                UserDTO.of(problem.getScooter().getOwner()),
+                user,
                 new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName()));
     }
 
@@ -104,6 +122,4 @@ public class ProblemController extends ErrorHandler {
         Session userSession = sessionService.get(uuid.toString());
         problemService.putReferentOnProblem(userSession.getUser(),id);
     }
-
-
 }

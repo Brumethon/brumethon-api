@@ -51,14 +51,15 @@ public class UserController extends ErrorHandler {
                         user.getEmailAddress().toString(),
                         user.getLastName(),
                         user.getFirstName(),
-                        user.getAddress().toString()))
+                        user.getAddress().toString(),
+                        user.getPhoneNumber()))
                 .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/users/{email}")
     public UserDTO getUserByEmail(@PathVariable @Valid String email) {
         User user = userService.getByEmail(new EmailAddress(email));
-        return new UserDTO(user.getEmailAddress().toString(), user.getLastName(), user.getFirstName(), user.getAddress().toString());
+        return UserDTO.of(user);
     }
 
     @GetMapping(value = "/users/{email}/categories")
@@ -77,15 +78,22 @@ public class UserController extends ErrorHandler {
     public List<ProblemDTO> getUserAvailableProblem(@PathVariable @Valid String email) {
         User user = userService.getByEmail(new EmailAddress(email));
         return problemService.getAllAvailable(user).stream()
-                .map(problem -> new ProblemDTO(problem.getID(),
-                        problem.getName(),
-                        problem.getDescription(),
-                        new ScooterDTO(problem.getScooter().getID(), problem.getScooter().getModel().getID(), problem.getScooter().getSerialNumber()),
-                        problem.getCoordinate().getLatitude(),
-                        problem.getCoordinate().getLongitude(),
-                        problem.getDate(),
-                        new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName())
-                ))
+                .map(problem -> {
+                    UserDTO referent = null;
+                    if (problem.getReferent() != null) {
+                        referent = UserDTO.of(problem.getReferent());
+                    }
+                    return new ProblemDTO(problem.getID(),
+                            problem.getName(),
+                            problem.getDescription(),
+                            new ScooterDTO(problem.getScooter().getID(), problem.getScooter().getModel().getID(), problem.getScooter().getSerialNumber()),
+                            problem.getCoordinate().getLatitude(),
+                            problem.getCoordinate().getLongitude(),
+                            problem.getDate(),
+                            UserDTO.of(problem.getScooter().getOwner()),
+                            referent,
+                            new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName()));
+                })
                 .collect(Collectors.toList());
     }
 

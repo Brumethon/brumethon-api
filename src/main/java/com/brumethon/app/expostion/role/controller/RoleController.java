@@ -1,14 +1,14 @@
 package com.brumethon.app.expostion.role.controller;
 
 
+import com.brumethon.app.domain.categories.Categories;
 import com.brumethon.app.domain.role.Role;
+import com.brumethon.app.expostion.category.dto.CreateCategoryDTO;
 import com.brumethon.app.expostion.error.ErrorHandler;
+import com.brumethon.app.expostion.role.dto.CreateRoleDTO;
 import com.brumethon.app.expostion.role.dto.RoleDTO;
 import com.brumethon.app.infrastructure.service.RoleService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -33,5 +33,10 @@ public class RoleController extends ErrorHandler {
     public RoleDTO getUsers(@PathVariable @Valid Long id) {
         Role role =roleService.get(id);
         return new RoleDTO(role.getID(),role.getName());
+    }
+
+    @PostMapping(value = "/roles")
+    public void postCategory(@RequestBody @Valid CreateRoleDTO createRoleDTO) {
+        roleService.add(new Role(-1L,createRoleDTO.name));
     }
 }

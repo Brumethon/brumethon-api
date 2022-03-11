@@ -6,6 +6,10 @@ public class SessionDTO {
     @NotBlank
     public String token;
 
+    public SessionDTO(){
+
+    }
+
     public SessionDTO(String token) {
         this.token = token;
     }

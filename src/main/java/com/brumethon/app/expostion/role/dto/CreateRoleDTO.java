@@ -8,6 +8,7 @@ public class CreateRoleDTO {
     public String name;
 
     public CreateRoleDTO() {
+
     }
 
     public CreateRoleDTO(String name) {

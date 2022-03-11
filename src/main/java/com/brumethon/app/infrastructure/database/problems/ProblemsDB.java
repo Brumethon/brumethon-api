@@ -24,20 +24,20 @@ public class ProblemsDB {
 
     private LocalDate date;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private ScooterDB scooter;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private CategoriesDB categories;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private ProblemStatusDB status;
 
     private String name;
 
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private UserDB referent;
 
     private Double latitude;
@@ -47,7 +47,8 @@ public class ProblemsDB {
     public ProblemsDB() {
     }
 
-    public ProblemsDB(LocalDate date, ScooterDB scooter, CategoriesDB categories, ProblemStatusDB status, String name, String description, UserDB referent, Double latitude, Double longitude) {
+    public ProblemsDB(Long problemID, LocalDate date, ScooterDB scooter, CategoriesDB categories, ProblemStatusDB status, String name, String description, UserDB referent, Double latitude, Double longitude) {
+        this.problemID = problemID;
         this.date = date;
         this.scooter = scooter;
         this.categories = categories;
@@ -57,6 +58,10 @@ public class ProblemsDB {
         this.referent = referent;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public ProblemsDB(LocalDate date, ScooterDB scooter, CategoriesDB categories, ProblemStatusDB status, String name, String description, UserDB referent, Double latitude, Double longitude) {
+        this(null, date, scooter, categories, status, name, description, referent, latitude, longitude);
     }
 
     public Long getId() {
@@ -101,6 +106,7 @@ public class ProblemsDB {
 
     public static ProblemsDB of(Problem problem) {
         ProblemsDB problemsDB = new ProblemsDB(
+                problem.getID(),
                 problem.getDate(),
                 ScooterDB.of(problem.getScooter()),
                 CategoriesDB.of(problem.getCategories()),

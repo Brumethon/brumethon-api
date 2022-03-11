@@ -60,6 +60,6 @@ public class InDBProblemRepository implements ProblemRepository {
 
     @Override
     public List<Problem> getAllAvailableProblem(Long categoryID) {
-        return dbRepository.getProblemAvailableForUser(categoryID, 0L).stream().map(ProblemsDB::toProblem).collect(Collectors.toList());
+        return dbRepository.getProblemAvailableForUser(categoryID).stream().map(ProblemsDB::toProblem).collect(Collectors.toList());
     }
 }

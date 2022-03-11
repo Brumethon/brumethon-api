@@ -21,6 +21,7 @@ public class UserDB {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long user_id;
+
     @Column(unique = true)
     private String mail;
     private String password;

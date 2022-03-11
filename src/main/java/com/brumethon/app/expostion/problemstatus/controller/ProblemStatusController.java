@@ -23,12 +23,12 @@ public class ProblemStatusController {
     @GetMapping(value = "problemstatus")
     public List<ProblemStatusDTO> getProblemStatus() {
         return problemStatusService.getAll().stream()
-                .map(problemStatus -> new ProblemStatusDTO(problemStatus.getName())).collect(Collectors.toList());
+                .map(problemStatus -> new ProblemStatusDTO(problemStatus.getID(), problemStatus.getName())).collect(Collectors.toList());
     }
 
     @GetMapping(value = "problemstatus/{status}")
     public ProblemStatusDTO getProblemStatusByStatus(@PathVariable @Valid String status) {
         ProblemStatus problemStatus = problemStatusService.getByName(status);
-        return new ProblemStatusDTO(problemStatus.getName());
+        return new ProblemStatusDTO(problemStatus.getID(), problemStatus.getName());
     }
 }

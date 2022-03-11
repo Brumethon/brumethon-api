@@ -1,11 +1,11 @@
 package com.brumethon.app.expostion.scooter.dto;
 
 public class ScooterDTO {
-    public long id;
-    public long scooterModelID;
+    public Long id;
+    public Long scooterModelID;
     public String serialNumber;
 
-    public ScooterDTO(long id, long scooterModelID, String serialNumber) {
+    public ScooterDTO(Long id, Long scooterModelID, String serialNumber) {
         this.id = id;
         this.scooterModelID = scooterModelID;
         this.serialNumber = serialNumber;

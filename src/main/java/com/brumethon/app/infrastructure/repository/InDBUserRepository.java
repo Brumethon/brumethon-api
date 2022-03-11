@@ -1,10 +1,7 @@
 package com.brumethon.app.infrastructure.repository;
 
-import com.brumethon.app.domain.address.Address;
-import com.brumethon.app.domain.address.AddressRepository;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.domain.user.UserRepository;
-import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDBRepository;
 import com.brumethon.app.infrastructure.database.user.UserDB;
@@ -23,12 +20,9 @@ public class InDBUserRepository implements UserRepository {
 
     private final CategoriesDBRepository categoriesDBRepository;
 
-    private final AddressRepository addressRepository;
-
-    public InDBUserRepository(UserDBRepository dbRepository, CategoriesDBRepository categoriesDBRepository, AddressRepository addressRepository) {
+    public InDBUserRepository(UserDBRepository dbRepository, CategoriesDBRepository categoriesDBRepository) {
         this.dbRepository = dbRepository;
         this.categoriesDBRepository = categoriesDBRepository;
-        this.addressRepository = addressRepository;
     }
 
     public User getByEmail(String email) {
@@ -43,12 +37,9 @@ public class InDBUserRepository implements UserRepository {
 
     @Override
     public Long add(User value) {
-        Long addressId = addressRepository.add(value.getAddress());
-        Address address = addressRepository.get(addressId).orElseThrow();
-        UserDB userDB = UserDB.of(value);
-        userDB.setAddressDB(AddressDB.of(address));
-        userDB = dbRepository.save(userDB);
-        return userDB.getId();
+        UserDB userDB = dbRepository.save(UserDB.of(value));
+        value.setId(userDB.getUser_id());
+        return userDB.getUser_id();
     }
 
     @Override
@@ -64,23 +55,7 @@ public class InDBUserRepository implements UserRepository {
     @Override
     public List<User> getAll() {
         List<User> result = new ArrayList<>();
-        dbRepository.findAll().forEach(userDB -> result.add(new User(
-                userDB.getId(),
-                userDB.getFirstName(),
-                userDB.getLastName(),
-                userDB.getPassword(),
-                userDB.getPhoneNumber(),
-                new EmailAddress(userDB.getMail()),
-                new Address(
-                        userDB.getAddressDB().getId(),
-                        userDB.getAddressDB().getCity(),
-                        userDB.getAddressDB().getStreet(),
-                        userDB.getAddressDB().getNumber(),
-                        userDB.getAddressDB().getCountry(),
-                        userDB.getAddressDB().getPostalCode(),
-                        userDB.getAddressDB().getLatitude(),
-                        userDB.getAddressDB().getLongitude())
-        )));
+        dbRepository.findAll().forEach(userDB -> result.add(userDB.toUser()));
         return result;
     }
 
@@ -112,5 +87,10 @@ public class InDBUserRepository implements UserRepository {
 
         UserDB userDB1 = dbRepository.save(userDB.get());
         return true;
+    }
+
+    @Override
+    public boolean addRoleToUser(EmailAddress emailAddress, Long roleID) {
+        return false;
     }
 }

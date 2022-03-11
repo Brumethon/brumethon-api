@@ -1,16 +1,18 @@
 package com.brumethon.app.infrastructure.database.user;
 
 import com.brumethon.app.domain.categories.Categories;
+import com.brumethon.app.domain.role.Role;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
 import com.brumethon.app.infrastructure.database.role.RoleDB;
 import com.brumethon.kernel.email.EmailAddress;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Table(name = "user")
@@ -19,7 +21,7 @@ public class UserDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private Long user_id;
 
     private String mail;
     private String password;
@@ -29,40 +31,49 @@ public class UserDB {
     private LocalDate registerDate;
 
     @OneToOne
-    private AddressDB addressDB;
+    private AddressDB address;
 
-    @ManyToMany
-    private Set<RoleDB> roleDB;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private List<RoleDB> roleDB;
 
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_categories",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "categories_id") })
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "categories_id")})
     private List<CategoriesDB> categories;
 
     protected UserDB() {
     }
 
-    protected UserDB(String mail, String password, String firstName, String lastName, String phoneNumber, LocalDate registerDate, AddressDB addressDB) {
+    public UserDB(Long user_id,
+                  String mail, String password,
+                  String firstName, String lastName,
+                  String phoneNumber,
+                  LocalDate registerDate,
+                  AddressDB address,
+                  List<RoleDB> roleDB, List<CategoriesDB> categories) {
+        this.user_id = user_id;
         this.mail = mail;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.registerDate = registerDate;
-        this.addressDB = addressDB;
+        this.address = address;
+        this.roleDB = roleDB;
+        this.categories = categories;
     }
 
-    protected UserDB(Long id, String mail, String password, String firstName, String lastName, String phoneNumber, LocalDate registerDate, AddressDB addressDB) {
-        this.id = id;
-        this.mail = mail;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.registerDate = registerDate;
-        this.addressDB = addressDB;
+    protected UserDB(String mail, String password, String firstName, String lastName, String phoneNumber, LocalDate registerDate, AddressDB address) {
+        this(null, mail, password, firstName, lastName, phoneNumber, registerDate, address, new ArrayList<>(), new ArrayList<>());
+    }
+
+    protected UserDB(Long user_id, String mail, String password, String firstName, String lastName, String phoneNumber, LocalDate registerDate, AddressDB address) {
+        this(user_id, mail, password, firstName, lastName, phoneNumber, registerDate, address, new ArrayList<>(), new ArrayList<>());
     }
 
     public static UserDB of(User user) {
@@ -74,23 +85,26 @@ public class UserDB {
                 user.getLastName(),
                 user.getPhoneNumber(),
                 LocalDate.now(),
-                AddressDB.of(user.getAddress()));
+                AddressDB.of(user.getAddress()),
+                user.getAssignedRoles().stream().map(role -> new RoleDB(role.getID(), role.getName())).collect(Collectors.toList()),
+                user.getAssignedCategories().stream().map(categories1 -> new CategoriesDB(categories1.getID(), categories1.getName())).collect(Collectors.toList()));
     }
 
     public User toUser() {
         return new User(
-                this.getId(),
+                this.getUser_id(),
                 this.getFirstName(),
                 this.getLastName(),
                 this.getPassword(),
                 this.getPhoneNumber(),
                 new EmailAddress(this.getMail()),
-                this.getAddressDB().toAddress(),
-                categories.stream().map(categoriesDB -> new Categories(categoriesDB.getCategories_id(), categoriesDB.getName())).collect(Collectors.toList()) );
+                this.getAddress().toAddress(),
+                categories.stream().map(categoriesDB -> new Categories(categoriesDB.getCategories_id(), categoriesDB.getName())).collect(Collectors.toList()),
+                roleDB.stream().map(roleDB -> new Role(roleDB.getRole_id(), roleDB.getName())).collect(Collectors.toList()));
     }
 
-    public Long getId() {
-        return id;
+    public Long getUser_id() {
+        return user_id;
     }
 
     public String getMail() {
@@ -117,16 +131,16 @@ public class UserDB {
         return registerDate;
     }
 
-    public AddressDB getAddressDB() {
-        return addressDB;
+    public AddressDB getAddress() {
+        return address;
     }
 
-    public Set<RoleDB> getRoleDB() {
+    public List<RoleDB> getRoleDB() {
         return roleDB;
     }
 
-    public void setAddressDB(AddressDB addressDB) {
-        this.addressDB = addressDB;
+    public void setAddress(AddressDB addressDB) {
+        this.address = addressDB;
     }
 
     public List<CategoriesDB> getCategories() {

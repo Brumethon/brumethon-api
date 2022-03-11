@@ -11,7 +11,7 @@ public interface SessionDBRepository extends CrudRepository<SessionDB, String> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM SessionDB WHERE userDB.id = :#{#user.id}")
+    @Query("DELETE FROM SessionDB WHERE userDB.user_id = :#{#user.id}")
     void deleteAllByUserID (@Param("user") UserDB user);
 
 

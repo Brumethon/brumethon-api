@@ -2,6 +2,7 @@ package com.brumethon.app.domain.user;
 
 import com.brumethon.app.domain.address.Address;
 import com.brumethon.app.domain.categories.Categories;
+import com.brumethon.app.domain.role.Role;
 import com.brumethon.kernel.Entity;
 import com.brumethon.kernel.email.EmailAddress;
 
@@ -17,7 +18,9 @@ public class User extends Entity<Long> {
     private final EmailAddress emailAddress;
     private final Address address;
 
-    private final List<Categories> categories;
+    private final List<Categories> assignedCategories;
+
+    private final List<Role> assignedRoles;
 
     public User(Long id,
                 String firstName, String lastName,
@@ -25,7 +28,8 @@ public class User extends Entity<Long> {
                 String phoneNumber,
                 EmailAddress emailAddress,
                 Address address,
-                List<Categories> categories) {
+                List<Categories> assignedCategories,
+                List<Role> assignedRoles) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -33,29 +37,16 @@ public class User extends Entity<Long> {
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.address = address;
-        this.categories = categories;
+        this.assignedCategories = assignedCategories;
+        this.assignedRoles = assignedRoles;
     }
 
     public User(Long id, String firstName, String lastName, String password, String phoneNumber, EmailAddress emailAddress, Address address) {
-        super(id);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.emailAddress = emailAddress;
-        this.address = address;
-        categories = new ArrayList<>();
+        this(id, firstName, lastName, password, phoneNumber, emailAddress, address, new ArrayList<>(), new ArrayList<>());
     }
 
     public User(String firstName, String lastName, String password, String phoneNumber, EmailAddress emailAddress, Address address) {
-        super(null);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.emailAddress = emailAddress;
-        this.address = address;
-        categories = new ArrayList<>();
+        this(null, firstName, lastName, password, phoneNumber, emailAddress, address, new ArrayList<>(), new ArrayList<>());
     }
 
 
@@ -84,7 +75,11 @@ public class User extends Entity<Long> {
         return address;
     }
 
-    public List<Categories> getCategories() {
-        return categories;
+    public List<Categories> getAssignedCategories() {
+        return assignedCategories;
+    }
+
+    public List<Role> getAssignedRoles() {
+        return assignedRoles;
     }
 }

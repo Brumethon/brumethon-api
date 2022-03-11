@@ -26,4 +26,9 @@ public class InMemoryUserRepository extends InMemoryRepository<User, Long> imple
     public boolean addCategoryToUser(EmailAddress emailAddress, Long categoryID) {
         return false;
     }
+
+    @Override
+    public boolean addRoleToUser(EmailAddress emailAddress, Long roleID) {
+        return false;
+    }
 }

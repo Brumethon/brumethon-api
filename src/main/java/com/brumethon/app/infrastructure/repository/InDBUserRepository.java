@@ -88,4 +88,9 @@ public class InDBUserRepository implements UserRepository {
         UserDB userDB1 = dbRepository.save(userDB.get());
         return true;
     }
+
+    @Override
+    public boolean addRoleToUser(EmailAddress emailAddress, Long roleID) {
+        return false;
+    }
 }

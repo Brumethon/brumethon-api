@@ -3,6 +3,7 @@ package com.brumethon.app.expostion.user.controller;
 import com.brumethon.app.domain.address.Address;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.expostion.category.dto.CategoryDTO;
+import com.brumethon.app.expostion.role.dto.RoleDTO;
 import com.brumethon.app.expostion.user.dto.CreateUserDTO;
 import com.brumethon.app.expostion.user.dto.UserDTO;
 import com.brumethon.app.infrastructure.service.AddressService;
@@ -55,12 +56,23 @@ public class UserController {
     @GetMapping(value = "/users/{email}/categories")
     public List<CategoryDTO> getUserCategories(@PathVariable @Valid String email) {
         User user = userService.getByEmail( new EmailAddress(email) );
-        return user.getCategories().stream().map(categories -> new CategoryDTO(categories.getID(), categories.getName())).collect(Collectors.toList());
+        return user.getAssignedCategories().stream().map(categories -> new CategoryDTO(categories.getID(), categories.getName())).collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/users/{email}/roles")
+    public List<RoleDTO> getUserRoles(@PathVariable @Valid String email) {
+        User user = userService.getByEmail( new EmailAddress(email) );
+        return user.getAssignedRoles().stream().map(role -> new RoleDTO(role.getID(), role.getName())).collect(Collectors.toList());
     }
 
     @PostMapping(value = "/users/{email}/categories/{id}")
     public void addUserCategories(@PathVariable @Valid String email, @PathVariable @Valid Long id) {
         userService.addCategoryToUser(new EmailAddress(email), id);
+    }
+
+    @PostMapping(value = "/users/{email}/roles/{id}")
+    public void addUserRoles(@PathVariable @Valid String email, @PathVariable @Valid Long id) {
+        userService.addRoleToUser(new EmailAddress(email), id);
     }
 
     @PostMapping(value = "/users")

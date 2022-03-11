@@ -64,23 +64,7 @@ public class InDBUserRepository implements UserRepository {
     @Override
     public List<User> getAll() {
         List<User> result = new ArrayList<>();
-        dbRepository.findAll().forEach(userDB -> result.add(new User(
-                userDB.getId(),
-                userDB.getFirstName(),
-                userDB.getLastName(),
-                userDB.getPassword(),
-                userDB.getPhoneNumber(),
-                new EmailAddress(userDB.getMail()),
-                new Address(
-                        userDB.getAddressDB().getId(),
-                        userDB.getAddressDB().getCity(),
-                        userDB.getAddressDB().getStreet(),
-                        userDB.getAddressDB().getNumber(),
-                        userDB.getAddressDB().getCountry(),
-                        userDB.getAddressDB().getPostalCode(),
-                        userDB.getAddressDB().getLatitude(),
-                        userDB.getAddressDB().getLongitude())
-        )));
+        dbRepository.findAll().forEach(userDB -> result.add(userDB.toUser()));
         return result;
     }
 

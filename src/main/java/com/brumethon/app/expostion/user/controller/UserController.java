@@ -5,27 +5,18 @@ import com.brumethon.app.domain.user.User;
 import com.brumethon.app.expostion.category.dto.CategoryDTO;
 import com.brumethon.app.expostion.user.dto.CreateUserDTO;
 import com.brumethon.app.expostion.user.dto.UserDTO;
-import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
-import com.brumethon.app.infrastructure.repository.InDBUserRepository;
+import com.brumethon.app.infrastructure.service.AddressService;
 import com.brumethon.app.infrastructure.service.UserService;
 import com.brumethon.kernel.email.EmailAddress;
 import com.byteowls.jopencage.JOpenCageGeocoder;
 import com.byteowls.jopencage.model.JOpenCageForwardRequest;
 import com.byteowls.jopencage.model.JOpenCageLatLng;
 import com.byteowls.jopencage.model.JOpenCageResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
-import org.springframework.data.annotation.Id;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 import java.util.stream.Collectors;
 
 @RestController
@@ -33,12 +24,15 @@ public class UserController {
 
     private final UserService userService;
 
+    private final AddressService addressService;
+
     @Value("${open_cages.token}")
     private String token;
 
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AddressService addressService) {
         this.userService = userService;
+        this.addressService = addressService;
     }
 
     @GetMapping(value = "/users")
@@ -60,7 +54,7 @@ public class UserController {
 
     @GetMapping(value = "/users/{email}/categories")
     public List<CategoryDTO> getUserCategories(@PathVariable @Valid String email) {
-        User user = userService.getByEmail( new EmailAddress(email) );
+        User user = userService.getByEmail(new EmailAddress(email));
         return user.getCategories().stream().map(categories -> new CategoryDTO(categories.getName())).collect(Collectors.toList());
     }
 
@@ -81,22 +75,26 @@ public class UserController {
         JOpenCageResponse response = jOpenCageGeocoder.forward(request);
         JOpenCageLatLng firstResultLatLng = response.getFirstPosition();
 
+        Address address = new Address(
+                null,
+                createUserDTO.address.city,
+                createUserDTO.address.street,
+                createUserDTO.address.number,
+                createUserDTO.address.country,
+                createUserDTO.address.postalCode,
+                firstResultLatLng.getLat(),
+                firstResultLatLng.getLng());
+
+        addressService.add(address);
+
         userService.add(new User(
-                -1L,
+                null,
                 createUserDTO.firstname,
                 createUserDTO.lastname,
                 createUserDTO.password,
                 createUserDTO.phoneNumber,
                 new EmailAddress(createUserDTO.email),
-                new Address(
-                        -1L,
-                        createUserDTO.address.city,
-                        createUserDTO.address.street,
-                        createUserDTO.address.number,
-                        createUserDTO.address.country,
-                        createUserDTO.address.postalCode,
-                        firstResultLatLng.getLat(),
-                        firstResultLatLng.getLng())
+                address
         ));
     }
 

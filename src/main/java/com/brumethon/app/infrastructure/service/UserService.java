@@ -1,9 +1,7 @@
 package com.brumethon.app.infrastructure.service;
 
-import com.brumethon.app.domain.categories.Categories;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.domain.user.UserRepository;
-import com.brumethon.app.domain.user.UserValidator;
 import com.brumethon.kernel.SimpleService;
 import com.brumethon.kernel.Validator;
 import com.brumethon.kernel.email.EmailAddress;
@@ -22,7 +20,9 @@ public class UserService extends SimpleService<UserRepository, User, Long> {
     }
 
     public void addCategoryToUser(EmailAddress userEmail, Long categoryID){
-        repository.addCategoryToUser(userEmail, categoryID);
+        if( !repository.addCategoryToUser(userEmail, categoryID) ){
+            throw new SimpleServiceObjectNotFoundException("", userEmail.toString() + " | " +categoryID.toString());
+        }
     }
 
 }

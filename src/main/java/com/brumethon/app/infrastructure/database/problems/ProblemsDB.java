@@ -1,5 +1,6 @@
 package com.brumethon.app.infrastructure.database.problems;
 
+import com.brumethon.app.domain.problem.Problem;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
 import com.brumethon.app.infrastructure.database.problemstatus.ProblemStatusDB;
 import com.brumethon.app.infrastructure.database.scooter.ScooterDB;
@@ -42,4 +43,55 @@ public class ProblemsDB {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public ScooterDB getScooterDB() {
+        return scooterDB;
+    }
+
+    public CategoriesDB getCategoriesDB() {
+        return categoriesDB;
+    }
+
+    public ProblemStatusDB getStatus() {
+        return status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public UserDB getReferentUser() {
+        return referentUser;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public static ProblemsDB of(Problem problem) {
+        return null;
+    }
+
+    public Problem toProblem(){
+        return null;
+    }
+
+
+
 }

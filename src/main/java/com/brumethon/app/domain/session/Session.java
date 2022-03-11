@@ -1,9 +1,9 @@
 package com.brumethon.app.domain.session;
 
 import com.brumethon.app.domain.user.User;
+import com.brumethon.app.infrastructure.database.session.SessionDB;
 import com.brumethon.kernel.Entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Session extends Entity<String> {

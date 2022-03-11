@@ -31,4 +31,9 @@ public class InMemoryUserRepository extends InMemoryRepository<User, Long> imple
     public boolean addRoleToUser(EmailAddress emailAddress, Long roleID) {
         return false;
     }
+
+    @Override
+    public boolean removeRoleToUser(EmailAddress emailAddress, Long roleID) {
+        return false;
+    }
 }

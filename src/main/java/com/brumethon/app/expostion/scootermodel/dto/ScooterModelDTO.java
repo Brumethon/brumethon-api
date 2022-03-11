@@ -1,4 +1,4 @@
-package com.brumethon.app.expostion.model.dto;
+package com.brumethon.app.expostion.scootermodel.dto;
 
 public class ScooterModelDTO {
     public long id;

@@ -38,13 +38,13 @@ class UserValidatorTest {
 
     @Test
     void should_not_be_valid_with_null_email_address(){
-        User user = new User(1L,  defaultValidFirstName, defaultValidLastName, defaultValidPassword, defaultValidPhoneNumber, defaultValidEmailAddress, defaultValidAddress);
+        User user = new User(1L,  defaultValidFirstName, defaultValidLastName, defaultValidPassword, defaultValidPhoneNumber, null, defaultValidAddress);
         Assertions.assertThrows(InvalidUserException.class, () -> userValidator.validate(user));
     }
 
     @Test
     void should_not_be_valid_with_empty_email_address(){
-        User user = new User(1L, defaultValidFirstName, defaultValidLastName, defaultValidPassword, defaultValidPhoneNumber, defaultValidEmailAddress, defaultValidAddress);
+        User user = new User(1L, defaultValidFirstName, defaultValidLastName, defaultValidPassword, defaultValidPhoneNumber, new EmailAddress(""), defaultValidAddress);
         Assertions.assertThrows(InvalidUserException.class, () -> userValidator.validate(user));
     }
 

@@ -1,6 +1,6 @@
-package com.brumethon.app.expostion.model.controller;
+package com.brumethon.app.expostion.scootermodel.controller;
 
-import com.brumethon.app.expostion.model.dto.ScooterModelDTO;
+import com.brumethon.app.expostion.scootermodel.dto.ScooterModelDTO;
 import com.brumethon.app.infrastructure.service.ScooterModelService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class ModelController {
+public class ScooterModelController {
 
     private final ScooterModelService scooterModelService;
 
-    public ModelController(ScooterModelService scooterModelService) {
+    public ScooterModelController(ScooterModelService scooterModelService) {
         this.scooterModelService = scooterModelService;
     }
 

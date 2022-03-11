@@ -19,9 +19,14 @@ public class InDBProblemStatusRepository implements ProblemStatusRepository {
         this.dbRepository = dbRepository;
     }
 
-    public ProblemStatus getByName(String name) {
-        ProblemStatusDB problemStatusDB = this.dbRepository.getProblemStatusDBByName(name).orElseThrow();
-        return problemStatusDB.toProblemStatus();
+    public Optional<ProblemStatus> getByName(String name) {
+        Optional<ProblemStatusDB> problemStatusDB = dbRepository.getProblemStatusDBByName(name);
+
+        if(problemStatusDB.isEmpty()){
+            return Optional.empty();
+        }
+
+        return Optional.of( problemStatusDB.get().toProblemStatus());
     }
 
     @Override

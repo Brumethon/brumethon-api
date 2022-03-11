@@ -1,0 +1,12 @@
+package com.brumethon.app.expostion.scootermodel.dto;
+
+import javax.validation.constraints.NotBlank;
+
+public class CreateScooterModel {
+    @NotBlank
+    public String name;
+
+    public CreateScooterModel(String name) {
+        this.name = name;
+    }
+}

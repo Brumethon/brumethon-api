@@ -1,12 +1,13 @@
 package com.brumethon.app.expostion.scootermodel.controller;
 
+import com.brumethon.app.domain.categories.Categories;
+import com.brumethon.app.domain.scootermodel.ScooterModel;
+import com.brumethon.app.expostion.category.dto.CreateCategoryDTO;
 import com.brumethon.app.expostion.error.ErrorHandler;
+import com.brumethon.app.expostion.scootermodel.dto.CreateScooterModel;
 import com.brumethon.app.expostion.scootermodel.dto.ScooterModelDTO;
 import com.brumethon.app.infrastructure.service.ScooterModelService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -32,5 +33,10 @@ public class ScooterModelController extends ErrorHandler {
         return scooterModelService.getAll().stream()
                 .map(scooterModel -> new ScooterModelDTO(scooterModel.getID(),scooterModel.getName()))
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping(value = "/models")
+    public void postCategory(@RequestBody @Valid CreateScooterModel createScooterModel) {
+        scooterModelService.add(new ScooterModel(-1L,createScooterModel.name));
     }
 }

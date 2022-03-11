@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class InDBProblemRepository implements ProblemRepository {
@@ -55,5 +56,10 @@ public class InDBProblemRepository implements ProblemRepository {
         List<Problem> problems = new ArrayList<>();
         dbRepository.findAll().forEach(problemsDB -> problems.add(problemsDB.toProblem()));
         return problems;
+    }
+
+    @Override
+    public List<Problem> getAllAvailableProblem(Long categoryID) {
+        return dbRepository.getProblemAvailableForUser(categoryID, 0L).stream().map(ProblemsDB::toProblem).collect(Collectors.toList());
     }
 }

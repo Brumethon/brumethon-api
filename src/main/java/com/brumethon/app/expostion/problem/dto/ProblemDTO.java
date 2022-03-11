@@ -2,6 +2,7 @@ package com.brumethon.app.expostion.problem.dto;
 
 import com.brumethon.app.expostion.category.dto.CategoryDTO;
 import com.brumethon.app.expostion.scooter.dto.ScooterDTO;
+import org.springframework.beans.factory.parsing.Problem;
 
 import java.time.LocalDate;
 

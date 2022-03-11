@@ -2,6 +2,7 @@ package com.brumethon.app.domain.user;
 
 import com.brumethon.app.domain.address.Address;
 import com.brumethon.app.domain.categories.Categories;
+import com.brumethon.app.domain.problem.Problem;
 import com.brumethon.app.domain.role.Role;
 import com.brumethon.kernel.Entity;
 import com.brumethon.kernel.email.EmailAddress;
@@ -49,7 +50,9 @@ public class User extends Entity<Long> {
         this(null, firstName, lastName, password, phoneNumber, emailAddress, address, new ArrayList<>(), new ArrayList<>());
     }
 
-
+    public boolean isUserAvailableForProblem(Problem problem){
+        return true;
+    }
 
     public EmailAddress getEmailAddress() {
         return emailAddress;

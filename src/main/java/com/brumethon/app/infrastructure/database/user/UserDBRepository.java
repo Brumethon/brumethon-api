@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface UserDBRepository extends CrudRepository<UserDB, Long> {
 
     @Query("FROM UserDB WHERE mail = :mail")
-    public Optional<UserDB> getUserDBByMail(@Param("mail") String mail);
+    Optional<UserDB> getUserDBByMail(@Param("mail") String mail);
 }

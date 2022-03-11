@@ -5,6 +5,7 @@ import com.brumethon.app.domain.problem.Problem;
 import com.brumethon.app.domain.problemestatus.ProblemStatus;
 import com.brumethon.app.domain.scooter.Scooter;
 import com.brumethon.app.expostion.category.dto.CategoryDTO;
+import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.problem.dto.CreateProblemDTO;
 import com.brumethon.app.expostion.problem.dto.ProblemDTO;
 import com.brumethon.app.expostion.scooter.dto.ScooterDTO;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class ProblemController {
+public class ProblemController extends ErrorHandler {
 
     private final ProblemService problemService;
 

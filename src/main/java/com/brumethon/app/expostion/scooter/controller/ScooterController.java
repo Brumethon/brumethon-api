@@ -3,6 +3,7 @@ package com.brumethon.app.expostion.scooter.controller;
 import com.brumethon.app.domain.scooter.Scooter;
 import com.brumethon.app.domain.scootermodel.ScooterModel;
 import com.brumethon.app.domain.session.Session;
+import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.scooter.dto.ScooterDTO;
 import com.brumethon.app.infrastructure.service.ScooterModelService;
 import com.brumethon.app.infrastructure.service.ScooterService;
@@ -16,7 +17,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-public class ScooterController {
+public class ScooterController extends ErrorHandler {
 
     private final ScooterService scooterService;
     private final ScooterModelService scooterModelService;

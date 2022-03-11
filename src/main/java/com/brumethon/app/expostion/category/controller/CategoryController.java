@@ -1,6 +1,7 @@
 package com.brumethon.app.expostion.category.controller;
 
 import com.brumethon.app.expostion.category.dto.CategoryDTO;
+import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.user.dto.UserDTO;
 import com.brumethon.app.infrastructure.service.CategoriesService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.logging.Handler;
 import java.util.stream.Collectors;
 
 @RestController
-public class CategoryController {
+public class CategoryController extends ErrorHandler {
 
     private final CategoriesService categoriesService;
 

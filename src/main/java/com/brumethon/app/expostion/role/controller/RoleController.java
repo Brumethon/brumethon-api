@@ -2,6 +2,7 @@ package com.brumethon.app.expostion.role.controller;
 
 
 import com.brumethon.app.domain.role.Role;
+import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.role.dto.RoleDTO;
 import com.brumethon.app.infrastructure.service.RoleService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class RoleController {
+public class RoleController extends ErrorHandler {
 
     private final RoleService roleService;
 

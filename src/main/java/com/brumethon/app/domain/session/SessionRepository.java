@@ -1,6 +1,5 @@
 package com.brumethon.app.domain.session;
 
-import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.kernel.Repository;
 
 import java.util.Optional;

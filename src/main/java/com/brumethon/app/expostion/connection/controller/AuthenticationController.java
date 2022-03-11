@@ -6,7 +6,6 @@ import com.brumethon.app.expostion.connection.dto.SessionDTO;
 import com.brumethon.app.expostion.connection.dto.UserConnectionDTO;
 import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.infrastructure.database.user.UserDB;
-import com.brumethon.app.infrastructure.repository.InDBSessionRepository;
 import com.brumethon.app.infrastructure.repository.InDBUserRepository;
 import com.brumethon.app.infrastructure.service.SessionService;
 import org.springframework.web.bind.annotation.CrossOrigin;

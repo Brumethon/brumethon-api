@@ -5,7 +5,6 @@ import com.brumethon.app.domain.scootermodel.ScooterModel;
 import com.brumethon.app.domain.session.Session;
 import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.scooter.dto.ScooterDTO;
-import com.brumethon.app.expostion.user.dto.UserDTO;
 import com.brumethon.app.infrastructure.service.ScooterModelService;
 import com.brumethon.app.infrastructure.service.ScooterService;
 import com.brumethon.app.infrastructure.service.SessionService;

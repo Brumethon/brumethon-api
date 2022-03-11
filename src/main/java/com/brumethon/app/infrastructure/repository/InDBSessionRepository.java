@@ -6,17 +6,21 @@ import com.brumethon.app.infrastructure.database.session.SessionDBRepository;
 import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.kernel.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @org.springframework.stereotype.Repository
 public class InDBSessionRepository implements Repository<Session, String> {
 
     private final SessionDBRepository dbRepository;
+    private final InDBUserRepository inDBUserRepository;
 
-    public InDBSessionRepository(SessionDBRepository dbRepository) {
+    public InDBSessionRepository(SessionDBRepository dbRepository, InDBUserRepository inDBUserRepository) {
         this.dbRepository = dbRepository;
+        this.inDBUserRepository = inDBUserRepository;
     }
 
     @Override
@@ -59,5 +63,18 @@ public class InDBSessionRepository implements Repository<Session, String> {
 
     public void removeAllForUserID(UserDB id) {
         dbRepository.deleteAllByUserID(id);
+    }
+
+    public Session getByUser(final UUID uuid) {
+        SessionDB sessionDB = dbRepository.findById(uuid.toString()).orElseThrow();
+        if (isExpired(sessionDB.getExpirationDate())) {
+            removeAllForUserID(sessionDB.getUserDB());
+            throw new RuntimeException();
+        }
+        return sessionDB.toSession();
+    }
+
+    private boolean isExpired(LocalDateTime dateTime) {
+        return LocalDateTime.now().isAfter(dateTime);
     }
 }

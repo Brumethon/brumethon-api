@@ -26,7 +26,7 @@ public abstract class SimpleService<R extends Repository<V, K> , V extends Entit
     public void add(V value) {
         validator.validate(value);
 
-        if (repository.get(value.getID()).isPresent()) {
+        if (value.getID() != null && repository.get(value.getID()).isPresent()) {
             throw getExceptionWhenObjectAlreadyPresent(value.getID());
         }
 

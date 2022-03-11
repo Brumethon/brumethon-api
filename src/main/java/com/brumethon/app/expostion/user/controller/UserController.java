@@ -97,9 +97,4 @@ public class UserController {
                 address
         ));
     }
-
-//    @GetMapping(value = "/users")
-//    public UserDTO getUserByToken(@RequestBody @Valid GetUserDTO getUser) {
-//        return new UserDTO();
-//    }
 }

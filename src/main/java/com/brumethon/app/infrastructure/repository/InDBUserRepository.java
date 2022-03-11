@@ -1,10 +1,7 @@
 package com.brumethon.app.infrastructure.repository;
 
-import com.brumethon.app.domain.address.Address;
-import com.brumethon.app.domain.address.AddressRepository;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.domain.user.UserRepository;
-import com.brumethon.app.infrastructure.database.address.AddressDB;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDBRepository;
 import com.brumethon.app.infrastructure.database.user.UserDB;
@@ -23,12 +20,9 @@ public class InDBUserRepository implements UserRepository {
 
     private final CategoriesDBRepository categoriesDBRepository;
 
-    private final AddressRepository addressRepository;
-
-    public InDBUserRepository(UserDBRepository dbRepository, CategoriesDBRepository categoriesDBRepository, AddressRepository addressRepository) {
+    public InDBUserRepository(UserDBRepository dbRepository, CategoriesDBRepository categoriesDBRepository) {
         this.dbRepository = dbRepository;
         this.categoriesDBRepository = categoriesDBRepository;
-        this.addressRepository = addressRepository;
     }
 
     public User getByEmail(String email) {
@@ -43,11 +37,8 @@ public class InDBUserRepository implements UserRepository {
 
     @Override
     public Long add(User value) {
-        Long addressId = addressRepository.add(value.getAddress());
-        Address address = addressRepository.get(addressId).orElseThrow();
-        UserDB userDB = UserDB.of(value);
-        userDB.setAddressDB(AddressDB.of(address));
-        userDB = dbRepository.save(userDB);
+        UserDB userDB = dbRepository.save(UserDB.of(value));
+        value.setId(userDB.getId());
         return userDB.getId();
     }
 

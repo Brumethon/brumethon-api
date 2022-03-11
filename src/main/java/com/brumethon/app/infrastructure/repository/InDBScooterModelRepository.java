@@ -54,4 +54,13 @@ public class InDBScooterModelRepository implements ScooterModelRepository {
         dbRepository.findAll().forEach(scooterModelDB -> list.add(scooterModelDB.toScooterModel()));
         return list;
     }
+
+    @Override
+    public Optional<ScooterModel> getByName(String name) {
+        Optional<ScooterModelDB> optionalScooterModel = dbRepository.findByName(name);
+        if (optionalScooterModel.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of( optionalScooterModel.get().toScooterModel());
+    }
 }

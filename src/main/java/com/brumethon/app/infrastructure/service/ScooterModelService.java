@@ -12,4 +12,8 @@ public class ScooterModelService extends SimpleService<ScooterModelRepository, S
     public ScooterModelService(ScooterModelRepository repository, Validator<ScooterModel> validator) {
         super(repository, validator, "scooter model");
     }
+
+    public ScooterModel getByName(String name) {
+        return repository.getByName(name).orElse(null);
+    }
 }

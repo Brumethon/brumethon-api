@@ -11,17 +11,11 @@ import java.time.LocalDate;
 public class Problem extends Entity<Long> {
 
     private final String name;
-
     private final String description;
-
     private final Scooter scooter;
-
     private final Coordinate coordinate;
-
     private final LocalDate date;
-
     private final Categories categories;
-
     private final ProblemStatus status;
 
     public Problem(Long id, String name, String description, Scooter scooter, Coordinate coordinate, LocalDate date, Categories categories, ProblemStatus status) {

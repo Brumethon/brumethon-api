@@ -9,7 +9,9 @@ import com.brumethon.kernel.Validator;
 import com.brumethon.kernel.exception.SimpleServiceObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProblemService extends SimpleService<ProblemRepository, Problem, Long> {
@@ -22,4 +24,13 @@ public class ProblemService extends SimpleService<ProblemRepository, Problem, Lo
         problem.setReferent(user);
         repository.update(problem);
     }
+
+    public List<Problem> getAllAvailable(User user){
+        if(user.getAssignedCategories().isEmpty()){
+            return List.of();
+        }
+        List<Problem> list = repository.getAllAvailableProblem(user.getAssignedCategories().get(0).getID());
+        return list.stream().filter(user::isUserAvailableForProblem).collect(Collectors.toList());
+    }
+
 }

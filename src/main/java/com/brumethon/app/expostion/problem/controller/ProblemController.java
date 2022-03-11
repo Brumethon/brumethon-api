@@ -8,12 +8,11 @@ import com.brumethon.app.expostion.category.dto.CategoryDTO;
 import com.brumethon.app.expostion.problem.dto.CreateProblemDTO;
 import com.brumethon.app.expostion.problem.dto.ProblemDTO;
 import com.brumethon.app.expostion.scooter.dto.ScooterDTO;
-import com.brumethon.app.infrastructure.repository.InDBCategoriesRepository;
-import com.brumethon.app.infrastructure.repository.InDBProblemRepository;
-import com.brumethon.app.infrastructure.repository.InDBProblemStatusRepository;
-import com.brumethon.app.infrastructure.repository.InDBScooterRepository;
+import com.brumethon.app.infrastructure.service.CategoriesService;
+import com.brumethon.app.infrastructure.service.ProblemService;
+import com.brumethon.app.infrastructure.service.ProblemStatusService;
+import com.brumethon.app.infrastructure.service.ScooterService;
 import com.brumethon.kernel.coordinate.Coordinate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,28 +23,27 @@ import java.util.stream.Collectors;
 @RestController
 public class ProblemController {
 
-    @Autowired
-    private final InDBProblemRepository inDBProblemRepository;
+    private final ProblemService problemService;
 
-    @Autowired
-    private final InDBProblemStatusRepository inDBProblemStatusRepository;
+    private final ProblemStatusService problemStatusService;
 
-    @Autowired
-    private final InDBCategoriesRepository inDBCategoriesRepository;
+    private final CategoriesService categoriesService;
 
-    @Autowired
-    private final InDBScooterRepository inDBScooterRepository;
+    private final ScooterService scooterService;
 
-    public ProblemController(InDBProblemRepository inDBProblemRepository, InDBProblemStatusRepository inDBProblemStatusRepository, InDBCategoriesRepository inDBCategoriesRepository, InDBScooterRepository inDBScooterRepository) {
-        this.inDBProblemRepository = inDBProblemRepository;
-        this.inDBProblemStatusRepository = inDBProblemStatusRepository;
-        this.inDBCategoriesRepository = inDBCategoriesRepository;
-        this.inDBScooterRepository = inDBScooterRepository;
+    public ProblemController(ProblemService problemService,
+                             ProblemStatusService problemStatusService,
+                             CategoriesService categoriesService,
+                             ScooterService scooterService) {
+        this.problemService = problemService;
+        this.problemStatusService = problemStatusService;
+        this.categoriesService = categoriesService;
+        this.scooterService = scooterService;
     }
 
     @GetMapping(value = "/problems")
     public List<ProblemDTO> getAllProblems() {
-        return inDBProblemRepository.getAll().stream()
+        return problemService.getAll().stream()
                 .map(problem -> new ProblemDTO(
                         problem.getID(),
                         problem.getName(),
@@ -63,7 +61,7 @@ public class ProblemController {
 
     @GetMapping(value = "/problems/{id}")
     public ProblemDTO getProblem(@PathVariable @Valid Long id) {
-        Problem problem = inDBProblemRepository.get(id).orElseThrow();
+        Problem problem = problemService.get(id);
         return new ProblemDTO(
                 problem.getID(),
                 problem.getName(),
@@ -80,11 +78,11 @@ public class ProblemController {
 
     @PostMapping(value = "/problems")
     public void postProblem(@RequestBody @Valid CreateProblemDTO createProblemDTO) {
-        Scooter scooter = inDBScooterRepository.get(createProblemDTO.scooterId).orElseThrow();
-        Categories categories = inDBCategoriesRepository.get(createProblemDTO.categoryId).orElseThrow();
-        ProblemStatus problemStatus = inDBProblemStatusRepository.get(createProblemDTO.problemStatusId).orElseThrow();
+        Scooter scooter = scooterService.get(createProblemDTO.scooterId);
+        Categories categories = categoriesService.get(createProblemDTO.categoryId);
+        ProblemStatus problemStatus = problemStatusService.get(createProblemDTO.problemStatusId);
 
-        this.inDBProblemRepository.add(new Problem(
+        this.problemService.add(new Problem(
                 -1L,
                 createProblemDTO.name,
                 createProblemDTO.description,

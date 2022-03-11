@@ -4,6 +4,8 @@ import com.brumethon.app.domain.address.Address;
 import com.brumethon.app.domain.address.AddressValidator;
 import com.brumethon.app.domain.categories.Categories;
 import com.brumethon.app.domain.categories.CategoriesValidator;
+import com.brumethon.app.domain.problem.Problem;
+import com.brumethon.app.domain.problem.ProblemValidator;
 import com.brumethon.app.domain.problemestatus.ProblemStatus;
 import com.brumethon.app.domain.problemestatus.ProblemStatusValidator;
 import com.brumethon.app.domain.role.Role;
@@ -39,12 +41,12 @@ public class BrumethonConfiguration {
 
     @Bean
     public Validator<Scooter> getScooterValidator() {
-        return new ScooterValidator((ScooterModelValidator) getScooterModelValidator(),(UserValidator) getUserValidator());
+        return new ScooterValidator((ScooterModelValidator) getScooterModelValidator(), (UserValidator) getUserValidator());
     }
 
     @Bean
     public Validator<User> getUserValidator() {
-        return new UserValidator((AddressValidator) getAddressValidator(),(EmailAddressValidator) getEmailValidator());
+        return new UserValidator((AddressValidator) getAddressValidator(), (EmailAddressValidator) getEmailValidator());
     }
 
     @Bean
@@ -70,5 +72,10 @@ public class BrumethonConfiguration {
     @Bean
     public Validator<ProblemStatus> getProblemStatusValidator() {
         return new ProblemStatusValidator();
+    }
+
+    @Bean
+    public Validator<Problem> getProblemValidator() {
+        return new ProblemValidator();
     }
 }

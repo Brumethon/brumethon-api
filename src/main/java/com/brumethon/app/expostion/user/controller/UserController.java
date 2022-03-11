@@ -59,7 +59,7 @@ public class UserController extends ErrorHandler {
     @GetMapping(value = "/users/{email}")
     public UserDTO getUserByEmail(@PathVariable @Valid String email) {
         User user = userService.getByEmail(new EmailAddress(email));
-        return new UserDTO(user.getEmailAddress().toString(), user.getLastName(), user.getFirstName(), user.getAddress().toString(), user.getPhoneNumber());
+        return UserDTO.of(user);
     }
 
     @GetMapping(value = "/users/{email}/categories")
@@ -81,12 +81,7 @@ public class UserController extends ErrorHandler {
                 .map(problem -> {
                     UserDTO referent = null;
                     if (problem.getReferent() != null) {
-                        referent = new UserDTO(
-                                problem.getReferent().getEmailAddress().toString(),
-                                problem.getReferent().getLastName(),
-                                problem.getReferent().getLastName(),
-                                problem.getReferent().getAddress().toString(),
-                                problem.getReferent().getPhoneNumber());
+                        referent = UserDTO.of(problem.getReferent());
                     }
                     return new ProblemDTO(problem.getID(),
                             problem.getName(),
@@ -95,6 +90,7 @@ public class UserController extends ErrorHandler {
                             problem.getCoordinate().getLatitude(),
                             problem.getCoordinate().getLongitude(),
                             problem.getDate(),
+                            UserDTO.of(problem.getScooter().getOwner()),
                             referent,
                             new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName()));
                 })

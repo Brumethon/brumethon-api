@@ -1,5 +1,7 @@
 package com.brumethon.app.expostion.scooter.dto;
 
+import com.brumethon.app.expostion.user.dto.UserDTO;
+
 public class ScooterDTO {
     public Long id;
     public Long scooterModelID;

@@ -54,12 +54,7 @@ public class ProblemController extends ErrorHandler {
                 .map(problem -> {
                     UserDTO user = null;
                     if (problem.getReferent() != null) {
-                        user = new UserDTO(
-                                problem.getReferent().getEmailAddress().toString(),
-                                problem.getReferent().getLastName(),
-                                problem.getReferent().getLastName(),
-                                problem.getReferent().getAddress().toString(),
-                                problem.getReferent().getPhoneNumber());
+                        user = UserDTO.of(problem.getReferent());
                     }
                     return new ProblemDTO(
                         problem.getID(),
@@ -72,6 +67,7 @@ public class ProblemController extends ErrorHandler {
                         problem.getCoordinate().getLatitude(),
                         problem.getCoordinate().getLongitude(),
                         problem.getDate(),
+                        UserDTO.of(problem.getScooter().getOwner()),
                         user,
                         new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName()));
                 })
@@ -84,12 +80,7 @@ public class ProblemController extends ErrorHandler {
 
         UserDTO user = null;
         if (problem.getReferent() != null) {
-            user = new UserDTO(
-                    problem.getReferent().getEmailAddress().toString(),
-                    problem.getReferent().getLastName(),
-                    problem.getReferent().getLastName(),
-                    problem.getReferent().getAddress().toString(),
-                    problem.getReferent().getPhoneNumber());
+            user = UserDTO.of(problem.getReferent());
         }
 
         return new ProblemDTO(
@@ -103,6 +94,7 @@ public class ProblemController extends ErrorHandler {
                 problem.getCoordinate().getLatitude(),
                 problem.getCoordinate().getLongitude(),
                 problem.getDate(),
+                UserDTO.of(problem.getScooter().getOwner()),
                 user,
                 new CategoryDTO(problem.getCategories().getID(), problem.getCategories().getName()));
     }
@@ -130,6 +122,4 @@ public class ProblemController extends ErrorHandler {
         Session userSession = sessionService.get(uuid.toString());
         problemService.putReferentOnProblem(userSession.getUser(),id);
     }
-
-
 }

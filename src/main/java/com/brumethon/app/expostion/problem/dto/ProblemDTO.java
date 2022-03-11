@@ -15,10 +15,11 @@ public class ProblemDTO {
     public Double latitude;
     public Double longitude;
     public LocalDate date;
+    public UserDTO owner;
     public UserDTO referent;
     public CategoryDTO category;
 
-    public ProblemDTO(Long id, String name, String description, ScooterDTO scooterDTO, Double latitude, Double longitude, LocalDate date, UserDTO referent, CategoryDTO categoryDTO) {
+    public ProblemDTO(Long id, String name, String description, ScooterDTO scooterDTO, Double latitude, Double longitude, LocalDate date, UserDTO owner, UserDTO referent, CategoryDTO categoryDTO) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -26,6 +27,7 @@ public class ProblemDTO {
         this.latitude = latitude;
         this.longitude = longitude;
         this.date = date;
+        this.owner = owner;
         this.referent = referent;
         this.category = categoryDTO;
     }

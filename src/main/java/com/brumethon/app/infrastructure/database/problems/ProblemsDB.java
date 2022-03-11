@@ -47,7 +47,8 @@ public class ProblemsDB {
     public ProblemsDB() {
     }
 
-    public ProblemsDB(LocalDate date, ScooterDB scooter, CategoriesDB categories, ProblemStatusDB status, String name, String description, UserDB referent, Double latitude, Double longitude) {
+    public ProblemsDB(Long problemID, LocalDate date, ScooterDB scooter, CategoriesDB categories, ProblemStatusDB status, String name, String description, UserDB referent, Double latitude, Double longitude) {
+        this.problemID = problemID;
         this.date = date;
         this.scooter = scooter;
         this.categories = categories;
@@ -57,6 +58,10 @@ public class ProblemsDB {
         this.referent = referent;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public ProblemsDB(LocalDate date, ScooterDB scooter, CategoriesDB categories, ProblemStatusDB status, String name, String description, UserDB referent, Double latitude, Double longitude) {
+        this(null, date, scooter, categories, status, name, description, referent, latitude, longitude);
     }
 
     public Long getId() {
@@ -101,6 +106,7 @@ public class ProblemsDB {
 
     public static ProblemsDB of(Problem problem) {
         return new ProblemsDB(
+                problem.getID(),
                 problem.getDate(),
                 ScooterDB.of(problem.getScooter()),
                 CategoriesDB.of(problem.getCategories()),

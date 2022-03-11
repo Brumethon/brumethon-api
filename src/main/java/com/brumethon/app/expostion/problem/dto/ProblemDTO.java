@@ -19,7 +19,10 @@ public class ProblemDTO {
     public UserDTO referent;
     public CategoryDTO category;
 
-    public ProblemDTO(Long id, String name, String description, ScooterDTO scooterDTO, Double latitude, Double longitude, LocalDate date, UserDTO owner, UserDTO referent, CategoryDTO categoryDTO) {
+    public ProblemDTO() {
+    }
+
+    public ProblemDTO(Long id, String name, String description, ScooterDTO scooterDTO, Double latitude, Double longitude, LocalDate date, CategoryDTO categoryDTO) {
         this.id = id;
         this.name = name;
         this.description = description;

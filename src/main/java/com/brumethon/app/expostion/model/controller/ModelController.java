@@ -1,5 +1,6 @@
 package com.brumethon.app.expostion.model.controller;
 
+import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.model.dto.ScooterModelDTO;
 import com.brumethon.app.infrastructure.service.ScooterModelService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class ModelController {
+public class ModelController extends ErrorHandler {
 
     private final ScooterModelService scooterModelService;
 

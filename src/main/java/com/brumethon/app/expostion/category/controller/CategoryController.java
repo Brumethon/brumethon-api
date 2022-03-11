@@ -2,6 +2,7 @@ package com.brumethon.app.expostion.category.controller;
 
 import com.brumethon.app.domain.categories.Categories;
 import com.brumethon.app.expostion.category.dto.CategoryDTO;
+import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.infrastructure.repository.InDBCategoriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class CategoryController {
+public class CategoryController extends ErrorHandler {
 
     @Autowired
     private final InDBCategoriesRepository inDBCategoriesRepository;

@@ -8,8 +8,7 @@ import java.util.List;
 
 public interface ProblemsDBRepository extends CrudRepository<ProblemsDB, Long> {
 
-    @Query("FROM ProblemsDB WHERE categories.categoriesID = :categoryID AND status.problemStatusID = :problemStatusID AND referent IS NULL")
-    List<ProblemsDB> getProblemAvailableForUser(@Param("categoryID") Long categoryID,
-                                                @Param("problemStatusID") Long problemStatusID);
+    @Query("FROM ProblemsDB WHERE categories.categoriesID = :categoryID  AND referent IS NULL")
+    List<ProblemsDB> getProblemAvailableForUser(@Param("categoryID") Long categoryID);
 
 }

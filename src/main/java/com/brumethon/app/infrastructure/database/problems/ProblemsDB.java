@@ -24,20 +24,20 @@ public class ProblemsDB {
 
     private LocalDate date;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private ScooterDB scooter;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private CategoriesDB categories;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private ProblemStatusDB status;
 
     private String name;
 
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private UserDB referent;
 
     private Double latitude;
@@ -113,7 +113,12 @@ public class ProblemsDB {
     }
 
     public Problem toProblem(){
-        return new Problem(referent.toUser(), problemID, name, description, scooter.toScooter(), new Coordinate(latitude,longitude), date, categories.toCategories(), status.toProblemStatus());
+        return new Problem( referent == null ? null : referent.toUser(),
+                problemID,
+                name,
+                description,
+                scooter.toScooter(),
+                new Coordinate(latitude,longitude), date, categories.toCategories(), status.toProblemStatus());
     }
 
 

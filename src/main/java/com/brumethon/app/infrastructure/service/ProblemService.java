@@ -26,6 +26,9 @@ public class ProblemService extends SimpleService<ProblemRepository, Problem, Lo
     }
 
     public List<Problem> getAllAvailable(User user){
+        if(user.getAssignedCategories().isEmpty()){
+            return List.of();
+        }
         List<Problem> list = repository.getAllAvailableProblem(user.getAssignedCategories().get(0).getID());
         return list.stream().filter(user::isUserAvailableForProblem).collect(Collectors.toList());
     }

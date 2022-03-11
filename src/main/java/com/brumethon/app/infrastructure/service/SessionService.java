@@ -7,6 +7,8 @@ import com.brumethon.kernel.Validator;
 import com.brumethon.kernel.exception.SimpleServiceObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -15,8 +17,22 @@ public class SessionService extends SimpleService<SessionRepository, Session, St
         super(repository, validator, "session");
     }
 
-    public Session getByUserID(UUID id){
-        return repository.getByUserID(id).orElseThrow(() -> new SimpleServiceObjectNotFoundException("session", id.toString()));
+    private boolean isExpired(LocalDateTime dateTime) {
+        return LocalDateTime.now().isAfter(dateTime);
     }
 
+
+    @Override
+    public Session get(String key) {
+        Session session = super.get(key);
+        if (isExpired(session.getExpirationDate())) {
+            repository.removeAllForUserID(session.getUser().getID());
+            throw  new SimpleServiceObjectNotFoundException("session", key);
+        }
+        return session;
+    }
+
+    public void removeAllForUserID(Long user_id) {
+        repository.removeAllForUserID(user_id);
+    }
 }

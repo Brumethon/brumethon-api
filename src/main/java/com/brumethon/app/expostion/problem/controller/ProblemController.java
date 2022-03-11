@@ -4,21 +4,20 @@ import com.brumethon.app.domain.categories.Categories;
 import com.brumethon.app.domain.problem.Problem;
 import com.brumethon.app.domain.problemestatus.ProblemStatus;
 import com.brumethon.app.domain.scooter.Scooter;
+import com.brumethon.app.domain.session.Session;
 import com.brumethon.app.expostion.category.dto.CategoryDTO;
 import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.problem.dto.CreateProblemDTO;
 import com.brumethon.app.expostion.problem.dto.ProblemDTO;
 import com.brumethon.app.expostion.scooter.dto.ScooterDTO;
-import com.brumethon.app.infrastructure.service.CategoriesService;
-import com.brumethon.app.infrastructure.service.ProblemService;
-import com.brumethon.app.infrastructure.service.ProblemStatusService;
-import com.brumethon.app.infrastructure.service.ScooterService;
+import com.brumethon.app.infrastructure.service.*;
 import com.brumethon.kernel.coordinate.Coordinate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,14 +31,18 @@ public class ProblemController extends ErrorHandler {
 
     private final ScooterService scooterService;
 
+    private final SessionService sessionService;
+
     public ProblemController(ProblemService problemService,
                              ProblemStatusService problemStatusService,
                              CategoriesService categoriesService,
-                             ScooterService scooterService) {
+                             ScooterService scooterService,
+                             SessionService sessionService) {
         this.problemService = problemService;
         this.problemStatusService = problemStatusService;
         this.categoriesService = categoriesService;
         this.scooterService = scooterService;
+        this.sessionService = sessionService;
     }
 
     @GetMapping(value = "/problems")
@@ -93,5 +96,11 @@ public class ProblemController extends ErrorHandler {
                 categories,
                 problemStatus
         ));
+    }
+
+    @PutMapping(value = "/problems/{id}")
+    public void putReferentOnProblem(@RequestHeader("uuid") UUID uuid, @PathVariable @Valid Long id) {
+        Session userSession = sessionService.get(uuid.toString());
+        problemService.putReferentOnProblem(userSession.getUser(),id);
     }
 }

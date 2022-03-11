@@ -1,10 +1,15 @@
 package com.brumethon.app.infrastructure.database.problems;
 
+import com.brumethon.app.domain.categories.Categories;
 import com.brumethon.app.domain.problem.Problem;
+import com.brumethon.app.domain.problemestatus.ProblemStatus;
+import com.brumethon.app.domain.scooter.Scooter;
+import com.brumethon.app.domain.user.User;
 import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
 import com.brumethon.app.infrastructure.database.problemstatus.ProblemStatusDB;
 import com.brumethon.app.infrastructure.database.scooter.ScooterDB;
 import com.brumethon.app.infrastructure.database.user.UserDB;
+import com.brumethon.kernel.coordinate.Coordinate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -102,14 +107,15 @@ public class ProblemsDB {
                 ProblemStatusDB.of(problem.getStatus()),
                 problem.getName(),
                 problem.getDescription(),
-                UserDB.of(problem.getScooter().getOwner()),
+                UserDB.of(problem.getReferent()),
                 problem.getCoordinate().getLatitude(),
                 problem.getCoordinate().getLongitude());
     }
 
-    public Problem toProblem() {
-        return null;
+    public Problem toProblem(){
+        return new Problem(referent.toUser(), problemID, name, description, scooter.toScooter(), new Coordinate(latitude,longitude), date, categories.toCategories(), status.toProblemStatus());
     }
+
 
 
 }

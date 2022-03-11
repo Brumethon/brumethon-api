@@ -1,10 +1,13 @@
 package com.brumethon.app.domain.session;
 
+import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.kernel.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
 
 public interface SessionRepository extends Repository<Session, String> {
-    Optional<Session> getByUserID(UUID id);
+    Optional<Session> get(UUID id);
+
+    void removeAllForUserID(Long userID);
 }

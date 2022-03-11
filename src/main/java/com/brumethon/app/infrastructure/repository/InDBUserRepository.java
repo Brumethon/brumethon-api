@@ -5,6 +5,8 @@ import com.brumethon.app.domain.address.AddressRepository;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.domain.user.UserRepository;
 import com.brumethon.app.infrastructure.database.address.AddressDB;
+import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
+import com.brumethon.app.infrastructure.database.categories.CategoriesDBRepository;
 import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.app.infrastructure.database.user.UserDBRepository;
 import com.brumethon.kernel.email.EmailAddress;
@@ -19,10 +21,13 @@ public class InDBUserRepository implements UserRepository {
 
     private final UserDBRepository dbRepository;
 
+    private final CategoriesDBRepository categoriesDBRepository;
+
     private final AddressRepository addressRepository;
 
-    public InDBUserRepository(UserDBRepository dbRepository, AddressRepository addressRepository) {
+    public InDBUserRepository(UserDBRepository dbRepository, CategoriesDBRepository categoriesDBRepository, AddressRepository addressRepository) {
         this.dbRepository = dbRepository;
+        this.categoriesDBRepository = categoriesDBRepository;
         this.addressRepository = addressRepository;
     }
 
@@ -61,11 +66,11 @@ public class InDBUserRepository implements UserRepository {
         List<User> result = new ArrayList<>();
         dbRepository.findAll().forEach(userDB -> result.add(new User(
                 userDB.getId(),
-                new EmailAddress(userDB.getMail()),
                 userDB.getFirstName(),
                 userDB.getLastName(),
                 userDB.getPassword(),
                 userDB.getPhoneNumber(),
+                new EmailAddress(userDB.getMail()),
                 new Address(
                         userDB.getAddressDB().getId(),
                         userDB.getAddressDB().getCity(),
@@ -77,5 +82,35 @@ public class InDBUserRepository implements UserRepository {
                         userDB.getAddressDB().getLongitude())
         )));
         return result;
+    }
+
+    @Override
+    public Optional<User> getByEmail(EmailAddress emailAddress) {
+        Optional<UserDB> userDB = dbRepository.getUserDBByMail(emailAddress.toString());
+        if(userDB.isEmpty()){
+            return Optional.empty();
+        }
+
+        return Optional.of( userDB.get().toUser());
+    }
+
+    @Override
+    public boolean addCategoryToUser(EmailAddress emailAddress, Long categoryID) {
+        Optional<UserDB> userDB = dbRepository.getUserDBByMail(emailAddress.toString());
+
+        if(userDB.isEmpty()){
+            return false;
+        }
+
+        Optional<CategoriesDB> categoriesDB =  categoriesDBRepository.findById(categoryID);
+
+        if(categoriesDB.isEmpty()){
+            return false;
+        }
+
+        userDB.get().getCategories().add(categoriesDB.get());
+
+        UserDB userDB1 = dbRepository.save(userDB.get());
+        return true;
     }
 }

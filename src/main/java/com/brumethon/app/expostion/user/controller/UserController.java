@@ -2,9 +2,12 @@ package com.brumethon.app.expostion.user.controller;
 
 import com.brumethon.app.domain.address.Address;
 import com.brumethon.app.domain.user.User;
+import com.brumethon.app.expostion.category.dto.CategoryDTO;
 import com.brumethon.app.expostion.user.dto.CreateUserDTO;
 import com.brumethon.app.expostion.user.dto.UserDTO;
+import com.brumethon.app.infrastructure.database.categories.CategoriesDB;
 import com.brumethon.app.infrastructure.repository.InDBUserRepository;
+import com.brumethon.app.infrastructure.service.UserService;
 import com.brumethon.kernel.email.EmailAddress;
 import com.byteowls.jopencage.JOpenCageGeocoder;
 import com.byteowls.jopencage.model.JOpenCageForwardRequest;
@@ -28,20 +31,19 @@ import java.util.stream.Collectors;
 @RestController
 public class UserController {
 
-    @Autowired
-    private final InDBUserRepository inDBUserRepository;
+    private final UserService userService;
 
     @Value("${open_cages.token}")
     private String token;
 
 
-    public UserController(InDBUserRepository inDBUserRepository) {
-        this.inDBUserRepository = inDBUserRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping(value = "/users")
     public List<UserDTO> getUsers() {
-        return inDBUserRepository.getAll().stream()
+        return userService.getAll().stream()
                 .map(user -> new UserDTO(
                         user.getEmailAddress().toString(),
                         user.getLastName(),
@@ -51,9 +53,20 @@ public class UserController {
     }
 
     @GetMapping(value = "/users/{email}")
-    public UserDTO getUser(@PathVariable @Valid String email) {
-        User user = inDBUserRepository.getByEmail(email);
+    public UserDTO getUserByEmail(@PathVariable @Valid String email) {
+        User user = userService.getByEmail(new EmailAddress(email));
         return new UserDTO(user.getEmailAddress().toString(), user.getLastName(), user.getFirstName(), user.getAddress().toString());
+    }
+
+    @GetMapping(value = "/users/{email}/categories")
+    public List<CategoryDTO> getUserCategories(@PathVariable @Valid String email) {
+        User user = userService.getByEmail( new EmailAddress(email) );
+        return user.getCategories().stream().map(categories -> new CategoryDTO(categories.getName())).collect(Collectors.toList());
+    }
+
+    @PostMapping(value = "/users/{email}/categories/{id}")
+    public void addUserCategories(@PathVariable @Valid String email, @PathVariable @Valid Long id) {
+        userService.addCategoryToUser(new EmailAddress(email), id);
     }
 
     @PostMapping(value = "/users")
@@ -68,13 +81,13 @@ public class UserController {
         JOpenCageResponse response = jOpenCageGeocoder.forward(request);
         JOpenCageLatLng firstResultLatLng = response.getFirstPosition();
 
-        this.inDBUserRepository.add(new User(
+        userService.add(new User(
                 -1L,
-                new EmailAddress(createUserDTO.email),
                 createUserDTO.firstname,
                 createUserDTO.lastname,
                 createUserDTO.password,
                 createUserDTO.phoneNumber,
+                new EmailAddress(createUserDTO.email),
                 new Address(
                         -1L,
                         createUserDTO.address.city,

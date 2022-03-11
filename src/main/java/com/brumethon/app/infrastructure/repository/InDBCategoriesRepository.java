@@ -33,8 +33,8 @@ public class InDBCategoriesRepository implements CategoriesRepository {
     @Override
     public Long add(Categories value) {
         CategoriesDB categoriesDB = dbRepository.save(CategoriesDB.of(value));
-        value.setId(categoriesDB.getId());
-        return categoriesDB.getId();
+        value.setId(categoriesDB.getCategories_id());
+        return categoriesDB.getCategories_id();
     }
 
     @Override

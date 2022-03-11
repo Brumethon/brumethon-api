@@ -100,22 +100,39 @@ public class ProblemsDB {
     }
 
     public static ProblemsDB of(Problem problem) {
-        return new ProblemsDB(
+        ProblemsDB problemsDB = new ProblemsDB(
                 problem.getDate(),
                 ScooterDB.of(problem.getScooter()),
                 CategoriesDB.of(problem.getCategories()),
                 ProblemStatusDB.of(problem.getStatus()),
                 problem.getName(),
                 problem.getDescription(),
-                UserDB.of(problem.getReferent()),
+                null,
                 problem.getCoordinate().getLatitude(),
                 problem.getCoordinate().getLongitude());
+
+        if (problem.getReferent() != null) {
+            problemsDB.referent = UserDB.of(problem.getReferent());
+        }
+        return problemsDB;
     }
 
     public Problem toProblem(){
-        return new Problem(referent.toUser(), problemID, name, description, scooter.toScooter(), new Coordinate(latitude,longitude), date, categories.toCategories(), status.toProblemStatus());
+        Problem problem = new Problem(
+                null,
+                problemID,
+                name,
+                description,
+                scooter.toScooter(),
+                new Coordinate(latitude,longitude),
+                date,
+                categories.toCategories(),
+                status.toProblemStatus());
+
+        if (this.referent != null) {
+            problem.setReferent(this.referent.toUser());
+        }
+        return problem;
     }
-
-
 
 }

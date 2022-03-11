@@ -44,14 +44,15 @@ public class UserController extends ErrorHandler {
                         user.getEmailAddress().toString(),
                         user.getLastName(),
                         user.getFirstName(),
-                        user.getAddress().toString()))
+                        user.getAddress().toString(),
+                        user.getPhoneNumber()))
                 .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/users/{email}")
     public UserDTO getUserByEmail(@PathVariable @Valid String email) {
         User user = userService.getByEmail(new EmailAddress(email));
-        return new UserDTO(user.getEmailAddress().toString(), user.getLastName(), user.getFirstName(), user.getAddress().toString());
+        return new UserDTO(user.getEmailAddress().toString(), user.getLastName(), user.getFirstName(), user.getAddress().toString(), user.getPhoneNumber());
     }
 
     @GetMapping(value = "/users/{email}/categories")

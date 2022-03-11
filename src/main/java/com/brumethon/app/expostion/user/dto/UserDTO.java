@@ -12,11 +12,15 @@ public class UserDTO {
     public String firstname;
     @NotBlank
     public String Address;
+    @NotBlank
+    public String phoneNumber;
 
-    public UserDTO(String email, String lastname, String firstname, String address) {
+
+    public UserDTO(String email, String lastname, String firstname, String address, String phoneNumber) {
         this.email = email;
         this.lastname = lastname;
         this.firstname = firstname;
-        Address = address;
+        this.Address = address;
+        this.phoneNumber = phoneNumber;
     }
 }

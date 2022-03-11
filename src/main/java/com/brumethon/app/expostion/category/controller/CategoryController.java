@@ -31,7 +31,7 @@ public class CategoryController extends ErrorHandler {
     @GetMapping(value = "/categories/{id}/users")
     public List<UserDTO> getAllCategoriesUser(@PathVariable @Valid Long id) {
         return categoriesService.getAllCategoriesUsers(id).stream()
-                .map(user -> new UserDTO( user.getEmailAddress().toString(), user.getLastName(), user.getFirstName(), user.getAddress().toString()))
+                .map(user -> new UserDTO( user.getEmailAddress().toString(), user.getLastName(), user.getFirstName(), user.getAddress().toString(), user.getPhoneNumber()))
                 .collect(Collectors.toList());
     }
 }

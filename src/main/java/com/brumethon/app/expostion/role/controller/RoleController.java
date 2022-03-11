@@ -1,9 +1,7 @@
 package com.brumethon.app.expostion.role.controller;
 
 
-import com.brumethon.app.domain.categories.Categories;
 import com.brumethon.app.domain.role.Role;
-import com.brumethon.app.expostion.category.dto.CreateCategoryDTO;
 import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.role.dto.CreateRoleDTO;
 import com.brumethon.app.expostion.role.dto.RoleDTO;

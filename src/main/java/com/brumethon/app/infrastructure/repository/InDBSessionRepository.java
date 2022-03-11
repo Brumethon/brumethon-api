@@ -4,9 +4,7 @@ import com.brumethon.app.domain.session.Session;
 import com.brumethon.app.domain.session.SessionRepository;
 import com.brumethon.app.infrastructure.database.session.SessionDB;
 import com.brumethon.app.infrastructure.database.session.SessionDBRepository;
-import com.brumethon.app.infrastructure.database.user.UserDB;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

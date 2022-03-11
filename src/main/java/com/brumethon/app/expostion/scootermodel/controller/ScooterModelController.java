@@ -1,8 +1,6 @@
 package com.brumethon.app.expostion.scootermodel.controller;
 
-import com.brumethon.app.domain.categories.Categories;
 import com.brumethon.app.domain.scootermodel.ScooterModel;
-import com.brumethon.app.expostion.category.dto.CreateCategoryDTO;
 import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.scootermodel.dto.CreateScooterModel;
 import com.brumethon.app.expostion.scootermodel.dto.ScooterModelDTO;

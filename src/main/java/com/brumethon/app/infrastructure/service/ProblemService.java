@@ -2,6 +2,7 @@ package com.brumethon.app.infrastructure.service;
 
 import com.brumethon.app.domain.problem.Problem;
 import com.brumethon.app.domain.problem.ProblemRepository;
+import com.brumethon.app.domain.problemestatus.ProblemStatus;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.kernel.SimpleService;
 import com.brumethon.kernel.Validator;
@@ -20,6 +21,12 @@ public class ProblemService extends SimpleService<ProblemRepository, Problem, Lo
     public void putReferentOnProblem(User user, Long problem_id) {
         Problem problem = repository.get(problem_id).orElseThrow(()->new SimpleServiceObjectNotFoundException("problem",problem_id.toString()));
         problem.setReferent(user);
+        repository.update(problem);
+    }
+
+    public void putProblemStatusOnProblem(ProblemStatus problemStatus, Long problem_id) {
+        Problem problem = repository.get(problem_id).orElseThrow(()->new SimpleServiceObjectNotFoundException("problem",problem_id.toString()));
+        problem.setStatus(problemStatus);
         repository.update(problem);
     }
 

@@ -9,6 +9,7 @@ import com.brumethon.app.expostion.problemstatus.dto.ProblemStatusDTO;
 import com.brumethon.app.expostion.role.dto.RoleDTO;
 import com.brumethon.app.expostion.scooter.dto.ScooterDTO;
 import com.brumethon.app.expostion.user.dto.CreateUserDTO;
+import com.brumethon.app.expostion.user.dto.UserCategoriesDTO;
 import com.brumethon.app.expostion.user.dto.UserDTO;
 import com.brumethon.app.infrastructure.service.AddressService;
 import com.brumethon.app.infrastructure.service.ProblemService;
@@ -53,7 +54,8 @@ public class UserController extends ErrorHandler {
                         user.getLastName(),
                         user.getFirstName(),
                         user.getAddress().toString(),
-                        user.getPhoneNumber()))
+                        user.getPhoneNumber(),
+                        user.getAssignedRoles().stream().map(role -> new RoleDTO(role.getID(), role.getName())).collect(Collectors.toList())))
                 .collect(Collectors.toList());
     }
 
@@ -86,6 +88,20 @@ public class UserController extends ErrorHandler {
     @PostMapping(value = "/users/{email}/categories/{id}")
     public void addUserCategories(@PathVariable @Valid String email, @PathVariable @Valid Long id) {
         userService.addCategoryToUser(new EmailAddress(email), id);
+    }
+
+    @PostMapping(value = "/users/{email}/categories")
+    public void addUserCategories(@PathVariable @Valid String email, @RequestBody @Valid UserCategoriesDTO userCategoriesDTO) {
+        for (Long id: userCategoriesDTO.list ) {
+            userService.addCategoryToUser(new EmailAddress(email), id);
+        }
+    }
+
+    @PostMapping(value = "/users/{email}/roles")
+    public void addUserRoles(@PathVariable @Valid String email, @RequestBody @Valid UserCategoriesDTO userCategoriesDTO) {
+        for (Long id: userCategoriesDTO.list ) {
+            userService.addRoleToUser(new EmailAddress(email), id);
+        }
     }
 
     @PostMapping(value = "/users/{email}/roles/{id}")

@@ -4,14 +4,12 @@ import com.brumethon.app.domain.problem.Problem;
 import com.brumethon.app.domain.problem.ProblemRepository;
 import com.brumethon.app.domain.problemestatus.ProblemStatus;
 import com.brumethon.app.domain.user.User;
-import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.kernel.SimpleService;
 import com.brumethon.kernel.Validator;
 import com.brumethon.kernel.exception.SimpleServiceObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

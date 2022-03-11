@@ -4,23 +4,24 @@ import com.brumethon.app.domain.scootermodel.ScooterModel;
 
 import javax.persistence.*;
 
-@Table(name = "model")
+@Table(name = "scooter_model")
 @Entity
 public class ScooterModelDB {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "scooter_model_id")
+    private Long scooterModelID;
 
     private String name;
 
-    public ScooterModelDB(Long id, String name) {
-        this.id = id;
+    public ScooterModelDB(Long scooterModelID, String name) {
+        this.scooterModelID = scooterModelID;
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
+    public Long getScooterModelID() {
+        return scooterModelID;
     }
 
     public String getName() {
@@ -35,7 +36,7 @@ public class ScooterModelDB {
     }
 
     public ScooterModel toScooterModel(){
-        return new ScooterModel(id, name);
+        return new ScooterModel(scooterModelID, name);
     }
 
 }

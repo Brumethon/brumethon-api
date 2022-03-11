@@ -33,8 +33,8 @@ public class InDBScooterRepository implements ScooterRepository {
     @Override
     public Long add(Scooter value) {
         ScooterDB scooterDB = dbRepository.save(ScooterDB.of(value));
-        value.setId(scooterDB.getId());
-        return scooterDB.getId();
+        value.setId(scooterDB.getScooterID());
+        return scooterDB.getScooterID();
     }
 
     @Override

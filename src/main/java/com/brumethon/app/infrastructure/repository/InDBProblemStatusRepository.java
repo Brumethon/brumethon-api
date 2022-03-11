@@ -43,8 +43,8 @@ public class InDBProblemStatusRepository implements ProblemStatusRepository {
     @Override
     public Long add(ProblemStatus value) {
         ProblemStatusDB problemStatusDB = dbRepository.save(ProblemStatusDB.of(value));
-        value.setId(problemStatusDB.getId());
-        return problemStatusDB.getId();
+        value.setId(problemStatusDB.getProblemStatusID());
+        return problemStatusDB.getProblemStatusID();
     }
 
     @Override

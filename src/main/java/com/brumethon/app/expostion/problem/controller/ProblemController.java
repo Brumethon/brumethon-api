@@ -83,7 +83,7 @@ public class ProblemController {
         ProblemStatus problemStatus = problemStatusService.get(createProblemDTO.problemStatusId);
 
         this.problemService.add(new Problem(
-                -1L,
+                null,
                 createProblemDTO.name,
                 createProblemDTO.description,
                 scooter,

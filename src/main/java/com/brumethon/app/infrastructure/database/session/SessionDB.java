@@ -14,20 +14,21 @@ public class SessionDB {
     private String tokenId;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private UserDB userDB;
+    private UserDB user;
+
     private LocalDateTime expirationDate;
 
     protected SessionDB() {
     }
 
-    public SessionDB(String tokenId, UserDB userDB, LocalDateTime expirationDate) {
+    public SessionDB(String tokenId, UserDB user, LocalDateTime expirationDate) {
         this.tokenId = tokenId;
-        this.userDB = userDB;
+        this.user = user;
         this.expirationDate = expirationDate;
     }
 
-    protected SessionDB(UserDB userDB, LocalDateTime expirationDate) {
-        this.userDB = userDB;
+    protected SessionDB(UserDB user, LocalDateTime expirationDate) {
+        this.user = user;
         this.expirationDate = expirationDate;
     }
 
@@ -35,8 +36,8 @@ public class SessionDB {
         return tokenId;
     }
 
-    public UserDB getUserDB() {
-        return userDB;
+    public UserDB getUser() {
+        return user;
     }
 
     public LocalDateTime getExpirationDate() {
@@ -52,7 +53,7 @@ public class SessionDB {
     }
 
     public Session toSession() {
-        return new Session(tokenId, userDB.toUser(), expirationDate);
+        return new Session(tokenId, user.toUser(), expirationDate);
     }
 
 }

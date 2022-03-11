@@ -76,17 +76,6 @@ public class UserDB {
         this(user_id, mail, password, firstName, lastName, phoneNumber, registerDate, address, new ArrayList<>(), new ArrayList<>());
     }
 
-    protected UserDB(Long id, String mail, String password, String firstName, String lastName, String phoneNumber, LocalDate registerDate, AddressDB addressDB) {
-        this.id = id;
-        this.mail = mail;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.registerDate = registerDate;
-        this.addressDB = addressDB;
-    }
-
     public static UserDB of(User user) {
         return new UserDB(
                 user.getID(),

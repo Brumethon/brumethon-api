@@ -38,8 +38,8 @@ public class InDBUserRepository implements UserRepository {
     @Override
     public Long add(User value) {
         UserDB userDB = dbRepository.save(UserDB.of(value));
-        value.setId(userDB.getId());
-        return userDB.getId();
+        value.setId(userDB.getUser_id());
+        return userDB.getUser_id();
     }
 
     @Override

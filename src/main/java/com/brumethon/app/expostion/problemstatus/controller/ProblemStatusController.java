@@ -1,6 +1,7 @@
 package com.brumethon.app.expostion.problemstatus.controller;
 
 import com.brumethon.app.domain.problemestatus.ProblemStatus;
+import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.problemstatus.dto.ProblemStatusDTO;
 import com.brumethon.app.infrastructure.service.ProblemStatusService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class ProblemStatusController {
+public class ProblemStatusController extends ErrorHandler {
 
     private final ProblemStatusService problemStatusService;
 

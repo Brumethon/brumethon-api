@@ -4,6 +4,7 @@ import com.brumethon.app.domain.session.Session;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.expostion.connection.dto.SessionDTO;
 import com.brumethon.app.expostion.connection.dto.UserConnectionDTO;
+import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.user.dto.UserDTO;
 import com.brumethon.app.infrastructure.database.user.UserDB;
 import com.brumethon.app.infrastructure.repository.InDBSessionRepository;
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @RestController
-public class AuthenticationController {
+public class AuthenticationController extends ErrorHandler {
 
     private final InDBSessionRepository inDBSessionRepository;
     private final InDBUserRepository inDBUserRepository;

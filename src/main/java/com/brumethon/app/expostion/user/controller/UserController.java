@@ -3,6 +3,7 @@ package com.brumethon.app.expostion.user.controller;
 import com.brumethon.app.domain.address.Address;
 import com.brumethon.app.domain.user.User;
 import com.brumethon.app.expostion.category.dto.CategoryDTO;
+import com.brumethon.app.expostion.error.ErrorHandler;
 import com.brumethon.app.expostion.role.dto.RoleDTO;
 import com.brumethon.app.expostion.user.dto.CreateUserDTO;
 import com.brumethon.app.expostion.user.dto.UserDTO;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class UserController {
+public class UserController extends ErrorHandler {
 
     private final UserService userService;
 

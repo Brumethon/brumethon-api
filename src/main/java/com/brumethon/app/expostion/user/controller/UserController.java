@@ -141,4 +141,9 @@ public class UserController extends ErrorHandler {
                 address
         ));
     }
+
+    @DeleteMapping(value = "/users/{email}/roles/{id}")
+    public void deleteRoleForUser(@PathVariable @Valid String email, @PathVariable @Valid Long id) {
+        userService.removeRoleToUser(new EmailAddress(email), id);
+    }
 }

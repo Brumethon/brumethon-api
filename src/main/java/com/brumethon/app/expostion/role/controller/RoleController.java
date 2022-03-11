@@ -29,12 +29,17 @@ public class RoleController extends ErrorHandler {
 
     @GetMapping(value = "/roles/{id}")
     public RoleDTO getUsers(@PathVariable @Valid Long id) {
-        Role role =roleService.get(id);
+        Role role = roleService.get(id);
         return new RoleDTO(role.getID(),role.getName());
     }
 
     @PostMapping(value = "/roles")
     public void postCategory(@RequestBody @Valid CreateRoleDTO createRoleDTO) {
-        roleService.add(new Role(-1L,createRoleDTO.name));
+        roleService.add(new Role(null,createRoleDTO.name));
+    }
+
+    @DeleteMapping(value = "/roles/{id}")
+    public void deleteCategory(@PathVariable @Valid Long id) {
+        roleService.remove(id);
     }
 }

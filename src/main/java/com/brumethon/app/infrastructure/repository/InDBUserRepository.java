@@ -113,4 +113,24 @@ public class InDBUserRepository implements UserRepository {
         UserDB userDB1 = dbRepository.save(userDB.get());
         return true;
     }
+
+    @Override
+    public boolean removeRoleToUser(EmailAddress emailAddress, Long roleID) {
+        Optional<UserDB> userDB = dbRepository.getUserDBByMail(emailAddress.toString());
+
+        if(userDB.isEmpty()){
+            return false;
+        }
+
+        Optional<RoleDB> roleDB =  roleDBRepository.findById(roleID);
+
+        if(roleDB.isEmpty()){
+            return false;
+        }
+
+        userDB.get().getRoles().remove(roleDB.get());
+
+        UserDB userDB1 = dbRepository.save(userDB.get());
+        return true;
+    }
 }

@@ -28,4 +28,8 @@ public class UserService extends SimpleService<UserRepository, User, Long> {
     public void addRoleToUser(EmailAddress userEmail, Long roleID){
         repository.addRoleToUser(userEmail, roleID);
     }
+
+    public void removeRoleToUser(EmailAddress userEmail, Long roleID) {
+        repository.removeRoleToUser(userEmail, roleID);
+    }
 }

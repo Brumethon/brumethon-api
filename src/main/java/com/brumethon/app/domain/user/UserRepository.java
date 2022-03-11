@@ -13,4 +13,5 @@ public interface UserRepository extends Repository<User, Long> {
 
     boolean addRoleToUser(EmailAddress emailAddress, Long roleID);
 
+    boolean removeRoleToUser(EmailAddress emailAddress, Long roleID);
 }
